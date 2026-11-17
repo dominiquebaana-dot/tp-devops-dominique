@@ -1,0 +1,36 @@
+# Défi TP 2.8 : Stack WordPress + MariaDB prête pour la production
+services:
+  db:
+    image: mariadb:11.4
+    environment:
+      MARIADB_DATABASE: wordpress
+      MARIADB_USER: wp
+      MARIADB_PASSWORD: ${DB_PASSWORD:-wp_secret_pass}
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-root_secret_pass}
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      retries: 5
+    restart: unless-stopped
+
+  wordpress:
+    image: wordpress:6-apache
+    ports:
+      - "8000:80"
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DB_USER: wp
+      WORDPRESS_DB_PASSWORD: ${DB_PASSWORD:-wp_secret_pass}
+    volumes:
+      - wp_content:/var/www/html/wp-content
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  db_data:
+  wp_content:

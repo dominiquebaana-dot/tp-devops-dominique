@@ -1,0 +1,11 @@
+# Défi TP 2.6 : Dockerfile multi-stage pour le site restaurant + HEALTHCHECK
+FROM alpine/git:v2.47.1 AS source
+RUN git clone --depth 1 https://github.com/Legeni07/restaurant.git /src \
+ && rm -rf /src/.git
+
+FROM nginx:1.27-alpine
+LABEL maintainer="Legeni"
+COPY --from=source /src/ /usr/share/nginx/html/
+EXPOSE 80
+HEALTHCHECK --interval=15s --timeout=3s \
+  CMD wget -q -O /dev/null http://127.0.0.1/ || exit 1

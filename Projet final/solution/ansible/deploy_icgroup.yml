@@ -1,0 +1,8 @@
+---
+- name: Déploiement IC GROUP (Odoo + pgAdmin + Legeni Academy)
+  hosts: localhost
+  connection: local
+  become: true
+  roles:
+    - role: odoo_role
+    - role: pgadmin_role

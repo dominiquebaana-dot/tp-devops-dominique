@@ -1,0 +1,199 @@
+---
+# ==============================================================================
+# Lot 3 + Bonus : Déploiement Kubernetes piloté par Ansible avec Smoke Test
+# et Rollback automatique (block / rescue)
+# ==============================================================================
+- name: Déploiement Kubernetes de Legeni WebApp ({{ target_env | default('staging') }})
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  vars:
+    ansible_python_interpreter: "{{ '/opt/k8s-python/bin/python' if '/opt/k8s-python/bin/python' is file else ansible_playbook_python }}"
+    target_env: staging
+    app_image: "{{ webapp_image | default('legeni-webapp') }}"
+    app_version: "1.0.0"
+    image_pull_policy: "IfNotPresent"
+    readiness_path: "/ready"
+    vault_file: "{{ 'vars/vault.yml' if (playbook_dir ~ '/vars/vault.yml') is file else 'vars/vault.yml.example' }}"
+    version_slug: "{{ app_version | lower | regex_replace('[^a-z0-9-]', '-') }}"
+
+  pre_tasks:
+    - name: Charger les variables de l'environnement ({{ target_env }})
+      ansible.builtin.include_vars: "vars/{{ target_env }}.yml"
+
+    - name: Charger les secrets depuis Ansible Vault
+      ansible.builtin.include_vars: "{{ vault_file }}"
+      no_log: true
+
+    - name: Sélectionner le mot de passe Redis de l'environnement cible
+      ansible.builtin.set_fact:
+        redis_password: "{{ vault_redis_password_prod if target_env == 'prod' else vault_redis_password_staging }}"
+      no_log: true
+
+  tasks:
+    - name: Créer le Namespace {{ k8s_namespace }}
+      kubernetes.core.k8s:
+        state: present
+        definition:
+          apiVersion: v1
+          kind: Namespace
+          metadata:
+            name: "{{ k8s_namespace }}"
+            labels:
+              env: "{{ app_env }}"
+
+    - name: Créer le Secret Redis dans {{ k8s_namespace }}
+      kubernetes.core.k8s:
+        state: present
+        definition:
+          apiVersion: v1
+          kind: Secret
+          metadata:
+            name: redis-secret
+            namespace: "{{ k8s_namespace }}"
+          type: Opaque
+          stringData:
+            REDIS_PASSWORD: "{{ redis_password }}"
+      no_log: true
+
+    - name: Vérifier si le Secret TLS legeni-tls existe déjà dans {{ k8s_namespace }}
+      kubernetes.core.k8s_info:
+        api_version: v1
+        kind: Secret
+        name: legeni-tls
+        namespace: "{{ k8s_namespace }}"
+      register: tls_secret_info
+
+    - name: Générer et créer le Secret TLS auto-signé legeni-tls si absent (Bonus Ingress HTTPS)
+      ansible.builtin.shell: |
+        TMPDIR=$(mktemp -d)
+        openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+          -keyout "$TMPDIR/tls.key" -out "$TMPDIR/tls.crt" -subj "/CN={{ ingress_host }}" 2>/dev/null
+        kubectl create secret tls legeni-tls -n "{{ k8s_namespace }}" \
+          --cert="$TMPDIR/tls.crt" --key="$TMPDIR/tls.key"
+        rm -rf "$TMPDIR"
+      when: tls_secret_info.resources | length == 0
+      changed_when: true
+
+    - name: Déployer la stack avec Migration préalable, Smoke Test et Rollback automatique
+      block:
+        - name: Appliquer ConfigMap + Redis (infra) avant le Job de migration
+          vars:
+            deploy_stage: infra
+          kubernetes.core.k8s:
+            state: present
+            template: templates/k8s/webapp.yml.j2
+            wait: true
+            wait_timeout: 120
+
+        - name: Vérifier si le Job de migration de cette version existe déjà
+          kubernetes.core.k8s_info:
+            api_version: batch/v1
+            kind: Job
+            name: "init-migration-{{ version_slug }}"
+            namespace: "{{ k8s_namespace }}"
+          register: migration_job_info
+
+        - name: "[BONUS] Lancer le Job d'initialisation/migration Redis avant le RollingUpdate"
+          kubernetes.core.k8s:
+            state: present
+            definition:
+              apiVersion: batch/v1
+              kind: Job
+              metadata:
+                name: "init-migration-{{ version_slug }}"
+                namespace: "{{ k8s_namespace }}"
+              spec:
+                ttlSecondsAfterFinished: 300
+                backoffLimit: 2
+                template:
+                  spec:
+                    restartPolicy: Never
+                    initContainers:
+                      - name: wait-redis
+                        image: busybox:1.36
+                        command: ["sh", "-c", "until nc -z redis 6379; do sleep 1; done"]
+                    containers:
+                      - name: migrate
+                        image: redis:7.4-alpine
+                        env:
+                          - name: REDIS_PASSWORD
+                            valueFrom:
+                              secretKeyRef:
+                                name: redis-secret
+                                key: REDIS_PASSWORD
+                        command:
+                          - sh
+                          - -c
+                          - "redis-cli -h redis -a \"$REDIS_PASSWORD\" SETNX visits 1 && redis-cli -h redis -a \"$REDIS_PASSWORD\" SET last_deployed_version '{{ app_version }}'"
+          when: migration_job_info.resources | length == 0
+
+        - name: Attendre la complétion du Job de migration avant le RollingUpdate
+          ansible.builtin.command: >
+            kubectl wait --for=condition=complete
+            job/init-migration-{{ version_slug }}
+            -n {{ k8s_namespace }} --timeout=90s
+          changed_when: false
+
+        - name: Appliquer WebApp + Ingress + HPA + CronJob et attendre le RollingUpdate
+          vars:
+            deploy_stage: app
+          kubernetes.core.k8s:
+            state: present
+            template: templates/k8s/webapp.yml.j2
+            wait: true
+            wait_timeout: 120
+
+        - name: Lister les pods webapp actifs pour le Smoke Test
+          kubernetes.core.k8s_info:
+            kind: Pod
+            namespace: "{{ k8s_namespace }}"
+            label_selectors:
+              - "app=webapp"
+          register: webapp_pods
+
+        - name: Sélectionner un pod Running et non Terminating
+          ansible.builtin.set_fact:
+            smoke_pod: >-
+              {{
+                (webapp_pods.resources
+                 | selectattr('status.phase', 'equalto', 'Running')
+                 | rejectattr('metadata.deletionTimestamp', 'defined')
+                 | list
+                 | first).metadata.name
+              }}
+
+        - name: Exécuter le Smoke Test depuis l'intérieur du cluster ({{ smoke_pod }})
+          kubernetes.core.k8s_exec:
+            namespace: "{{ k8s_namespace }}"
+            pod: "{{ smoke_pod }}"
+            command: >-
+              python -c "import json,urllib.request;
+              r=urllib.request.urlopen('http://webapp/ready');
+              assert r.status==200;
+              d=json.load(urllib.request.urlopen('http://webapp/api/info'));
+              assert d['version']=='{{ app_version }}', f'Attendu {{ app_version }}, obtenu {d}';
+              print(json.dumps(d))"
+          register: smoke_result
+          changed_when: false
+
+        - name: Afficher le succès du Smoke Test
+          ansible.builtin.debug:
+            msg: "✅ Déploiement {{ app_env }} validé : {{ smoke_result.stdout | trim }}"
+
+      rescue:
+        - name: "❌ Échec détecté : Rollback automatique du Deployment webapp vers la révision précédente"
+          kubernetes.core.k8s_rollback:
+            api_version: apps/v1
+            kind: Deployment
+            name: webapp
+            namespace: "{{ k8s_namespace }}"
+
+        - name: Attendre que le Rollback soit stabilisé
+          ansible.builtin.command: "kubectl rollout status deployment/webapp -n {{ k8s_namespace }} --timeout=60s"
+          changed_when: false
+
+        - name: Faire échouer le playbook pour signaler l'erreur à Jenkins
+          ansible.builtin.fail:
+            msg: "Le déploiement de la version {{ app_version }} en {{ app_env }} a échoué. Le rollback automatique vers la version précédente a été effectué avec succès."

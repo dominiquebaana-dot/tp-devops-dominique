@@ -1,0 +1,25 @@
+# TP 4.10 - Étape 3 : Provisionnement statique PV + PVC (reclaimPolicy: Retain)
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-manuel
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes: [ReadWriteOnce]
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: manuel
+  hostPath:
+    path: /data/pv-manuel
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-manuel
+  namespace: legeni-dev
+spec:
+  storageClassName: manuel
+  accessModes: [ReadWriteOnce]
+  resources:
+    requests:
+      storage: 500Mi

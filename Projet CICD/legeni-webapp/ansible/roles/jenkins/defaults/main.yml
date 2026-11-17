@@ -1,0 +1,4 @@
+---
+jenkins_compose_dir: "{{ playbook_dir }}/../../../TP_jenkins/jenkins-docker"
+jenkins_container_name: jenkins
+minikube_user: "{{ ansible_env.SUDO_USER | default(ansible_user_id) }}"

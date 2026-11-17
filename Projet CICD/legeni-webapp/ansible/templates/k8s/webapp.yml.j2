@@ -1,0 +1,255 @@
+# ==============================================================================
+# Manifests Kubernetes complets (Lot 3 + Bonus Ingress TLS, HPA, CronJob)
+# Générés dynamiquement par Ansible (templates/k8s/webapp.yml.j2)
+# deploy_stage : 'all' (défaut), 'infra' (ConfigMap + Redis), 'app' (WebApp + Ingress + HPA + CronJob)
+# ==============================================================================
+{% if (deploy_stage | default('all')) in ['all', 'infra'] %}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: webapp-config
+  namespace: {{ k8s_namespace }}
+  labels:
+    app: webapp
+    env: {{ app_env }}
+data:
+  APP_ENV: "{{ app_env }}"
+  APP_COLOR: "{{ app_color }}"
+  REDIS_HOST: "redis"
+  REDIS_PORT: "6379"
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: redis
+  namespace: {{ k8s_namespace }}
+  labels:
+    app: redis
+    env: {{ app_env }}
+spec:
+  serviceName: redis
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis
+  template:
+    metadata:
+      labels:
+        app: redis
+        env: {{ app_env }}
+    spec:
+      containers:
+        - name: redis
+          image: redis:7.4-alpine
+          args: ["--requirepass", "$(REDIS_PASSWORD)", "--appendonly", "yes"]
+          env:
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: redis-secret
+                  key: REDIS_PASSWORD
+          ports:
+            - containerPort: 6379
+          readinessProbe:
+            tcpSocket:
+              port: 6379
+            periodSeconds: 5
+          livenessProbe:
+            tcpSocket:
+              port: 6379
+            periodSeconds: 10
+          resources:
+            requests:
+              cpu: 50m
+              memory: 32Mi
+            limits:
+              cpu: 200m
+              memory: 128Mi
+          volumeMounts:
+            - name: data
+              mountPath: /data
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: [ReadWriteOnce]
+        resources:
+          requests:
+            storage: 1Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis
+  namespace: {{ k8s_namespace }}
+  labels:
+    app: redis
+    env: {{ app_env }}
+spec:
+  type: ClusterIP
+  selector:
+    app: redis
+  ports:
+    - port: 6379
+{% endif %}
+{% if (deploy_stage | default('all')) in ['all', 'app'] %}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp
+  namespace: {{ k8s_namespace }}
+  labels:
+    app: webapp
+    env: {{ app_env }}
+spec:
+  replicas: {{ app_replicas }}
+  revisionHistoryLimit: 5
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: webapp
+  template:
+    metadata:
+      labels:
+        app: webapp
+        env: {{ app_env }}
+      annotations:
+        checksum/config: "{{ (app_env ~ app_color) | hash('sha1') }}"
+    spec:
+      containers:
+        - name: webapp
+          image: "{{ app_image }}:{{ app_version }}"
+          imagePullPolicy: "{{ image_pull_policy | default('IfNotPresent') }}"
+          ports:
+            - containerPort: 5000
+          envFrom:
+            - configMapRef:
+                name: webapp-config
+            - secretRef:
+                name: redis-secret
+          readinessProbe:
+            httpGet:
+              path: "{{ readiness_path | default('/ready') }}"
+              port: 5000
+            periodSeconds: 5
+            failureThreshold: 2
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 5000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            failureThreshold: 3
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 200m
+              memory: 128Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: webapp
+  namespace: {{ k8s_namespace }}
+  labels:
+    app: webapp
+    env: {{ app_env }}
+spec:
+  type: NodePort
+  selector:
+    app: webapp
+  ports:
+    - port: 80
+      targetPort: 5000
+      nodePort: {{ app_node_port }}
+---
+# BONUS (+1 pt) : Ingress avec nom d'hôte ({{ ingress_host }}) et terminaison TLS
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: webapp-ingress
+  namespace: {{ k8s_namespace }}
+  labels:
+    app: webapp
+    env: {{ app_env }}
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - {{ ingress_host }}
+      secretName: legeni-tls
+  rules:
+    - host: {{ ingress_host }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: webapp
+                port:
+                  number: 80
+{% if enable_hpa | default(false) %}
+---
+# BONUS (+1 pt) : Autoscaling Horizontal (HPA) en production
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: webapp-hpa
+  namespace: {{ k8s_namespace }}
+  labels:
+    app: webapp
+    env: {{ app_env }}
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: webapp
+  minReplicas: {{ app_replicas }}
+  maxReplicas: 8
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 50
+{% endif %}
+{% if enable_cronjob | default(false) %}
+---
+# BONUS (+1 pt) : CronJob de contrôle de santé permanent en production
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: controle-sante-prod
+  namespace: {{ k8s_namespace }}
+  labels:
+    app: webapp
+    env: {{ app_env }}
+spec:
+  schedule: "*/1 * * * *"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      backoffLimit: 0
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: healthcheck
+              image: curlimages/curl:8.11.1
+              command:
+                - sh
+                - -c
+                - "date; curl -sf --max-time 5 http://webapp/ready && curl -sf --max-time 5 http://webapp/api/info"
+{% endif %}
+{% endif %}

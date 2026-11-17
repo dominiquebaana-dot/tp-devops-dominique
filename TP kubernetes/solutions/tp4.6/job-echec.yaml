@@ -1,0 +1,16 @@
+# TP 4.6 - Étape 2 : Job volontairement en échec (backoffLimit: 2 -> 3 tentatives)
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: migration-ratee
+  namespace: batch
+spec:
+  backoffLimit: 2
+  activeDeadlineSeconds: 60
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: migration
+          image: busybox:1.36
+          command: ["sh", "-c", "echo 'Simulation échec migration'; exit 1"]

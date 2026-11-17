@@ -1,0 +1,28 @@
+---
+# Défi TP 5.4 : Test automatisé du rôle webapp (version + isolation Redis sans port publié)
+- name: Tester le rôle webapp
+  hosts: web
+  become: true
+  roles:
+    - webapp
+
+  post_tasks:
+    - name: Interroger /api/info sur l'application déployée
+      ansible.builtin.uri:
+        url: "http://127.0.0.1:{{ webapp_port | default(8080) }}/api/info"
+        return_content: true
+      register: api_info
+      changed_when: false
+
+    - name: Inspecter le conteneur redis pour vérifier l'absence de port publié
+      community.docker.docker_container_info:
+        name: redis
+      register: redis_info
+
+    - name: Valider les assertions du rôle webapp
+      ansible.builtin.assert:
+        that:
+          - api_info.json.version == webapp_version
+          - (redis_info.container.HostConfig.PortBindings | default({})) | length == 0
+        success_msg: "✅ Rôle webapp validé sur {{ inventory_hostname }} (version={{ api_info.json.version }}, redis isolé sans port publié)."
+        fail_msg: "❌ Échec de validation du rôle webapp sur {{ inventory_hostname }}."

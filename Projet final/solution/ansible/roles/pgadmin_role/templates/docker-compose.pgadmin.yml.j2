@@ -1,0 +1,32 @@
+services:
+  {{ pgadmin_service_name }}:
+    image: dpage/pgadmin4:latest
+    container_name: {{ pgadmin_container_name }}
+    environment:
+      PGADMIN_DEFAULT_EMAIL: {{ pgadmin_email }}
+      PGADMIN_DEFAULT_PASSWORD: {{ pgadmin_password }}
+    ports:
+      - "{{ pgadmin_port }}:80"
+    volumes:
+      - {{ pgadmin_volume_name }}:/var/lib/pgadmin
+      - {{ pgadmin_deploy_dir }}/servers.json:/pgadmin4/servers.json:ro
+    networks:
+      - {{ pgadmin_network_name }}
+    restart: unless-stopped
+
+  {{ academy_service_name }}:
+    image: {{ app_image }}:{{ app_version }}
+    container_name: {{ academy_container_name }}
+    ports:
+      - "{{ academy_port }}:8080"
+    networks:
+      - {{ pgadmin_network_name }}
+    restart: unless-stopped
+
+networks:
+  {{ pgadmin_network_name }}:
+    external: true
+
+volumes:
+  {{ pgadmin_volume_name }}:
+    name: {{ pgadmin_volume_name }}

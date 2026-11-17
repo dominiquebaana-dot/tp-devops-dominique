@@ -1,0 +1,28 @@
+---
+- name: S'assurer que le réseau Docker externe existe
+  community.docker.docker_network:
+    name: "{{ pgadmin_network_name }}"
+    state: present
+
+- name: Créer le répertoire de déploiement pgAdmin + Legeni Academy
+  ansible.builtin.file:
+    path: "{{ pgadmin_deploy_dir }}"
+    state: directory
+    mode: "0755"
+
+- name: Générer le fichier servers.json de pré-configuration pgAdmin
+  ansible.builtin.template:
+    src: servers.json.j2
+    dest: "{{ pgadmin_deploy_dir }}/servers.json"
+    mode: "0644"
+
+- name: Générer le fichier docker-compose.yml de pgAdmin + Legeni Academy
+  ansible.builtin.template:
+    src: docker-compose.pgadmin.yml.j2
+    dest: "{{ pgadmin_deploy_dir }}/docker-compose.yml"
+    mode: "0644"
+
+- name: Déployer pgAdmin et le site vitrine Legeni Academy
+  community.docker.docker_compose_v2:
+    project_src: "{{ pgadmin_deploy_dir }}"
+    state: present

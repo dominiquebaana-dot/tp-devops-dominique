@@ -1,0 +1,88 @@
+---
+# TP 5.5 + Défi : WordPress avec Docker Compose, Vault et sauvegarde mariadb-dump avant redéploiement
+- name: Déployer WordPress
+  hosts: wordpress_servers
+  become: true
+  vars_files:
+    - vars/wordpress.yml          # variables non sensibles
+    - vars/wordpress_secrets.yml  # fichier chiffré avec ansible-vault
+
+  pre_tasks:
+    - name: Vérifier que les secrets sont définis (>= 12 caractères)
+      ansible.builtin.assert:
+        that:
+          - mysql_password | length >= 12
+          - mysql_root_password | length >= 12
+        fail_msg: "Mots de passe absents ou trop courts (12 caractères minimum)"
+
+  roles:
+    - docker
+
+  tasks:
+    - name: Appliquer les éventuels handlers Docker avant de démarrer WordPress
+      ansible.builtin.meta: flush_handlers
+
+    - name: Créer les dossiers de l'application et des sauvegardes
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+        mode: "0750"
+      loop:
+        - "{{ wordpress_dir }}"
+        - "{{ wordpress_dir }}/backups"
+
+    - name: Vérifier si la base WordPress tourne déjà avant sauvegarde (Défi TP 5.5)
+      community.docker.docker_container_info:
+        name: wordpress-db-1
+      register: wp_db_info
+
+    - name: Dump de la base avant redéploiement (Défi TP 5.5)
+      community.docker.docker_container_exec:
+        container: wordpress-db-1
+        command: >-
+          sh -c 'mariadb-dump -u root -p"$MARIADB_ROOT_PASSWORD" {{ mysql_database }}'
+      register: dump
+      no_log: true
+      changed_when: false
+      failed_when: false
+      when: wp_db_info.exists | default(false) and (wp_db_info.container.State.Running | default(false))
+
+    - name: Écrire la sauvegarde SQL sur l'hôte (mode 0600)
+      ansible.builtin.copy:
+        content: "{{ dump.stdout }}"
+        dest: "{{ wordpress_dir }}/backups/wordpress_{{ ansible_date_time.iso8601_basic_short }}.sql"
+        mode: "0600"
+      no_log: true
+      when: dump is defined and (dump.rc | default(1)) == 0
+
+    - name: Lister les sauvegardes SQL existantes
+      ansible.builtin.find:
+        paths: "{{ wordpress_dir }}/backups"
+        patterns: "*.sql"
+      register: backups
+
+    - name: Ne garder que les 5 sauvegardes les plus récentes
+      ansible.builtin.file:
+        path: "{{ item.path }}"
+        state: absent
+      loop: "{{ (backups.files | sort(attribute='mtime', reverse=true))[5:] }}"
+
+    - name: Générer le docker-compose.yml
+      ansible.builtin.template:
+        src: templates/wordpress-compose.yml.j2
+        dest: "{{ wordpress_dir }}/docker-compose.yml"
+        mode: "0600"            # contient des mots de passe
+
+    - name: Démarrer la stack WordPress
+      community.docker.docker_compose_v2:
+        project_src: "{{ wordpress_dir }}"
+        state: present
+
+    - name: Vérifier que WordPress répond
+      ansible.builtin.uri:
+        url: "http://127.0.0.1:{{ wordpress_port }}/wp-admin/install.php"
+        status_code: 200
+      register: wp
+      retries: 30          # MariaDB met jusqu'à 1 à 2 min à s'initialiser
+      delay: 5
+      until: wp.status == 200

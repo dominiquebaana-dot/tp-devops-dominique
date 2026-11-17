@@ -1,0 +1,4 @@
+FROM alpine:3.20
+COPY --chmod=755 wait.sh /wait.sh
+ENTRYPOINT ["/wait.sh"]
+CMD ["echo", "prêt"]

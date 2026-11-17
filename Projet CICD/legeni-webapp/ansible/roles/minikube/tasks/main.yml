@@ -1,0 +1,89 @@
+---
+- name: Vérifier si kubectl est déjà installé
+  ansible.builtin.stat:
+    path: /usr/local/bin/kubectl
+  register: kubectl_bin
+
+- name: Récupérer la dernière version stable de kubectl
+  ansible.builtin.uri:
+    url: https://dl.k8s.io/release/stable.txt
+    return_content: true
+  register: kubectl_version
+  when: not kubectl_bin.stat.exists
+
+- name: Installer le binaire kubectl
+  ansible.builtin.get_url:
+    url: "https://dl.k8s.io/release/{{ kubectl_version.content | trim }}/bin/linux/amd64/kubectl"
+    dest: /usr/local/bin/kubectl
+    mode: "0755"
+  when: not kubectl_bin.stat.exists
+
+- name: Vérifier si Minikube est déjà installé
+  ansible.builtin.stat:
+    path: /usr/local/bin/minikube
+  register: minikube_bin
+
+- name: Installer le binaire Minikube
+  ansible.builtin.get_url:
+    url: https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+    dest: /usr/local/bin/minikube
+    mode: "0755"
+  when: not minikube_bin.stat.exists
+
+- name: Adapter les ressources Minikube à la machine hôte
+  ansible.builtin.set_fact:
+    effective_minikube_cpus: "{{ minikube_cpus if (ansible_processor_vcpus | default(2) | int) >= minikube_cpus else (ansible_processor_vcpus | default(1) | int) }}"
+    effective_minikube_memory: "{{ minikube_memory if (ansible_memtotal_mb | default(8192) | int) >= 6144 else 2560 }}"
+
+- name: Mettre à jour le contexte kubectl si Minikube tourne déjà
+  become: true
+  become_user: "{{ minikube_user }}"
+  ansible.builtin.command: minikube update-context
+  register: mk_ctx
+  failed_when: false
+  changed_when: false
+
+- name: Vérifier le statut du cluster Minikube
+  become: true
+  become_user: "{{ minikube_user }}"
+  ansible.builtin.command: minikube status
+  register: mk_status
+  failed_when: false
+  changed_when: false
+
+- name: Libérer une éventuelle IP réservée sur le réseau Docker minikube avant démarrage
+  ansible.builtin.shell: |
+    JENKINS_IP=$(docker inspect jenkins -f '{{ "{{" }}with index .NetworkSettings.Networks "minikube"{{ "}}" }}{{ "{{" }}.IPAddress{{ "}}" }}{{ "{{" }}end{{ "}}" }}' 2>/dev/null || true)
+    if [ -n "$JENKINS_IP" ] && echo "$JENKINS_IP" | grep -qE '\.2$'; then
+      docker network disconnect -f minikube jenkins 2>/dev/null || true
+    fi
+  when: mk_status.rc != 0
+  changed_when: false
+
+- name: Démarrer le cluster Minikube (driver docker)
+  become: true
+  become_user: "{{ minikube_user }}"
+  ansible.builtin.command: >-
+    minikube start --driver=docker --preload=false
+    --cpus={{ effective_minikube_cpus }}
+    --memory={{ effective_minikube_memory }}
+    {{ '--force' if minikube_user == 'root' else '' }}
+  when: mk_status.rc != 0
+  changed_when: true
+
+- name: Activer les addons Minikube requis (metrics-server, ingress)
+  become: true
+  become_user: "{{ minikube_user }}"
+  ansible.builtin.command: "minikube addons enable {{ item }}"
+  loop: "{{ minikube_addons }}"
+  changed_when: false
+
+- name: Attendre que le contrôleur Ingress Nginx soit prêt (éviter l'erreur webhook)
+  become: true
+  become_user: "{{ minikube_user }}"
+  ansible.builtin.command: >-
+    kubectl wait --namespace ingress-nginx
+    --for=condition=ready pod
+    --selector=app.kubernetes.io/component=controller
+    --timeout=180s
+  changed_when: false

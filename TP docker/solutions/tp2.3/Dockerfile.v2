@@ -1,0 +1,10 @@
+FROM ubuntu:22.04
+LABEL maintainer="Legeni"
+# Une seule couche : mise à jour + installation + nettoyage du cache apt
+RUN apt-get update \
+ && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends nginx git ca-certificates \
+ && rm -rf /var/lib/apt/lists/* /var/www/html/*
+RUN git clone --depth 1 https://github.com/Legeni07/restaurant.git /var/www/html/ \
+ && rm -rf /var/www/html/.git
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]

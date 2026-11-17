@@ -1,0 +1,342 @@
+==============================================================================
+ DÉMARRAGE DU PARCOURS AUTOMATISÉ TP 2.1 : GIT EN ÉQUIPE (Tue Nov 17 16:19:54 WAT 2026)
+==============================================================================
+
+=== [ÉTAPE 1] Configuration Git globale et alias (lg + Défi undo) ===
+user.name=Dominique DevOps
+user.email=dominique@legeni.local
+init.defaultbranch=main
+pull.rebase=true
+alias.lg=log --oneline --graph --all --decorate
+alias.undo=reset --soft HEAD~1
+
+=== [ÉTAPE 2] Initialisation du dépôt (Étudiant A) et dépôt distant origin.git ===
+Initialized empty Git repository in /tmp/tp_git_demo/origin.git/
+Initialized empty Git repository in /tmp/tp_git_demo/etudiantA/.git/
+?? .dockerignore
+?? .env.example
+?? .flake8
+?? .gitignore
+?? Dockerfile
+?? Jenkinsfile
+?? app.py
+?? deploy/
+?? docker-compose.yml
+?? nginx/
+?? pytest.ini
+?? requirements-dev.txt
+?? requirements.txt
+?? tests/
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+
+[notice] A new release of pip is available: 25.0.1 -> 26.3
+[notice] To update, run: pip install --upgrade pip
+[main (root-commit) 35bb262] Application fil rouge : version initiale
+ 17 files changed, 464 insertions(+)
+ create mode 100755 .dockerignore
+ create mode 100755 .env.example
+ create mode 100755 .flake8
+ create mode 100755 .gitignore
+ create mode 100755 Dockerfile
+ create mode 100755 Jenkinsfile
+ create mode 100755 app.py
+ create mode 100755 deploy/.env.example
+ create mode 100755 deploy/docker-compose.deploy.yml
+ create mode 100755 deploy/smoke-test.sh
+ create mode 100755 docker-compose.yml
+ create mode 100755 nginx/default.conf
+ create mode 100755 pytest.ini
+ create mode 100755 requirements-dev.txt
+ create mode 100755 requirements.txt
+ create mode 100755 tests/__init__.py
+ create mode 100755 tests/test_app.py
+To /tmp/tp_git_demo/origin.git
+ * [new branch]      main -> main
+branch 'main' set up to track 'origin/main'.
+
+=== [ÉTAPE 3 & 4] Clone (Étudiant B) et branche feature/titre ===
+Cloning into '/tmp/tp_git_demo/etudiantB'...
+done.
+Switched to a new branch 'feature/titre'
+diff --git a/app.py b/app.py
+index c5e4a98..5c8c817 100755
+--- a/app.py
++++ b/app.py
+@@ -29,7 +29,7 @@ PAGE = """<!doctype html>
+   </style>
+ </head>
+ <body>
+-  <header><h1>Legeni WebApp</h1><p>Version {{ version }}</p></header>
++  <header><h1>Legeni WebApp – B3</h1><p>Version {{ version }}</p></header>
+   <main>
+     <table>
+       <tr><td>Environnement</td><td><b>{{ env }}</b></td></tr>
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+
+[notice] A new release of pip is available: 25.0.1 -> 26.3
+[notice] To update, run: pip install --upgrade pip
+[feature/titre ed7732d] Ajoute la promotion dans le titre
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+To /tmp/tp_git_demo/origin.git
+ * [new branch]      feature/titre -> feature/titre
+branch 'feature/titre' set up to track 'origin/feature/titre'.
+=== [ÉTAPE 5] Revue & Merge de la PR feature/titre sur main ===
+From /tmp/tp_git_demo/origin
+ * [new branch]      feature/titre -> origin/feature/titre
+From /tmp/tp_git_demo/origin
+ * branch            main       -> FETCH_HEAD
+Already up to date.
+Merge made by the 'ort' strategy.
+ app.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+To /tmp/tp_git_demo/origin.git
+   35bb262..d2c50ba  main -> main
+To /tmp/tp_git_demo/origin.git
+ - [deleted]         feature/titre
+
+=== [ÉTAPE 6] Création et résolution d'un conflit (feature/couleur-verte vs feature/couleur-violette) ===
+Already on 'main'
+Your branch is up to date with 'origin/main'.
+Already up to date.
+Switched to a new branch 'feature/couleur-verte'
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+
+[notice] A new release of pip is available: 25.0.1 -> 26.3
+[notice] To update, run: pip install --upgrade pip
+[feature/couleur-verte e2c8d5e] Passe la couleur par défaut au vert (#2da44e)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+To /tmp/tp_git_demo/origin.git
+ * [new branch]      feature/couleur-verte -> feature/couleur-verte
+branch 'feature/couleur-verte' set up to track 'origin/feature/couleur-verte'.
+Switched to branch 'main'
+Your branch is up to date with 'origin/main'.
+From /tmp/tp_git_demo/origin
+   35bb262..d2c50ba  main                  -> origin/main
+ * [new branch]      feature/couleur-verte -> origin/feature/couleur-verte
+Updating 35bb262..d2c50ba
+Fast-forward
+ app.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+Switched to a new branch 'feature/couleur-violette'
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+
+[notice] A new release of pip is available: 25.0.1 -> 26.3
+[notice] To update, run: pip install --upgrade pip
+[feature/couleur-violette d3b220f] Passe la couleur par défaut au violet (#8250df)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+To /tmp/tp_git_demo/origin.git
+ * [new branch]      feature/couleur-violette -> feature/couleur-violette
+branch 'feature/couleur-violette' set up to track 'origin/feature/couleur-violette'.
+Switched to branch 'main'
+Your branch is up to date with 'origin/main'.
+Merge made by the 'ort' strategy.
+ app.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+To /tmp/tp_git_demo/origin.git
+   d2c50ba..757b14c  main -> main
+To /tmp/tp_git_demo/origin.git
+ - [deleted]         feature/couleur-verte
+From /tmp/tp_git_demo/origin
+ * branch            main       -> FETCH_HEAD
+   d2c50ba..757b14c  main       -> origin/main
+Rebasing (1/1)Auto-merging app.py
+CONFLICT (content): Merge conflict in app.py
+error: could not apply d3b220f... Passe la couleur par défaut au violet (#8250df)
+hint: Resolve all conflicts manually, mark them as resolved with
+hint: "git add/rm <conflicted_files>", then run "git rebase --continue".
+hint: You can instead skip this commit: run "git rebase --skip".
+hint: To abort and get back to the state before "git rebase", run "git rebase --abort".
+Could not apply d3b220f... Passe la couleur par défaut au violet (#8250df)
+Code retour rebase (conflit attendu != 0) : 1
+UU app.py
+--- Marqueurs de conflit observés dans app.py ---
+106-        data = info()
+107-        return render_template_string(
+108-            PAGE,
+109:<<<<<<< HEAD
+110-            color=os.getenv("APP_COLOR", "#2da44e"),
+111:=======
+112-            color=os.getenv("APP_COLOR", "#8250df"),
+113:>>>>>>> d3b220f (Passe la couleur par défaut au violet (#8250df))
+114-            version=data["version"],
+115-            env=data["env"],
+116-            hostname=data["hostname"],
+[KSuccessfully rebased and updated refs/heads/feature/couleur-violette.
+--- Validation Docker --target test après résolution du conflit ---
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 1.23kB done
+#1 DONE 0.0s
+
+#2 resolve image config for docker-image://docker.io/docker/dockerfile:1
+#2 DONE 1.5s
+
+#3 docker-image://docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e
+#3 resolve docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e 0.0s done
+#3 CACHED
+
+#4 [internal] load metadata for docker.io/library/python:3.12-slim
+#4 DONE 1.2s
+
+#5 [internal] load .dockerignore
+#5 transferring context: 143B done
+#5 DONE 0.0s
+
+#6 [base 1/4] FROM docker.io/library/python:3.12-slim@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b
+#6 resolve docker.io/library/python:3.12-slim@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b 0.0s done
+#6 DONE 0.0s
+
+#7 [internal] load build context
+#7 transferring context: 9.62kB done
+#7 DONE 0.0s
+
+#8 [base 2/4] WORKDIR /app
+#8 CACHED
+
+#9 [base 3/4] COPY requirements.txt .
+#9 CACHED
+
+#10 [base 4/4] RUN pip install --no-cache-dir -r requirements.txt
+#10 CACHED
+
+#11 [test 1/4] COPY requirements-dev.txt .
+#11 DONE 0.0s
+
+#12 [test 2/4] RUN pip install --no-cache-dir -r requirements-dev.txt
+#12 2.199 Collecting pytest==8.3.4 (from -r requirements-dev.txt (line 1))
+#12 3.104   Downloading pytest-8.3.4-py3-none-any.whl.metadata (7.5 kB)
+#12 3.280 Collecting pytest-cov==6.0.0 (from -r requirements-dev.txt (line 2))
+#12 3.477   Downloading pytest_cov-6.0.0-py3-none-any.whl.metadata (27 kB)
+#12 3.733 Collecting flake8==7.1.1 (from -r requirements-dev.txt (line 3))
+#12 3.919   Downloading flake8-7.1.1-py2.py3-none-any.whl.metadata (3.8 kB)
+#12 4.035 Collecting iniconfig (from pytest==8.3.4->-r requirements-dev.txt (line 1))
+#12 4.233   Downloading iniconfig-2.3.1-py3-none-any.whl.metadata (2.8 kB)
+#12 4.253 Requirement already satisfied: packaging in /usr/local/lib/python3.12/site-packages (from pytest==8.3.4->-r requirements-dev.txt (line 1)) (26.3)
+#12 4.367 Collecting pluggy<2,>=1.5 (from pytest==8.3.4->-r requirements-dev.txt (line 1))
+#12 4.556   Downloading pluggy-1.7.0-py3-none-any.whl.metadata (5.0 kB)
+#12 5.475 Collecting coverage>=7.5 (from coverage[toml]>=7.5->pytest-cov==6.0.0->-r requirements-dev.txt (line 2))
+#12 5.664   Downloading coverage-7.17.3-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (8.3 kB)
+#12 5.778 Collecting mccabe<0.8.0,>=0.7.0 (from flake8==7.1.1->-r requirements-dev.txt (line 3))
+#12 5.968   Downloading mccabe-0.7.0-py2.py3-none-any.whl.metadata (5.0 kB)
+#12 6.083 Collecting pycodestyle<2.13.0,>=2.12.0 (from flake8==7.1.1->-r requirements-dev.txt (line 3))
+#12 6.349   Downloading pycodestyle-2.12.1-py2.py3-none-any.whl.metadata (4.5 kB)
+#12 6.489 Collecting pyflakes<3.3.0,>=3.2.0 (from flake8==7.1.1->-r requirements-dev.txt (line 3))
+#12 6.664   Downloading pyflakes-3.2.0-py2.py3-none-any.whl.metadata (3.5 kB)
+#12 6.856 Downloading pytest-8.3.4-py3-none-any.whl (343 kB)
+#12 7.608 Downloading pytest_cov-6.0.0-py3-none-any.whl (22 kB)
+#12 7.797 Downloading flake8-7.1.1-py2.py3-none-any.whl (57 kB)
+#12 8.074 Downloading coverage-7.17.3-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (264 kB)
+#12 8.360 Downloading mccabe-0.7.0-py2.py3-none-any.whl (7.3 kB)
+#12 8.541 Downloading pluggy-1.7.0-py3-none-any.whl (27 kB)
+#12 8.738 Downloading pycodestyle-2.12.1-py2.py3-none-any.whl (31 kB)
+#12 8.930 Downloading pyflakes-3.2.0-py2.py3-none-any.whl (62 kB)
+#12 9.132 Downloading iniconfig-2.3.1-py3-none-any.whl (7.6 kB)
+#12 9.193 Installing collected packages: pyflakes, pycodestyle, pluggy, mccabe, iniconfig, coverage, pytest, flake8, pytest-cov
+#12 10.12 Successfully installed coverage-7.17.3 flake8-7.1.1 iniconfig-2.3.1 mccabe-0.7.0 pluggy-1.7.0 pycodestyle-2.12.1 pyflakes-3.2.0 pytest-8.3.4 pytest-cov-6.0.0
+#12 10.12 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+#12 11.69 
+#12 11.69 [notice] A new release of pip is available: 25.0.1 -> 26.3
+#12 11.69 [notice] To update, run: pip install --upgrade pip
+#12 DONE 11.9s
+
+#13 [test 3/4] COPY . .
+#13 DONE 0.1s
+
+#14 [test 4/4] RUN flake8 . && pytest -q
+#14 1.958 ......                                                                   [100%]
+#14 1.986 6 passed in 0.27s
+#14 DONE 2.1s
+
+#15 exporting to image
+#15 exporting layers
+#15 exporting layers 1.0s done
+#15 exporting manifest sha256:89a3961eae47c76a0d5f17f7b021c234cec56a241217af4203025f832b5f6939 0.0s done
+#15 exporting config sha256:1987dc093d2475d67a4df8f77d1bcf3db054f4c489bc40f7a9ceed0544fb4ef0 0.0s done
+#15 exporting attestation manifest sha256:7797c8b384b526f96396a7e7401d0fac3fa14cc4501bc7a0c7a9ec11e25df47c 0.1s done
+#15 exporting manifest list sha256:d4630d6176eba8224194a2fdf2591df1cb7b0d038d9d1e8d27c603b022b5cf92
+#15 exporting manifest list sha256:d4630d6176eba8224194a2fdf2591df1cb7b0d038d9d1e8d27c603b022b5cf92 0.0s done
+#15 naming to docker.io/library/legeni-webapp:tp21-test done
+#15 unpacking to docker.io/library/legeni-webapp:tp21-test
+#15 unpacking to docker.io/library/legeni-webapp:tp21-test 0.5s done
+#15 DONE 1.7s
+To /tmp/tp_git_demo/origin.git
+ + d3b220f...757b14c feature/couleur-violette -> feature/couleur-violette (forced update)
+Already on 'main'
+Your branch is up to date with 'origin/main'.
+From /tmp/tp_git_demo/origin
+ * [new branch]      feature/couleur-violette -> origin/feature/couleur-violette
+Already up to date.
+Already up to date.
+Everything up-to-date
+To /tmp/tp_git_demo/origin.git
+ - [deleted]         feature/couleur-violette
+
+=== [ÉTAPE 7] Annulation propre d'un commit partagé (git revert) ===
+Already on 'main'
+Your branch is up to date with 'origin/main'.
+Already up to date.
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+
+[notice] A new release of pip is available: 25.0.1 -> 26.3
+[notice] To update, run: pip install --upgrade pip
+[main 3aea14b] Erreur volontaire
+ 1 file changed, 1 insertion(+)
+To /tmp/tp_git_demo/origin.git
+   757b14c..3aea14b  main -> main
+[main b421370] Revert "Erreur volontaire"
+ Date: Tue Nov 17 16:21:13 2026 +0100
+ 1 file changed, 1 deletion(-)
+To /tmp/tp_git_demo/origin.git
+   3aea14b..b421370  main -> main
+
+=== [ÉTAPE 8] Création et push du tag annoté v1.0.0 ===
+To /tmp/tp_git_demo/origin.git
+ * [new tag]         v1.0.0 -> v1.0.0
+
+=== [ÉTAPE 9] Test de protection de la branche main ===
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+
+[notice] A new release of pip is available: 25.0.1 -> 26.3
+[notice] To update, run: pip install --upgrade pip
+[main 30fa01d] Test push direct sur main protégée
+ 1 file changed, 1 insertion(+)
+ create mode 100644 README_TEMP.txt
+remote: ❌ [Protection main] Push direct sur 'main' refusé : passez par une Pull Request !        
+To /tmp/tp_git_demo/origin.git
+ ! [remote rejected] main -> main (pre-receive hook declined)
+error: failed to push some refs to '/tmp/tp_git_demo/origin.git'
+Code retour push direct sur main (refus attendu != 0) : 1
+
+=== [DÉFI 1] Test de l'alias 'git undo' (annule le commit local non poussé) ===
+A  README_TEMP.txt
+
+=== [DÉFI 2] Test du hook pre-commit flake8 (rejet d'une erreur E501 / syntaxe) ===
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+
+[notice] A new release of pip is available: 25.0.1 -> 26.3
+[notice] To update, run: pip install --upgrade pip
+./app.py:140:5: F821 undefined name 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+./app.py:140:101: E501 line too long (134 > 100 characters)
+flake8 a trouvé des erreurs : commit refusé
+Code retour commit invalide (refus attendu != 0) : 1
+
+=== [VÉRIFICATION FINALE TP 2.1] ===
+Nombre de commits sur main : 7
+Tags présents : v1.0.0
+* b421370 (HEAD -> main, tag: v1.0.0, origin/main) Revert "Erreur volontaire"
+* 3aea14b Erreur volontaire
+*   757b14c Merge pull request #2: feature/couleur-verte
+|\  
+| * e2c8d5e (feature/couleur-verte) Passe la couleur par défaut au vert (#2da44e)
+|/  
+*   d2c50ba Merge pull request #1: feature/titre (approuvée par Étudiant A)
+|\  
+| * ed7732d Ajoute la promotion dans le titre
+|/  
+* 35bb262 Application fil rouge : version initiale
+
+==============================================================================
+ TP 2.1 (GIT EN ÉQUIPE) EXÉCUTÉ ET VALIDÉ AVEC SUCCÈS !
+ Traces : /home/win11_pro/Dominique/TP git/logs_execution_tp_git.txt
+==============================================================================

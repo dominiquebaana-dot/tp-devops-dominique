@@ -1,0 +1,543 @@
+==============================================================================
+ DÉMARRAGE DU PARCOURS AUTOMATISÉ TP KUBERNETES (Tue Nov 17 18:43:28 WAT 2026)
+==============================================================================
+
+=== [TP 4.1] Installation de kubectl et Minikube, démarrage du cluster et addons ===
+* minikube v1.39.0 on Ubuntu 24.04 (kvm/amd64)
+* Using the docker driver based on existing profile
+* Starting "minikube" primary control-plane node in "minikube" cluster
+* Pulling base image v0.0.51 ...
+* Preparing Kubernetes v1.37.0 on containerd 2.3.4 ...
+* Verifying Kubernetes components...
+  - Using image gcr.io/k8s-minikube/storage-provisioner:v5
+  - Using image registry.k8s.io/metrics-server/metrics-server:v0.9.0
+  - Using image registry.k8s.io/ingress-nginx/kube-webhook-certgen:v1.6.9
+  - Using image registry.k8s.io/ingress-nginx/kube-webhook-certgen:v1.6.9
+  - Using image registry.k8s.io/ingress-nginx/controller:v1.15.1
+* Verifying ingress addon...
+* Enabled addons: storage-provisioner, metrics-server, default-storageclass, ingress
+* Done! kubectl is now configured to use "minikube" cluster and "default" namespace by default
+* metrics-server is an addon maintained by Kubernetes. For any concerns contact minikube on GitHub.
+You can view the list of minikube maintainers at: https://github.com/kubernetes/minikube/blob/master/OWNERS
+  - Using image registry.k8s.io/metrics-server/metrics-server:v0.9.0
+* The 'metrics-server' addon is enabled
+* ingress is an addon maintained by Kubernetes. For any concerns contact minikube on GitHub.
+You can view the list of minikube maintainers at: https://github.com/kubernetes/minikube/blob/master/OWNERS
+  - Using image registry.k8s.io/ingress-nginx/controller:v1.15.1
+  - Using image registry.k8s.io/ingress-nginx/kube-webhook-certgen:v1.6.9
+  - Using image registry.k8s.io/ingress-nginx/kube-webhook-certgen:v1.6.9
+* Verifying ingress addon...
+* The 'ingress' addon is enabled
+* dashboard is an addon maintained by Kubernetes. For any concerns contact minikube on GitHub.
+You can view the list of minikube maintainers at: https://github.com/kubernetes/minikube/blob/master/OWNERS
+  - Using image docker.io/kubernetesui/dashboard:v2.7.0
+  - Using image docker.io/kubernetesui/metrics-scraper:v1.0.8
+* Some dashboard features require the metrics-server addon. To enable all features please run:
+
+	minikube addons enable metrics-server
+
+* The 'dashboard' addon is enabled
+Attente que le contrôleur Ingress Nginx soit prêt...
+pod/ingress-nginx-controller-d7cd8c989-gbbmb condition met
+pod/metrics-server-768f9f6999-m5bxf condition met
+NAME       STATUS   ROLES           AGE     VERSION   INTERNAL-IP    EXTERNAL-IP   OS-IMAGE                         KERNEL-VERSION                             CONTAINER-RUNTIME
+minikube   Ready    control-plane   3h34m   v1.37.0   192.168.49.2   <none>        Debian GNU/Linux 12 (bookworm)   6.6.87.2-microsoft-standard-WSL2 (amd64)   containerd://2.3.4
+NAME                               READY   STATUS    RESTARTS       AGE
+coredns-559f6c778d-tq9bx           1/1     Running   3 (118s ago)   3h33m
+etcd-minikube                      1/1     Running   3 (118s ago)   3h34m
+kindnet-v52t2                      1/1     Running   3 (118s ago)   3h33m
+kube-apiserver-minikube            1/1     Running   3 (118s ago)   3h34m
+kube-controller-manager-minikube   1/1     Running   3 (118s ago)   3h34m
+kube-proxy-f45p5                   1/1     Running   3 (118s ago)   3h33m
+kube-scheduler-minikube            1/1     Running   3 (118s ago)   3h34m
+metrics-server-768f9f6999-m5bxf    1/1     Running   5 (73s ago)    3h33m
+storage-provisioner                1/1     Running   7 (75s ago)    3h34m
+error: Metrics API not available
+--- Chargement des images legeni-webapp:1.0.0 et 2.0.0 dans Minikube ---
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 1.23kB done
+#1 DONE 0.0s
+
+#2 resolve image config for docker-image://docker.io/docker/dockerfile:1
+#2 DONE 0.9s
+
+#3 docker-image://docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e
+#3 resolve docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e 0.0s done
+#3 CACHED
+
+#4 [internal] load metadata for docker.io/library/python:3.12-slim
+#4 DONE 0.9s
+
+#5 [internal] load .dockerignore
+#5 transferring context: 143B done
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 63B done
+#6 DONE 0.0s
+
+#7 [base 1/4] FROM docker.io/library/python:3.12-slim@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b
+#7 resolve docker.io/library/python:3.12-slim@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b 0.0s done
+#7 DONE 0.1s
+
+#8 [base 3/4] COPY requirements.txt .
+#8 CACHED
+
+#9 [base 4/4] RUN pip install --no-cache-dir -r requirements.txt
+#9 CACHED
+
+#10 [runtime 1/2] RUN useradd --create-home --uid 10001 appuser
+#10 CACHED
+
+#11 [base 2/4] WORKDIR /app
+#11 CACHED
+
+#12 [runtime 2/2] COPY app.py .
+#12 CACHED
+
+#13 exporting to image
+#13 exporting layers done
+#13 exporting manifest sha256:552ff2a7eb9c3b6c6ff5328d572775d17f1742b45bcd5e55496c00950f32698a done
+#13 exporting config sha256:37b828f0f7a6124972d5c6bd64f9749a4fe724658930dbff692b196110ad3c05 done
+#13 exporting attestation manifest sha256:2ef339b713ffbf383f6e7dc3e7dd052ae6da339f512df1c15013ee79169c58a1 0.1s done
+#13 exporting manifest list sha256:067b70f448fdafa977c8e38b799957d2007f7a9e33671e79f3c1906b4e5cca69
+#13 exporting manifest list sha256:067b70f448fdafa977c8e38b799957d2007f7a9e33671e79f3c1906b4e5cca69 0.0s done
+#13 naming to docker.io/library/legeni-webapp:1.0.0 done
+#13 unpacking to docker.io/library/legeni-webapp:1.0.0 0.0s done
+#13 DONE 0.3s
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 1.23kB done
+#1 DONE 0.0s
+
+#2 resolve image config for docker-image://docker.io/docker/dockerfile:1
+#2 DONE 0.8s
+
+#3 docker-image://docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e
+#3 resolve docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e 0.1s done
+#3 DONE 0.1s
+
+#3 docker-image://docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e
+#3 CACHED
+
+#4 [internal] load metadata for docker.io/library/python:3.12-slim
+#4 DONE 0.3s
+
+#5 [internal] load .dockerignore
+#5 transferring context: 143B done
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 63B done
+#6 DONE 0.0s
+
+#7 [base 1/4] FROM docker.io/library/python:3.12-slim@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b
+#7 resolve docker.io/library/python:3.12-slim@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b 0.1s done
+#7 DONE 0.1s
+
+#8 [base 2/4] WORKDIR /app
+#8 CACHED
+
+#9 [base 4/4] RUN pip install --no-cache-dir -r requirements.txt
+#9 CACHED
+
+#10 [base 3/4] COPY requirements.txt .
+#10 CACHED
+
+#11 [runtime 1/2] RUN useradd --create-home --uid 10001 appuser
+#11 CACHED
+
+#12 [runtime 2/2] COPY app.py .
+#12 CACHED
+
+#13 exporting to image
+#13 exporting layers done
+#13 exporting manifest sha256:8d2658662206b21fd6a62e9b626b318519ea97ed66c61810b3447daf11516d6e done
+#13 exporting config sha256:0a411fb5152dc131ba2110206d996e0d77bd57e8d17c7175182564aa2bbb543a done
+#13 exporting attestation manifest sha256:8f0c085cb1eba4264647e79fce1bf51b063e12e8a8014ed6dd89c11237cdebd9 0.1s done
+#13 exporting manifest list sha256:2028e4d10144bc10b293034ce8faf33b05bc9aa85463f49f77d7b53bdffb2818
+#13 exporting manifest list sha256:2028e4d10144bc10b293034ce8faf33b05bc9aa85463f49f77d7b53bdffb2818 0.0s done
+#13 naming to docker.io/library/legeni-webapp:2.0.0 done
+#13 unpacking to docker.io/library/legeni-webapp:2.0.0 0.0s done
+#13 DONE 0.2s
+
+=== [TP 4.2] Déploiement des Pods (my-pod, web-sidecar et Défi redis) ===
+pod/my-pod created
+pod/web-sidecar created
+pod/redis created
+pod/my-pod condition met
+pod/web-sidecar condition met
+pod/redis condition met
+NAME          READY   STATUS    RESTARTS   AGE   IP            NODE       NOMINATED NODE   READINESS GATES
+my-pod        1/1     Running   0          2s    10.244.0.13   minikube   <none>           <none>
+redis         1/1     Running   0          1s    10.244.0.15   minikube   <none>           <none>
+web-sidecar   2/2     Running   0          2s    10.244.0.14   minikube   <none>           <none>
+PONG
+pod "my-pod" deleted from default namespace
+pod "web-sidecar" deleted from default namespace
+pod "redis" deleted from default namespace
+
+=== [TP 4.3] Deployment, Auto-réparation, Service et Défi http-echo ===
+deployment.apps/my-deployment created
+service/my-service created
+deployment.apps/echo created
+service/echo created
+Waiting for deployment "my-deployment" rollout to finish: 0 of 3 updated replicas are available...
+Waiting for deployment "my-deployment" rollout to finish: 1 of 3 updated replicas are available...
+Waiting for deployment "my-deployment" rollout to finish: 2 of 3 updated replicas are available...
+deployment "my-deployment" successfully rolled out
+deployment "echo" successfully rolled out
+NAME                            READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/echo            2/2     2            2           6s
+deployment.apps/my-deployment   3/3     3            3           7s
+
+NAME                                       DESIRED   CURRENT   READY   AGE
+replicaset.apps/echo-cfcdfb6bc             2         2         2       6s
+replicaset.apps/my-deployment-7cd6b456c4   3         3         3       7s
+
+NAME                                 READY   STATUS    RESTARTS   AGE
+pod/echo-cfcdfb6bc-7gfzd             1/1     Running   0          6s
+pod/echo-cfcdfb6bc-c7b28             1/1     Running   0          6s
+pod/my-deployment-7cd6b456c4-cflsq   1/1     Running   0          7s
+pod/my-deployment-7cd6b456c4-nnhzs   1/1     Running   0          7s
+pod/my-deployment-7cd6b456c4-wbgpx   1/1     Running   0          7s
+
+NAME                 TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
+service/echo         ClusterIP   10.110.222.91   <none>        80/TCP         6s
+service/kubernetes   ClusterIP   10.96.0.1       <none>        443/TCP        3h35m
+service/my-service   NodePort    10.99.206.202   <none>        80:30080/TCP   7s
+deployment.apps "my-deployment" deleted from default namespace
+service "my-service" deleted from default namespace
+deployment.apps "echo" deleted from default namespace
+service "echo" deleted from default namespace
+
+=== [TP 4.4] Application fil rouge (port 8180) + Défi seconde instance webapp-prod ===
+deployment.apps/webapp-deployment created
+service/webapp-service created
+deployment.apps/webapp-prod created
+service/webapp-prod created
+Waiting for deployment "webapp-deployment" rollout to finish: 0 of 2 updated replicas are available...
+Waiting for deployment "webapp-deployment" rollout to finish: 1 of 2 updated replicas are available...
+deployment "webapp-deployment" successfully rolled out
+deployment "webapp-prod" successfully rolled out
+NAME                                READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/webapp-deployment   2/2     2            2           6s
+deployment.apps/webapp-prod         3/3     3            3           6s
+
+NAME                                     READY   STATUS    RESTARTS   AGE
+pod/webapp-deployment-64445f969c-rrxkq   1/1     Running   0          6s
+pod/webapp-deployment-64445f969c-vf8r8   1/1     Running   0          6s
+pod/webapp-prod-7d855c774f-8rh5v         1/1     Running   0          6s
+pod/webapp-prod-7d855c774f-fjxn4         1/1     Running   0          6s
+pod/webapp-prod-7d855c774f-kvm4v         1/1     Running   0          6s
+{"app":"legeni-webapp","env":"k8s-dev","hostname":"webapp-deployment-64445f969c-rrxkq","version":"1.0.0"}
+
+{"app":"legeni-webapp","env":"prod","hostname":"webapp-prod-7d855c774f-kvm4v","version":"1.0.0"}
+
+deployment.apps "webapp-deployment" deleted from default namespace
+service "webapp-service" deleted from default namespace
+deployment.apps "webapp-prod" deleted from default namespace
+service "webapp-prod" deleted from default namespace
+
+=== [TP 4.5] Stack WordPress + MySQL + PVC + Secret + Défi phpMyAdmin ===
+namespace/wordpress created
+secret/mysql-pass created
+namespace/wordpress configured
+persistentvolumeclaim/mysql-pv-claim created
+deployment.apps/mysql created
+service/mysql created
+deployment.apps/wordpress created
+service/wordpress-service created
+deployment.apps/phpmyadmin created
+deployment "mysql" successfully rolled out
+deployment "wordpress" successfully rolled out
+deployment "phpmyadmin" successfully rolled out
+NAME                                   STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
+persistentvolumeclaim/mysql-pv-claim   Bound    pvc-cae0cd5e-048d-4a10-a7d2-5c49d8075f3a   2Gi        RWO            standard       <unset>                 4s
+
+NAME                         READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/mysql        1/1     1            1           4s
+deployment.apps/phpmyadmin   1/1     1            1           4s
+deployment.apps/wordpress    1/1     1            1           4s
+
+NAME                        TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)        AGE
+service/mysql               ClusterIP   None         <none>        3306/TCP       4s
+service/wordpress-service   NodePort    10.96.8.21   <none>        80:32236/TCP   4s
+namespace "wordpress" deleted
+
+=== [TP 4.6] Jobs (succès & échec), CronJobs, DaemonSet, initContainer & Défi Migration ===
+namespace/batch created
+deployment.apps/webapp created
+service/webapp created
+job.batch/calcul-pi created
+job.batch/traitement-lots created
+cronjob.batch/controle-sante created
+persistentvolumeclaim/sauvegardes created
+cronjob.batch/sauvegarde created
+daemonset.apps/agent-noeud created
+deployment.apps/webapp-redis created
+job.batch/migration-compteur created
+Waiting for deployment "webapp" rollout to finish: 0 of 1 updated replicas are available...
+deployment "webapp" successfully rolled out
+job.batch/migration-ratee created
+job.batch/migration-ratee condition met
+job.batch "migration-ratee" deleted from batch namespace
+job.batch/calcul-pi condition met
+3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679821480865132823066
+...
+job.batch/traitement-lots condition met
+--- Test manuel des CronJobs controle-sante et sauvegarde (http://webapp prêt) ---
+job.batch/controle-manuel created
+job.batch/controle-manuel condition met
+Tue Nov 17 17:49:07 UTC 2026
+{"status":"ok"}
+ -> OK
+job.batch/sauvegarde-manuel created
+job.batch/sauvegarde-manuel condition met
+Sauvegarde : /backup/info-20261117-1749.json
+total 4
+-rw-r--r--    1 root     root            91 Nov 17 17:49 info-20261117-1749.json
+--- Déblocage de l'initContainer et complétion du Job migration-compteur ---
+deployment.apps/redis created
+service/redis created
+job.batch/migration-compteur condition met
+deployment "webapp-redis" successfully rolled out
+1000
+NAME                                STATUS     COMPLETIONS   DURATION   AGE
+job.batch/calcul-pi                 Complete   1/1           8s         63s
+job.batch/controle-manuel           Complete   1/1           4s         17s
+job.batch/controle-sante-29915629   Complete   1/1           4s         22s
+job.batch/migration-compteur        Complete   1/1           61s        62s
+job.batch/sauvegarde-manuel         Complete   1/1           3s         12s
+job.batch/traitement-lots           Complete   6/6           21s        63s
+
+NAME                           SCHEDULE      TIMEZONE   SUSPEND   ACTIVE   LAST SCHEDULE   AGE
+cronjob.batch/controle-sante   */1 * * * *   <none>     False     0        23s             63s
+cronjob.batch/sauvegarde       */2 * * * *   <none>     False     0        <none>          63s
+
+NAME                         DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR   AGE
+daemonset.apps/agent-noeud   1         1         1       1            1           <none>          63s
+
+NAME                                READY   STATUS      RESTARTS     AGE
+pod/agent-noeud-cw6jn               1/1     Running     0            62s
+pod/calcul-pi-vzz2g                 0/1     Completed   0            63s
+pod/controle-manuel-c7g57           0/1     Completed   0            17s
+pod/controle-sante-29915629-28bpb   0/1     Completed   0            22s
+pod/migration-compteur-8vqrn        0/1     Completed   0            62s
+pod/redis-5db996c44d-qs4rg          1/1     Running     0            8s
+pod/sauvegarde-manuel-tn8cq         0/1     Completed   0            12s
+pod/traitement-lots-0-zshq4         0/1     Completed   0            63s
+pod/traitement-lots-1-g4wj4         0/1     Completed   0            63s
+pod/traitement-lots-2-qbcxl         0/1     Completed   0            55s
+pod/traitement-lots-3-qgzh9         0/1     Completed   0            55s
+pod/traitement-lots-4-snnjz         0/1     Completed   0            48s
+pod/traitement-lots-5-9tsb6         0/1     Completed   0            48s
+pod/webapp-78dbbc75b5-w7xdt         1/1     Running     0            63s
+pod/webapp-redis-cb6fbc9b5-cqw7k    0/1     Error       1 (2s ago)   62s
+namespace "batch" deleted
+
+=== [TP 4.7 à 4.11] Stack complète legeni-dev (StatefulSet Redis, Probes, HPA, Ingress TLS) ===
+namespace/legeni-dev created
+namespace/legeni-dev labeled
+secret/redis-secret created
+secret/redis-secret labeled
+secret/legeni-tls created
+secret/legeni-tls labeled
+namespace/legeni-dev configured
+configmap/webapp-config created
+statefulset.apps/redis created
+service/redis created
+deployment.apps/webapp created
+service/webapp created
+horizontalpodautoscaler.autoscaling/webapp created
+ingress.networking.k8s.io/legeni created
+Waiting for 1 pods to be ready...
+partitioned roll out complete: 1 new pods have been updated...
+Waiting for deployment "webapp" rollout to finish: 0 of 2 updated replicas are available...
+Waiting for deployment "webapp" rollout to finish: 1 of 2 updated replicas are available...
+deployment "webapp" successfully rolled out
+--- TP 4.8 : Rolling Update 1.0.0 -> 2.0.0 & Rollback sur image :9.9.9 ---
+deployment.apps/webapp image updated
+Waiting for deployment "webapp" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "webapp" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "webapp" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "webapp" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "webapp" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "webapp" rollout to finish: 1 old replicas are pending termination...
+deployment "webapp" successfully rolled out
+deployment.apps/webapp image updated
+Warning: resource deployments/webapp was previously managed with 'kubectl apply'. Rolling back will not update the kubectl.kubernetes.io/last-applied-configuration annotation, which may cause unexpected behavior on future 'kubectl apply' operations. Consider using 'kubectl apply' with your previous configuration file instead.
+deployment.apps/webapp rolled back
+deployment "webapp" successfully rolled out
+deployment.apps/webapp 
+REVISION  CHANGE-CAUSE
+1         <none>
+3         <none>
+4         <none>
+
+--- TP 4.9 : OOMKilled (oom.yaml) & ResourceQuota (quota-dev.yaml) ---
+pod/oom created
+OOMKilled
+pod "oom" deleted from legeni-dev namespace
+resourcequota/quota-dev created
+NAME        REQUEST                                                        LIMIT                                          AGE
+quota-dev   pods: 3/10, requests.cpu: 150m/1, requests.memory: 160Mi/1Gi   limits.cpu: 600m/2, limits.memory: 384Mi/2Gi   0s
+resourcequota "quota-dev" deleted from legeni-dev namespace
+--- TP 4.10 : PV/PVC statique (pv-manuel.yaml) & Défi WordPress StatefulSet ---
+persistentvolume/pv-manuel created
+persistentvolumeclaim/pvc-manuel created
+NAME        CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                   STORAGECLASS   VOLUMEATTRIBUTESCLASS   REASON   AGE
+pv-manuel   1Gi        RWO            Retain           Bound    legeni-dev/pvc-manuel   manuel         <unset>                          0s
+NAME         STATUS   VOLUME      CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
+pvc-manuel   Bound    pv-manuel   1Gi        RWO            manuel         <unset>                 1s
+persistentvolume "pv-manuel" deleted
+persistentvolumeclaim "pvc-manuel" deleted from legeni-dev namespace
+--- TP 4.11 : Vérification Ingress TLS https://legeni.local/api/info ---
+{"app":"legeni-webapp","env":"dev","hostname":"webapp-6874c5fddf-ljqjr","version":"2.0.0"}
+
+NAME      CPU(cores)   MEMORY(bytes)   
+redis-0   27m          3Mi             
+NAME                          READY   STATUS    RESTARTS   AGE
+pod/redis-0                   1/1     Running   0          82s
+pod/webapp-6874c5fddf-ljqjr   1/1     Running   0          61s
+pod/webapp-6874c5fddf-t6g84   1/1     Running   0          44s
+
+NAME             TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
+service/redis    ClusterIP   10.98.203.89    <none>        6379/TCP       82s
+service/webapp   NodePort    10.110.103.53   <none>        80:30080/TCP   82s
+
+NAME                     READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/webapp   2/2     2            2           82s
+
+NAME                                DESIRED   CURRENT   READY   AGE
+replicaset.apps/webapp-67dcf7db64   0         0         0       82s
+replicaset.apps/webapp-6874c5fddf   2         2         2       61s
+replicaset.apps/webapp-864779d4b8   0         0         0       25s
+
+NAME                     READY   AGE
+statefulset.apps/redis   1/1     82s
+
+NAME                                         REFERENCE           TARGETS              MINPODS   MAXPODS   REPLICAS   AGE
+horizontalpodautoscaler.autoscaling/webapp   Deployment/webapp   cpu: <unknown>/50%   2         8         2          82s
+
+NAME                                 STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
+persistentvolumeclaim/data-redis-0   Bound    pvc-85bf72e6-3fbf-42b7-9688-5ff9e6ecaab6   1Gi        RWO            standard       <unset>                 82s
+
+NAME                               CLASS   HOSTS          ADDRESS        PORTS     AGE
+ingress.networking.k8s.io/legeni   nginx   legeni.local   192.168.49.2   80, 443   82s
+namespace "legeni-dev" deleted
+--- Défi TP 4.10 + TP 4.11 : WordPress StatefulSet + PVC + blog-ingress.yaml ---
+namespace/wordpress-sts created
+secret/mysql-pass created
+namespace/wordpress-sts configured
+service/mysql created
+statefulset.apps/mysql created
+persistentvolumeclaim/wp-html-pvc created
+deployment.apps/wordpress created
+service/wordpress-service created
+ingress.networking.k8s.io/blog created
+partitioned roll out complete: 1 new pods have been updated...
+deployment "wordpress" successfully rolled out
+NAME                     READY   AGE
+statefulset.apps/mysql   1/1     3s
+
+NAME                                       STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
+persistentvolumeclaim/mysql-data-mysql-0   Bound    pvc-3e57dbf6-5b53-4c8f-afef-92f7cec6dab4   2Gi        RWO            standard       <unset>                 3s
+persistentvolumeclaim/wp-html-pvc          Bound    pvc-069f2eb8-dade-4f49-a592-db2439bc4a26   1Gi        RWO            standard       <unset>                 3s
+
+NAME                             CLASS   HOSTS               ADDRESS   PORTS   AGE
+ingress.networking.k8s.io/blog   nginx   blog.legeni.local             80      2s
+namespace "wordpress-sts" deleted
+
+=== [TP 4.12] Kustomize : Validation et déploiement réel des overlays staging, prod et dev ===
+Overlay staging valide !
+Overlay prod valide !
+Overlay dev (Défi) valide !
+namespace/legeni-staging created
+secret/redis-secret created
+namespace/legeni-prod created
+secret/redis-secret created
+namespace/legeni-dev-kustomize created
+secret/redis-secret created
+configmap/webapp-config-thhbmh54h2 created
+service/redis created
+service/webapp created
+deployment.apps/webapp created
+statefulset.apps/redis created
+configmap/webapp-config-t5fkchbk2t created
+service/redis created
+service/webapp created
+deployment.apps/webapp created
+statefulset.apps/redis created
+configmap/webapp-config-99t9dt497k created
+service/redis created
+service/webapp created
+deployment.apps/webapp created
+statefulset.apps/redis created
+partitioned roll out complete: 1 new pods have been updated...
+Waiting for deployment "webapp" rollout to finish: 0 of 2 updated replicas are available...
+Waiting for deployment "webapp" rollout to finish: 1 of 2 updated replicas are available...
+deployment "webapp" successfully rolled out
+{"app":"legeni-webapp","env":"staging","hostname":"webapp-7888b77dc4-6fxdm","version":"2.0.0"}
+
+partitioned roll out complete: 1 new pods have been updated...
+deployment "webapp" successfully rolled out
+{"app":"legeni-webapp","env":"prod","hostname":"webapp-5775cb9fbc-slxkn","version":"1.0.0"}
+
+partitioned roll out complete: 1 new pods have been updated...
+deployment "webapp" successfully rolled out
+{"app":"legeni-webapp","env":"dev","hostname":"webapp-6b8cc8fd65-8s9lt","version":"1.0.0"}
+
+namespace "legeni-staging" deleted
+namespace "legeni-prod" deleted
+namespace "legeni-dev-kustomize" deleted
+
+=== [TP 4.13] Dépannage : Déploiement et vérification des 6 pannes corrigées + Défi ===
+namespace/depannage created
+deployment.apps/front created
+deployment.apps/api created
+deployment.apps/web created
+service/web created
+service/app created
+deployment.apps/app created
+configmap/config-app created
+deployment.apps/conf created
+persistentvolumeclaim/data created
+pod/db created
+deployment.apps/portal-defi created
+deployment "front" successfully rolled out
+deployment "api" successfully rolled out
+deployment "web" successfully rolled out
+deployment "app" successfully rolled out
+deployment "conf" successfully rolled out
+Waiting for deployment "portal-defi" rollout to finish: 0 of 1 updated replicas are available...
+deployment "portal-defi" successfully rolled out
+pod/db condition met
+web: 200
+app: 200
+NAME                              READY   STATUS    RESTARTS   AGE
+pod/api-5fc8b48775-zpfdf          1/1     Running   0          9s
+pod/app-555b946fb7-hlqbn          1/1     Running   0          9s
+pod/conf-7488cd94b7-472gr         1/1     Running   0          9s
+pod/db                            1/1     Running   0          9s
+pod/front-654ddc6db7-5zkzf        1/1     Running   0          9s
+pod/front-654ddc6db7-f5wcf        1/1     Running   0          9s
+pod/portal-defi-f6686b77b-7j9hc   1/1     Running   0          8s
+pod/web-bd858dc99-ntcn9           1/1     Running   0          9s
+pod/web-bd858dc99-t58kn           1/1     Running   0          9s
+
+NAME          TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)   AGE
+service/app   ClusterIP   10.104.13.207   <none>        80/TCP    9s
+service/web   ClusterIP   10.103.248.45   <none>        80/TCP    9s
+
+NAME                         STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
+persistentvolumeclaim/data   Bound    pvc-e42a01d8-e71d-4041-9740-2554517f12c2   1Gi        RWO            standard       <unset>                 9s
+namespace "depannage" deleted
+
+==============================================================================
+ TOUS LES TPs KUBERNETES (4.1 À 4.13) SONT VALIDÉS AVEC SUCCÈS !
+ Compte-rendu complet : /home/win11_pro/Dominique/TP kubernetes/COMPTE_RENDU_TP_KUBERNETES.md
+==============================================================================

@@ -1,0 +1,19 @@
+---
+webapp_image: "legeni-webapp"
+webapp_version: "1.0.0"
+
+# Liste des comptes pour le Défi TP 5.3 (utilisateurs.yml)
+comptes:
+  - nom: dev1
+    groupe: developpeurs
+    etat: present
+  - nom: dev2
+    groupe: developpeurs
+    etat: present
+  - nom: ops1
+    groupe: operations
+    etat: present
+    cle: "{{ lookup('file', 'keys/id_ansible.pub') }}"
+  - nom: ancien_stagiaire
+    groupe: developpeurs
+    etat: absent

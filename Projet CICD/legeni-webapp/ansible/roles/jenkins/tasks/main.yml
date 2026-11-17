@@ -1,0 +1,70 @@
+---
+- name: Récupérer le GID du socket Docker (/var/run/docker.sock)
+  ansible.builtin.stat:
+    path: /var/run/docker.sock
+  register: docker_sock
+
+- name: Vérifier si TP_jenkins/jenkins-docker externe existe
+  ansible.builtin.stat:
+    path: "{{ playbook_dir }}/../../../TP_jenkins/jenkins-docker/docker-compose.yml"
+  register: external_jenkins_compose
+
+- name: Sélectionner le dossier jenkins-docker actif (externe ou embarqué)
+  ansible.builtin.set_fact:
+    active_jenkins_compose_dir: >-
+      {{
+        (playbook_dir ~ '/../../../TP_jenkins/jenkins-docker')
+        if external_jenkins_compose.stat.exists
+        else (role_path ~ '/files/jenkins-docker')
+      }}
+
+- name: Configurer le fichier .env avec DOCKER_GID pour Jenkins
+  ansible.builtin.copy:
+    dest: "{{ active_jenkins_compose_dir }}/.env"
+    content: "DOCKER_GID={{ docker_sock.stat.gid }}\n"
+    mode: "0644"
+
+- name: Construire et démarrer le conteneur Jenkins via Docker Compose
+  community.docker.docker_compose_v2:
+    project_src: "{{ active_jenkins_compose_dir }}"
+    build: policy
+    state: present
+  register: jenkins_compose_res
+  retries: 2
+  delay: 3
+  until: jenkins_compose_res is succeeded
+
+- name: Connecter le conteneur Jenkins au réseau Docker de Minikube avec IP fixe .50 (idempotent)
+  ansible.builtin.shell: |
+    CUR_IP=$(docker inspect "{{ jenkins_container_name }}" -f '{{ "{{" }}with index .NetworkSettings.Networks "minikube"{{ "}}" }}{{ "{{" }}.IPAddress{{ "}}" }}{{ "{{" }}end{{ "}}" }}' 2>/dev/null || true)
+    SUBNET=$(docker network inspect minikube -f '{{ "{{" }}(index .IPAM.Config 0).Subnet{{ "}}" }}' 2>/dev/null || true)
+    TARGET_IP=$(echo "$SUBNET" | sed -E 's|\.[0-9]+/[0-9]+$|.50|')
+    if [ -n "$TARGET_IP" ] && [ "$CUR_IP" != "$TARGET_IP" ]; then
+      docker network disconnect -f minikube "{{ jenkins_container_name }}" 2>/dev/null || true
+      docker network connect --ip "$TARGET_IP" minikube "{{ jenkins_container_name }}"
+      echo "CONNECTED"
+    fi
+  register: net_connect
+  changed_when: "'CONNECTED' in net_connect.stdout"
+  failed_when: false
+
+- name: Récupérer l'IP interne de Minikube sur le réseau Docker
+  become: true
+  become_user: "{{ minikube_user }}"
+  ansible.builtin.command: minikube ip
+  register: minikube_internal_ip
+  changed_when: false
+
+- name: Lire le kubeconfig aplati de Minikube
+  become: true
+  become_user: "{{ minikube_user }}"
+  ansible.builtin.command: kubectl config view --flatten --minify
+  register: kubeconfig_flat
+  changed_when: false
+
+- name: Exporter le kubeconfig aplati pour Jenkins (kubeconfig-jenkins.yml)
+  ansible.builtin.copy:
+    content: "{{ (kubeconfig_flat.stdout | regex_replace('https://(127\\.0\\.0\\.1|localhost):[0-9]+', 'https://' ~ (minikube_internal_ip.stdout | trim) ~ ':8443')) }}\n"
+    dest: "{{ playbook_dir }}/kubeconfig-jenkins.yml"
+    owner: "{{ minikube_user }}"
+    mode: "0600"

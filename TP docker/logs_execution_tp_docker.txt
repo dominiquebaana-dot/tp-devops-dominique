@@ -1,0 +1,3996 @@
+==============================================================================
+ DÉMARRAGE DU PARCOURS AUTOMATISÉ TP DOCKER (Tue Nov 17 18:28:49 WAT 2026)
+ Dossier racine : /home/win11_pro/Dominique
+ Fichier de traces : /home/win11_pro/Dominique/TP docker/logs_execution_tp_docker.txt
+==============================================================================
+
+>>> [VÉRIFICATION SYSTÈME] Contrôle de Docker Engine et Docker Compose...
+Docker version 29.4.1, build 055a478
+Docker Compose version v5.1.3
+
+==============================================================================
+ TP 2.2 : CYCLE DE VIE D'UN CONTENEUR & PREMIÈRE STACK COMPOSE
+==============================================================================
+
+Hello from Docker!
+This message shows that your installation appears to be working correctly.
+
+To generate this message, Docker took the following steps:
+ 1. The Docker client contacted the Docker daemon.
+ 2. The Docker daemon pulled the "hello-world" image from the Docker Hub.
+    (amd64)
+ 3. The Docker daemon created a new container from that image which runs the
+    executable that produces the output you are currently reading.
+ 4. The Docker daemon streamed that output to the Docker client, which sent it
+    to your terminal.
+
+To try something more ambitious, you can run an Ubuntu container with:
+ $ docker run -it ubuntu bash
+bb985027f3564ad43cc6b07dd7ec5f424e3e021a1b08e97f1cd374c93a7027c3
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+<style>
+Status=running IP=172.17.0.2
+web
+--- Validation et test de persistance Compose Odoo + PostgreSQL ---
+compose.yml Odoo valide !
+ Network odoo-compose_odoo_network Creating 
+ Network odoo-compose_odoo_network Created 
+ Volume odoo-compose_db-data Creating 
+ Volume odoo-compose_db-data Created 
+ Volume odoo-compose_odoo-data Creating 
+ Volume odoo-compose_odoo-data Created 
+ Container odoo-compose-db-1 Creating 
+ Container odoo-compose-db-1 Created 
+ Container odoo-compose-odoo-1 Creating 
+ Container odoo-compose-odoo-1 Created 
+ Container odoo-compose-db-1 Starting 
+ Container odoo-compose-db-1 Started 
+ Container odoo-compose-odoo-1 Starting 
+ Container odoo-compose-odoo-1 Started 
+NAME                  IMAGE         COMMAND                  SERVICE   CREATED         STATUS         PORTS
+odoo-compose-db-1     postgres:16   "docker-entrypoint.s…"   db        7 seconds ago   Up 6 seconds   5432/tcp
+odoo-compose-odoo-1   odoo:18.0     "/entrypoint.sh odoo"    odoo      7 seconds ago   Up 5 seconds   0.0.0.0:8069->8069/tcp, [::]:8069->8069/tcp, 8071-8072/tcp
+ Container odoo-compose-odoo-1 Stopping 
+ Container odoo-compose-odoo-1 Stopped 
+ Container odoo-compose-odoo-1 Removing 
+ Container odoo-compose-odoo-1 Removed 
+ Container odoo-compose-db-1 Stopping 
+ Container odoo-compose-db-1 Stopped 
+ Container odoo-compose-db-1 Removing 
+ Container odoo-compose-db-1 Removed 
+ Network odoo-compose_odoo_network Removing 
+ Network odoo-compose_odoo_network Removed 
+ Network odoo-compose_odoo_network Creating 
+ Network odoo-compose_odoo_network Created 
+ Container odoo-compose-db-1 Creating 
+ Container odoo-compose-db-1 Created 
+ Container odoo-compose-odoo-1 Creating 
+ Container odoo-compose-odoo-1 Created 
+ Container odoo-compose-db-1 Starting 
+ Container odoo-compose-db-1 Started 
+ Container odoo-compose-odoo-1 Starting 
+ Container odoo-compose-odoo-1 Started 
+NAME                  IMAGE         COMMAND                  SERVICE   CREATED         STATUS                  PORTS
+odoo-compose-db-1     postgres:16   "docker-entrypoint.s…"   db        2 seconds ago   Up 1 second             5432/tcp
+odoo-compose-odoo-1   odoo:18.0     "/entrypoint.sh odoo"    odoo      2 seconds ago   Up Less than a second   0.0.0.0:8069->8069/tcp, [::]:8069->8069/tcp, 8071-8072/tcp
+ Container odoo-compose-odoo-1 Stopping 
+ Container odoo-compose-odoo-1 Stopped 
+ Container odoo-compose-odoo-1 Removing 
+ Container odoo-compose-odoo-1 Removed 
+ Container odoo-compose-db-1 Stopping 
+ Container odoo-compose-db-1 Stopped 
+ Container odoo-compose-db-1 Removing 
+ Container odoo-compose-db-1 Removed 
+ Volume odoo-compose_db-data Removing 
+ Network odoo-compose_odoo_network Removing 
+ Volume odoo-compose_odoo-data Removing 
+ Volume odoo-compose_db-data Removed 
+ Volume odoo-compose_odoo-data Removed 
+ Network odoo-compose_odoo_network Removed 
+--- Exécution du Défi TP 2.2 (Redis cache) ---
+=== [TP 2.2 - Défi] Lancement de Redis (cache) ===
+ac41c2b5658144a8d6efb74f10388a388583ae2a93194f5965aa9ba90368ae6b
+=== Écriture et lecture de la clé 'cours' ===
+OK
+Valeur lue : devops
+=== Adresse IP du conteneur cache ===
+172.17.0.2
+=== Suppression du conteneur en une seule commande ===
+cache
+Défi TP 2.2 terminé avec succès.
+
+==============================================================================
+ TP 2.3 : DOCKERFILE (v1, v2, v3) & COUCHES D'IMAGES
+==============================================================================
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 327B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/ubuntu:24.04
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/5] FROM docker.io/library/ubuntu:24.04@sha256:73b999393d07f2bf65a40373778a44dc9a6d54ad7718d29247d8ff9413c4d6a8
+#4 resolve docker.io/library/ubuntu:24.04@sha256:73b999393d07f2bf65a40373778a44dc9a6d54ad7718d29247d8ff9413c4d6a8 0.0s done
+#4 DONE 0.0s
+
+#5 [3/5] RUN DEBIAN_FRONTEND=noninteractive apt-get install -y nginx git
+#5 CACHED
+
+#6 [4/5] RUN rm -Rf /var/www/html/*
+#6 CACHED
+
+#7 [2/5] RUN apt-get update
+#7 CACHED
+
+#8 [5/5] RUN git clone https://github.com/Legeni07/restaurant.git /var/www/html/
+#8 CACHED
+
+#9 exporting to image
+#9 exporting layers done
+#9 exporting manifest sha256:906c3d0c2161244a57b92b2e94dedd3b52a684800b60cb6112a12298a6558739 done
+#9 exporting config sha256:80fd9fcd8b9a0dbc1aa9d8adcc73752aa94ad777fc4c6fa62ee2ba4b5afc1e89 done
+#9 exporting attestation manifest sha256:0312f15a1c0d65a96caefa6614361676bdc8b0340e4aa5c015603d1097027b19 0.1s done
+#9 exporting manifest list sha256:e0da8c40534233d348bf9749677e9eaac084a9bca16f28df9801b5252fe2872f
+#9 exporting manifest list sha256:e0da8c40534233d348bf9749677e9eaac084a9bca16f28df9801b5252fe2872f 0.0s done
+#9 naming to docker.io/library/legeni_static_website:v1 done
+#9 unpacking to docker.io/library/legeni_static_website:v1 0.0s done
+#9 DONE 0.2s
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.v2
+#1 transferring dockerfile: 494B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/ubuntu:22.04
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/3] FROM docker.io/library/ubuntu:22.04@sha256:9abcaffc92a5279fff3a6a41635c0800ea33e528425fb389658806476e7defde
+#4 resolve docker.io/library/ubuntu:22.04@sha256:9abcaffc92a5279fff3a6a41635c0800ea33e528425fb389658806476e7defde 0.0s done
+#4 DONE 0.1s
+
+#5 [2/3] RUN apt-get update  && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends nginx git ca-certificates  && rm -rf /var/lib/apt/lists/* /var/www/html/*
+#5 CACHED
+
+#6 [3/3] RUN git clone --depth 1 https://github.com/Legeni07/restaurant.git /var/www/html/  && rm -rf /var/www/html/.git
+#6 CACHED
+
+#7 exporting to image
+#7 exporting layers done
+#7 exporting manifest sha256:ed49a5d02bca05fa014895f01a40c5671fa561671d75dd7ceabeee4613fb9b6e done
+#7 exporting config sha256:c46a61f341bcd0f63a74c3d0af4f0272555e298ba8bd0e5ed163abdfc6c5bd86 done
+#7 exporting attestation manifest sha256:71af19fdb6e7838c9e240497461e8c9eee07ea0dd1cf97677efbd3bc90717189 0.1s done
+#7 exporting manifest list sha256:9e70e4f4a169f8cce3930513378d293a62b098850075675087678a9e02935556 0.0s done
+#7 naming to docker.io/library/legeni_static_website:v2
+#7 naming to docker.io/library/legeni_static_website:v2 done
+#7 unpacking to docker.io/library/legeni_static_website:v2 0.0s done
+#7 DONE 0.2s
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.v3
+#1 transferring dockerfile: 566B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/ubuntu:22.04
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/3] FROM docker.io/library/ubuntu:22.04@sha256:9abcaffc92a5279fff3a6a41635c0800ea33e528425fb389658806476e7defde
+#4 resolve docker.io/library/ubuntu:22.04@sha256:9abcaffc92a5279fff3a6a41635c0800ea33e528425fb389658806476e7defde 0.0s done
+#4 DONE 0.0s
+
+#5 [2/3] RUN apt-get update  && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends nginx git ca-certificates  && rm -rf /var/lib/apt/lists/* /var/www/html/*
+#5 CACHED
+
+#6 [3/3] RUN git clone --depth 1 https://github.com/Legeni07/restaurant.git /var/www/html/  && rm -rf /var/www/html/.git  && sed -i "s|</body>|<p style="text-align:center">Version : v3 – $(date +%F)</p></body>|" /var/www/html/index.html
+#6 CACHED
+
+#7 exporting to image
+#7 exporting layers done
+#7 exporting manifest sha256:1bace19cff7f568eb1c75ac9beb6d33d91d023ddb8fad36ae308dab64c8941cc done
+#7 exporting config sha256:3b3950173e8c6a87c5d9d0a53fbd857a5595dc12dcb476f7def691544261836d done
+#7 exporting attestation manifest sha256:02e0176aed406db4c2ea4af7331ef5103e0ee5f2a1c451f52fb004052ed81998 0.1s done
+#7 exporting manifest list sha256:b7be8da8774df018689ea481f97f40205ce68ac75f881e05675b97bcccbad9bc
+#7 exporting manifest list sha256:b7be8da8774df018689ea481f97f40205ce68ac75f881e05675b97bcccbad9bc 0.0s done
+#7 naming to docker.io/library/legeni_static_website:v3 done
+#7 unpacking to docker.io/library/legeni_static_website:v3 0.0s done
+#7 DONE 0.2s
+--- Comparaison des tailles d'images (v1 vs v2 vs v3) ---
+WARNING: This output is designed for human readability. For machine-readable output, please use --format.
+IMAGE                      ID             DISK USAGE   CONTENT SIZE   EXTRA
+legeni_static_website:v1   e0da8c405342        356MB          102MB        
+legeni_static_website:v2   9e70e4f4a169        294MB         74.3MB        
+legeni_static_website:v3   b7be8da8774d        294MB         74.3MB        
+--- Test du Défi TP 2.3 (injection dynamique de la version v3) ---
+f74a808a9ca7f598e6150202303d7dbb372e53cb9edffcc64a8dcde26a121f28
+<p style="text-align:center">Version : v3 – 2026-11-17</p></body>
+v3
+
+==============================================================================
+ TP 2.4 : RÉSEAUX BRIDGE, VOLUMES & PERSISTANCE POSTGRESQL
+==============================================================================
+=== [TP 2.4 - Étape 2] Création du réseau bridge personnalisé mon_reseau ===
+80e1f67664dd160a77b4c6acce0a8ea325c88e3ecf92e1deab31cd271395e329
+Subnet: 172.20.0.0/16
+98560885f597271eccbc3f3b609a3503fe9e12beb61ac63f04cde721f2c16845
+7b36c1f83ad5e081e99b0186e37f146b83516726792800b815f8c1af27c55d1c
+Test ping DNS entre B3_jour et B3_soir :
+PING B3_soir (172.20.0.3): 56 data bytes
+64 bytes from 172.20.0.3: seq=0 ttl=64 time=0.385 ms
+64 bytes from 172.20.0.3: seq=1 ttl=64 time=0.098 ms
+
+--- B3_soir ping statistics ---
+2 packets transmitted, 2 packets received, 0% packet loss
+round-trip min/avg/max = 0.098/0.241/0.385 ms
+=== [TP 2.4 - Étape 3] Volume anonyme (temporaire) ===
+B3_jour
+B3_soir
+187cc9bf8f59edb3f418926fbe2b6114028df03a9b3418db6c8bbfd2037c7d3e
+6a559a58d7936f414a3c582bc4cf45bcdecbd2ae84de70bb66891a4933446cc3
+Contenu lu depuis B3_jour :
+Bonjour du jour
+Bonsoir
+B3_soir
+B3_jour
+=== [TP 2.4 - Étape 4] Volume nommé (persistant) ===
+mon_volume_persistant
+4d9b3351f7a24280ace46aa0c034c9a8298fb58657dd2307bcb09b4fab8209a0
+1ba50b3cb95bc5c6eba3657d38ee4506486aaf80797fa19f04ace9544b52f6d3
+B3_jour
+B3_soir
+Lecture après suppression des conteneurs :
+Bonjour
+=== [TP 2.4 - Étape 5] Base PostgreSQL persistante ===
+8f98eb2955a53de11e88f1be0e06e30f089acf42ecd93bf5d4b6556838cb9c96
+CREATE TABLE
+INSERT 0 2
+pg
+0f957e517fff1d7e8e44dd82bc9036111a56adb3d2f0eff86b56fbbb814775cb
+Vérification des données après recréation du conteneur pg :
+   nom   
+---------
+ B3 jour
+ B3 soir
+(2 rows)
+
+=== [TP 2.4 - Nettoyage] ===
+pg
+mon_volume_persistant
+pg_data
+mon_reseau
+=== [TP 2.4 - Défi] Isolation réseau 3-tiers (frontend / backend) ===
+db41d2b68d7a4c67484c39303cee5dd42de0bb68eabd12351dd22ed743d6db7e
+51008654fdbed89da9b637dd34c9d2f90f9c1e2eb3dd848087221456ecc36c41
+bce3f2b2ae7d04cce168855e67ee2e174f163bc33a1653ebbf33f523fe47245a
+15135432736f427ec1bcd6064da969e96c59b487c64e58a2fc03a97c21ce79ab
+7093ade549c3fdba9feaa4d8c0924f16aff65234d2deb019a12abfe6cb73fb28
+1) web -> api (doit réussir) :
+PING api (172.21.0.3): 56 data bytes
+64 bytes from 172.21.0.3: seq=0 ttl=64 time=0.278 ms
+
+--- api ping statistics ---
+1 packets transmitted, 1 packets received, 0% packet loss
+round-trip min/avg/max = 0.278/0.278/0.278 ms
+2) web -> db (doit échouer car isolé) :
+OK : web ne peut pas joindre db directement (isolation validée).
+3) api -> db (doit réussir) :
+PING db (172.20.0.2): 56 data bytes
+64 bytes from 172.20.0.2: seq=0 ttl=64 time=0.279 ms
+
+--- db ping statistics ---
+1 packets transmitted, 1 packets received, 0% packet loss
+round-trip min/avg/max = 0.279/0.279/0.279 ms
+db
+web
+api
+backend
+frontend
+TP 2.4 terminé avec succès.
+
+==============================================================================
+ TP 2.5 : CONFIGURATION PAR L'ENVIRONNEMENT, PID 1 & ENTRYPOINT
+==============================================================================
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 1.23kB done
+#1 DONE 0.0s
+
+#2 resolve image config for docker-image://docker.io/docker/dockerfile:1
+#2 DONE 1.5s
+
+#3 docker-image://docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e
+#3 resolve docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e 0.0s done
+#3 CACHED
+
+#4 [internal] load metadata for docker.io/library/python:3.12-slim
+#4 DONE 1.9s
+
+#5 [internal] load .dockerignore
+#5 transferring context: 143B done
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 3.86kB done
+#6 DONE 0.0s
+
+#7 [base 1/4] FROM docker.io/library/python:3.12-slim@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b
+#7 resolve docker.io/library/python:3.12-slim@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b 0.0s done
+#7 DONE 0.1s
+
+#8 [base 4/4] RUN pip install --no-cache-dir -r requirements.txt
+#8 CACHED
+
+#9 [runtime 1/2] RUN useradd --create-home --uid 10001 appuser
+#9 CACHED
+
+#10 [base 3/4] COPY requirements.txt .
+#10 CACHED
+
+#11 [base 2/4] WORKDIR /app
+#11 CACHED
+
+#12 [runtime 2/2] COPY app.py .
+#12 CACHED
+
+#13 exporting to image
+#13 exporting layers done
+#13 exporting manifest sha256:552ff2a7eb9c3b6c6ff5328d572775d17f1742b45bcd5e55496c00950f32698a done
+#13 exporting config sha256:37b828f0f7a6124972d5c6bd64f9749a4fe724658930dbff692b196110ad3c05 done
+#13 exporting attestation manifest sha256:948ea8d5a9a0120b625203ec7621356adac58c6980f2251e0edb077d5fdae192
+#13 exporting attestation manifest sha256:948ea8d5a9a0120b625203ec7621356adac58c6980f2251e0edb077d5fdae192 0.1s done
+#13 exporting manifest list sha256:f15fd3087d3836e451d2ec5dacff18d3145a1b75c00f0df9e70bc087406abafe 0.0s done
+#13 naming to docker.io/library/legeni-webapp:1.0.0
+#13 naming to docker.io/library/legeni-webapp:1.0.0 done
+#13 unpacking to docker.io/library/legeni-webapp:1.0.0 0.0s done
+#13 DONE 0.2s
+37cd3b706bf2f8ba8c2a20802cd4ab4881e7a6aebe3e696aad595ddce7a32cf3
+3e62ff2e808ef252f40f1f25f15f517f7345eaba70b01c57443165ab6e2c5b33
+ebcfca152ae725c03d449bb2d56cfe644c7a6efb683a5333f179cbb7ac693d20
+Réponse dev     : {"app":"legeni-webapp","env":"dev","hostname":"37cd3b706bf2","version":"1.0.0"}
+Réponse prod    : {"app":"legeni-webapp","env":"prod","hostname":"3e62ff2e808e","version":"1.0.0"}
+Réponse staging : {"app":"legeni-webapp","env":"staging","hostname":"ebcfca152ae7","version":"1.0.0"}
+dev
+prod
+staging
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.args
+#1 transferring dockerfile: 274B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/alpine:3.20
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/2] FROM docker.io/library/alpine:3.20@sha256:d9e853e87e55526f6b2917df91a2115c36dd7c696a35be12163d44e6e2a4b6bc
+#4 resolve docker.io/library/alpine:3.20@sha256:d9e853e87e55526f6b2917df91a2115c36dd7c696a35be12163d44e6e2a4b6bc 0.1s done
+#4 DONE 0.1s
+
+#5 [2/2] RUN echo "Construit en version 2.0" > /version.txt
+#5 CACHED
+
+#6 exporting to image
+#6 exporting layers done
+#6 exporting manifest sha256:4552e0182fdb8a40cdcb0ed93a6171b23ce4a8c2ecc74668d022e2fe5f4f81e8 done
+#6 exporting config sha256:2ebd79209a23980200b783c1001ee40b155a31c80e8140dc305e8e4820d80168
+#6 exporting config sha256:2ebd79209a23980200b783c1001ee40b155a31c80e8140dc305e8e4820d80168 done
+#6 exporting attestation manifest sha256:d85b0ff48adde5600bf92c9d6fb34f157972b9ba56349218f1a48c78f625dc32 0.1s done
+#6 exporting manifest list sha256:57fbaaea146254a86889feb7367ca12b0372d8f32fda258cba7dd19b79684cc1
+#6 exporting manifest list sha256:57fbaaea146254a86889feb7367ca12b0372d8f32fda258cba7dd19b79684cc1 0.0s done
+#6 naming to docker.io/library/demo:args done
+#6 unpacking to docker.io/library/demo:args 0.0s done
+#6 DONE 0.2s
+Construit en version 2.0
+BUILD_VERSION= APP_MESSAGE=Bonjour
+Construit en version 2.0
+BUILD_VERSION= APP_MESSAGE=Salut
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.cmd
+#1 DONE 0.0s
+
+#1 [internal] load build definition from Dockerfile.cmd
+#1 transferring dockerfile: 106B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/alpine:3.20
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/1] FROM docker.io/library/alpine:3.20@sha256:d9e853e87e55526f6b2917df91a2115c36dd7c696a35be12163d44e6e2a4b6bc
+#4 resolve docker.io/library/alpine:3.20@sha256:d9e853e87e55526f6b2917df91a2115c36dd7c696a35be12163d44e6e2a4b6bc 0.0s done
+#4 CACHED
+
+#5 exporting to image
+#5 exporting layers done
+#5 exporting manifest sha256:a76d96cc35f813b3dd1b6ff06728f0167597d2d4d753d717455d4221417b9da2 done
+#5 exporting config sha256:74310b86e30cdbc6d5237d82855fb214edeb770dfef0cb507fe9893f8f4fbe0c done
+#5 exporting attestation manifest sha256:52a56269e3b2ef3ec5e0736d78e420bc750b81ce8f71809a4eea623d0b131485 0.1s done
+#5 exporting manifest list sha256:42d873ce15c255c2d8324b25a24370f9340ece1701158a057fd1a1e0dee774db
+#5 exporting manifest list sha256:42d873ce15c255c2d8324b25a24370f9340ece1701158a057fd1a1e0dee774db 0.0s done
+#5 naming to docker.io/library/demo:cmd done
+#5 unpacking to docker.io/library/demo:cmd 0.0s done
+#5 DONE 0.2s
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.entry
+#1 transferring dockerfile: 128B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/alpine:3.20
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/1] FROM docker.io/library/alpine:3.20@sha256:d9e853e87e55526f6b2917df91a2115c36dd7c696a35be12163d44e6e2a4b6bc
+#4 resolve docker.io/library/alpine:3.20@sha256:d9e853e87e55526f6b2917df91a2115c36dd7c696a35be12163d44e6e2a4b6bc 0.0s done
+#4 CACHED
+
+#5 exporting to image
+#5 exporting layers done
+#5 exporting manifest sha256:da9406090beec9d761f0b14233397fdc49dcc3747a03f374bc277f00fb76ebd9 done
+#5 exporting config sha256:1ba769565d9dfdb4a9fa75db7235d12133a078be9b8b107f695b2ae110a4ec0f done
+#5 exporting attestation manifest sha256:2abab81c3a54056e6080d67dca005062cb37ddcb0ff8d94868dabb6645b3006f 0.1s done
+#5 exporting manifest list sha256:6ddec91889ae124a2b8ee9857c639c2d1d1a4e1703c2e04db0f4c0ebcf90ffd0
+#5 exporting manifest list sha256:6ddec91889ae124a2b8ee9857c639c2d1d1a4e1703c2e04db0f4c0ebcf90ffd0 0.0s done
+#5 naming to docker.io/library/demo:entry done
+#5 unpacking to docker.io/library/demo:entry 0.0s done
+#5 DONE 0.2s
+Préfixe fixe : mon argument
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.shell
+#1 transferring dockerfile: 119B done
+#1 WARN: JSONArgsRecommended: JSON arguments recommended for CMD to prevent unintended behavior related to OS signals (line 4)
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/alpine:3.20
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [internal] load build context
+#4 DONE 0.0s
+
+#5 [1/3] FROM docker.io/library/alpine:3.20@sha256:d9e853e87e55526f6b2917df91a2115c36dd7c696a35be12163d44e6e2a4b6bc
+#5 resolve docker.io/library/alpine:3.20@sha256:d9e853e87e55526f6b2917df91a2115c36dd7c696a35be12163d44e6e2a4b6bc 0.0s done
+#5 DONE 0.0s
+
+#4 [internal] load build context
+#4 transferring context: 176B done
+#4 DONE 0.0s
+
+#6 [2/3] COPY app.sh /app.sh
+#6 CACHED
+
+#7 [3/3] RUN chmod +x /app.sh
+#7 CACHED
+
+#8 exporting to image
+#8 exporting layers done
+#8 exporting manifest sha256:de6c34138089773b315502b78c4e0497eba0002999438a33b18bf67f8df3d39e done
+#8 exporting config sha256:600e4eac3036c6badbb82a642a1ea94b7ba1b9d104cf4547244f28d11ccb9fae done
+#8 exporting attestation manifest sha256:95f4f73a0256ef30f5bf860c6dfdaaf2a21759c2d109cfa148905d6be0fd7fc4 0.1s done
+#8 exporting manifest list sha256:e8a106f8efa82e0a3438d985a64ea9e4154a7fe5d6ea3eefd9793670f88ef7c6
+#8 exporting manifest list sha256:e8a106f8efa82e0a3438d985a64ea9e4154a7fe5d6ea3eefd9793670f88ef7c6 0.0s done
+#8 naming to docker.io/library/demo:shell done
+#8 unpacking to docker.io/library/demo:shell 0.0s done
+#8 DONE 0.2s
+
+ [33m1 warning found (use docker --debug to expand):
+[0m - JSONArgsRecommended: JSON arguments recommended for CMD to prevent unintended behavior related to OS signals (line 4)
+cf4e5ce91d7ae25055ee621691a3fd7e4eac04ade34688f50aa7a92059254c7e
+Arrêt demo:shell (forme shell -> SIGKILL ~10s) :
+shell_pid
+
+real	0m10.360s
+user	0m0.019s
+sys	0m0.028s
+shell_pid
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.exec
+#1 transferring dockerfile: 116B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/alpine:3.20
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [internal] load build context
+#4 DONE 0.0s
+
+#5 [1/3] FROM docker.io/library/alpine:3.20@sha256:d9e853e87e55526f6b2917df91a2115c36dd7c696a35be12163d44e6e2a4b6bc
+#5 resolve docker.io/library/alpine:3.20@sha256:d9e853e87e55526f6b2917df91a2115c36dd7c696a35be12163d44e6e2a4b6bc 0.0s done
+#5 DONE 0.0s
+
+#4 [internal] load build context
+#4 transferring context: 28B done
+#4 DONE 0.0s
+
+#6 [2/3] COPY app.sh /app.sh
+#6 CACHED
+
+#7 [3/3] RUN chmod +x /app.sh
+#7 CACHED
+
+#8 exporting to image
+#8 exporting layers done
+#8 exporting manifest sha256:d2b575156770885e16dabb403498792a2956bce6a439804e0013a566f0c38e1c done
+#8 exporting config sha256:2147a1d48a3c0245dcfee292c74d298fda31dbc933457a28985564def4952398 done
+#8 exporting attestation manifest sha256:3eb2c71e57dc60b19eb4749a2f068ca812df18b457e37de4b51dcdb9e089df17 0.1s done
+#8 exporting manifest list sha256:ae461d45eb03f598b58032bf8cccb182f1c2813bedd862f059ff413a99bdba90
+#8 exporting manifest list sha256:ae461d45eb03f598b58032bf8cccb182f1c2813bedd862f059ff413a99bdba90 0.0s done
+#8 naming to docker.io/library/demo:exec done
+#8 unpacking to docker.io/library/demo:exec 0.0s done
+#8 DONE 0.2s
+eccf1ab2565c16acaec7429cf94a335c539f62ad14a23ada665934fca9834ea9
+Arrêt demo:exec (forme exec -> SIGTERM ~1s) :
+exec
+
+real	0m1.231s
+user	0m0.003s
+sys	0m0.021s
+Démarrage (PID 1)
+SIGTERM reçu : fermeture propre des connexions
+exec
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.nginx
+#1 DONE 0.0s
+
+#1 [internal] load build definition from Dockerfile.nginx
+#1 transferring dockerfile: 195B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/nginx:1.27-alpine
+#2 DONE 0.1s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/3] FROM docker.io/library/nginx:1.27-alpine@sha256:65645c7bb6a0661892a8b03b89d0743208a18dd2f3f17a54ef4b76fb8e2f2a10
+#4 resolve docker.io/library/nginx:1.27-alpine@sha256:65645c7bb6a0661892a8b03b89d0743208a18dd2f3f17a54ef4b76fb8e2f2a10 0.0s done
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 242B done
+#5 DONE 0.0s
+
+#6 [2/3] COPY entrypoint.sh /entrypoint.sh
+#6 CACHED
+
+#7 [3/3] RUN chmod +x /entrypoint.sh
+#7 CACHED
+
+#8 exporting to image
+#8 exporting layers 0.0s done
+#8 exporting manifest sha256:4d1ca1e16b554c95c710b68a0a8654d25da8504cf1c24694bac34e84a40064c6 done
+#8 exporting config sha256:c09d4871d31b11fcb2bede8d159b1a3fca5f87fd72413938cd45c98ee4b9f066 done
+#8 exporting attestation manifest sha256:52ff4b03c29ba12b06cba37c228f275e2b799de6fc911f7eaef60aa5cd86a356 0.1s done
+#8 exporting manifest list sha256:ad2602e98249c253812f92a1f5abced0018495b23ede91fca2026b5ad28a73f4
+#8 exporting manifest list sha256:ad2602e98249c253812f92a1f5abced0018495b23ede91fca2026b5ad28a73f4 0.0s done
+#8 naming to docker.io/library/demo:entrypoint done
+#8 unpacking to docker.io/library/demo:entrypoint 0.0s done
+#8 DONE 0.2s
+911fac66bb98895ebdbe680a007ae670dd17b6076bf3750ed60b824670acdd01
+<h1>Environnement : staging</h1>
+ep
+--- Défi TP 2.5 : Image demo:wait (attente active de disponibilité réseau) ---
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.wait
+#1 transferring dockerfile: 139B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/alpine:3.20
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [internal] load build context
+#4 transferring context: 334B done
+#4 DONE 0.0s
+
+#5 [1/2] FROM docker.io/library/alpine:3.20@sha256:d9e853e87e55526f6b2917df91a2115c36dd7c696a35be12163d44e6e2a4b6bc
+#5 resolve docker.io/library/alpine:3.20@sha256:d9e853e87e55526f6b2917df91a2115c36dd7c696a35be12163d44e6e2a4b6bc
+#5 resolve docker.io/library/alpine:3.20@sha256:d9e853e87e55526f6b2917df91a2115c36dd7c696a35be12163d44e6e2a4b6bc 0.0s done
+#5 DONE 0.0s
+
+#6 [2/2] COPY --chmod=755 wait.sh /wait.sh
+#6 CACHED
+
+#7 exporting to image
+#7 exporting layers done
+#7 exporting manifest sha256:adbe36ff48be1b2e02c52742da06161bd496a4703e1cbe49c4f0ab0a8294a37e done
+#7 exporting config sha256:8785c1f4561a07f50ed7218f5d5d994cba4886d2db89a73bf4ccf706cdbd606d done
+#7 exporting attestation manifest sha256:ec6d8eedc1c28c9cf557630aa092296bf349d4b6813fb76c130bacea4c45fb4d 0.1s done
+#7 exporting manifest list sha256:187de4b44ffd2d10fda48c97416f15660dd9883f8a18ac5fc2ec1179d5915e64
+#7 exporting manifest list sha256:187de4b44ffd2d10fda48c97416f15660dd9883f8a18ac5fc2ec1179d5915e64 0.0s done
+#7 naming to docker.io/library/demo:wait done
+#7 unpacking to docker.io/library/demo:wait 0.0s done
+#7 DONE 0.2s
+561f362bbb129b70aa95fb53313fa52b201f47a3b69548a9622c2ee9c90b34fc
+nc: bad address 'redis_tp25'
+[wait] redis_tp25:6379 indisponible (1/30)
+nc: bad address 'redis_tp25'
+[wait] redis_tp25:6379 indisponible (2/30)
+nc: bad address 'redis_tp25'
+[wait] redis_tp25:6379 indisponible (3/30)
+Redis est prêt !
+redis_tp25
+tp25
+Untagged: demo:args
+Deleted: sha256:57fbaaea146254a86889feb7367ca12b0372d8f32fda258cba7dd19b79684cc1
+Untagged: demo:cmd
+Deleted: sha256:42d873ce15c255c2d8324b25a24370f9340ece1701158a057fd1a1e0dee774db
+Untagged: demo:entry
+Deleted: sha256:6ddec91889ae124a2b8ee9857c639c2d1d1a4e1703c2e04db0f4c0ebcf90ffd0
+Untagged: demo:shell
+Deleted: sha256:e8a106f8efa82e0a3438d985a64ea9e4154a7fe5d6ea3eefd9793670f88ef7c6
+Untagged: demo:exec
+Deleted: sha256:ae461d45eb03f598b58032bf8cccb182f1c2813bedd862f059ff413a99bdba90
+Untagged: demo:entrypoint
+Deleted: sha256:ad2602e98249c253812f92a1f5abced0018495b23ede91fca2026b5ad28a73f4
+Untagged: demo:wait
+Deleted: sha256:187de4b44ffd2d10fda48c97416f15660dd9883f8a18ac5fc2ec1179d5915e64
+
+==============================================================================
+ TP 2.6 : DOCKERFILE AVANCÉ, MULTI-STAGE, NON-ROOT & HEALTHCHECK
+==============================================================================
+--- Exécution de la cible 'test' (flake8 + pytest) & comparaison de tailles ---
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 1.23kB done
+#1 DONE 0.0s
+
+#2 resolve image config for docker-image://docker.io/docker/dockerfile:1
+#2 DONE 0.8s
+
+#3 docker-image://docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e
+#3 resolve docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e 0.0s done
+#3 CACHED
+
+#4 [internal] load metadata for docker.io/library/python:3.12-slim
+#4 DONE 0.8s
+
+#5 [internal] load .dockerignore
+#5 transferring context: 143B done
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 DONE 0.0s
+
+#7 [base 1/4] FROM docker.io/library/python:3.12-slim@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b
+#7 resolve docker.io/library/python:3.12-slim@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b 0.0s done
+#7 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 5.67kB done
+#6 DONE 0.0s
+
+#8 [base 2/4] WORKDIR /app
+#8 CACHED
+
+#9 [base 4/4] RUN pip install --no-cache-dir -r requirements.txt
+#9 CACHED
+
+#10 [test 3/4] COPY . .
+#10 CACHED
+
+#11 [base 3/4] COPY requirements.txt .
+#11 CACHED
+
+#12 [test 1/4] COPY requirements-dev.txt .
+#12 CACHED
+
+#13 [test 2/4] RUN pip install --no-cache-dir -r requirements-dev.txt
+#13 CACHED
+
+#14 [test 4/4] RUN flake8 . && pytest -q
+#14 CACHED
+
+#15 exporting to image
+#15 exporting layers done
+#15 exporting manifest sha256:b8bcf2431182593435d1cf349f0a7ffeca86b9171270c750755a3031d15ce678 done
+#15 exporting config sha256:79dc6f75060f57a7a7d374000892096f32d345fdb3a65dac91f3e3194cf0a0b8 done
+#15 exporting attestation manifest sha256:f78c3d286da6f7101dd6dc5da65643622fdac6c8c3d7b55e174cec59b1da2c34 0.1s done
+#15 exporting manifest list sha256:9bacc3ceaf23ec665db113fb0d6491f526085c42f9c8c3b8ddeb26097d7e0fb5
+#15 exporting manifest list sha256:9bacc3ceaf23ec665db113fb0d6491f526085c42f9c8c3b8ddeb26097d7e0fb5 0.0s done
+#15 naming to docker.io/library/legeni-webapp:test done
+#15 unpacking to docker.io/library/legeni-webapp:test 0.1s done
+#15 DONE 0.2s
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 1.23kB done
+#1 DONE 0.0s
+
+#2 resolve image config for docker-image://docker.io/docker/dockerfile:1
+#2 DONE 0.3s
+
+#3 docker-image://docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e
+#3 resolve docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e 0.0s done
+#3 CACHED
+
+#4 [internal] load metadata for docker.io/library/python:3.12-slim
+#4 DONE 0.3s
+
+#5 [internal] load .dockerignore
+#5 transferring context: 143B done
+#5 DONE 0.0s
+
+#6 [base 1/4] FROM docker.io/library/python:3.12-slim@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b
+#6 resolve docker.io/library/python:3.12-slim@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b 0.1s done
+#6 DONE 0.1s
+
+#7 [internal] load build context
+#7 transferring context: 63B done
+#7 DONE 0.0s
+
+#8 [runtime 1/2] RUN useradd --create-home --uid 10001 appuser
+#8 CACHED
+
+#9 [base 2/4] WORKDIR /app
+#9 CACHED
+
+#10 [base 3/4] COPY requirements.txt .
+#10 CACHED
+
+#11 [base 4/4] RUN pip install --no-cache-dir -r requirements.txt
+#11 CACHED
+
+#12 [runtime 2/2] COPY app.py .
+#12 CACHED
+
+#13 exporting to image
+#13 exporting layers
+#13 exporting layers done
+#13 exporting manifest sha256:552ff2a7eb9c3b6c6ff5328d572775d17f1742b45bcd5e55496c00950f32698a done
+#13 exporting config sha256:37b828f0f7a6124972d5c6bd64f9749a4fe724658930dbff692b196110ad3c05 done
+#13 exporting attestation manifest sha256:4d9e88ad347fcd61731c021713354c9d0f0ccd1c112fec6827dc9e9c147c6970 0.1s done
+#13 exporting manifest list sha256:89d75d1f6d622da540f0ae6cc78438de99937137fc2db67daaa1022df1fdb981 0.0s done
+#13 naming to docker.io/library/legeni-webapp:1.0.0
+#13 naming to docker.io/library/legeni-webapp:1.0.0 done
+#13 unpacking to docker.io/library/legeni-webapp:1.0.0 0.0s done
+#13 DONE 0.2s
+WARNING: This output is designed for human readability. For machine-readable output, please use --format.
+IMAGE                     ID             DISK USAGE   CONTENT SIZE   EXTRA
+legeni-webapp:1.0.0       89d75d1f6d62        191MB         46.2MB        
+legeni-webapp:1.0.0-1     eabef4f08e48        191MB         46.2MB        
+legeni-webapp:1.0.1       dae2ad6c9718        191MB         46.2MB        
+legeni-webapp:1.1.0-2     76d13d313dbc        191MB         46.2MB        
+legeni-webapp:2.0.0       442eb8535741        191MB         46.2MB        
+legeni-webapp:test        9bacc3ceaf23        200MB         48.2MB        
+legeni-webapp:tp21-test   d4630d6176eb        200MB         48.2MB        
+--- Expérience .dockerignore (réduction du contexte de 200 Mo -> quelques Ko) ---
+#5 transferring context: 143B done
+#7 transferring context: 3.91kB done
+#5 transferring context: 160B done
+#6 transferring context: 63B done
+Untagged: legeni-webapp:ctx-before
+Deleted: sha256:483bdab7b26e0d28b75c749a76b372ff4b3988861651727e5c291e0401800cc3
+Untagged: legeni-webapp:ctx-after
+Deleted: sha256:7d99478d77c8430b8f3d18281237e65b2dccabd21cfe9f45c8471b334ae22267
+--- Test volontairement cassé (--target test doit échouer) ---
+✅ OK : --target test a bien bloqué le build sur test cassé.
+--- Vérification de l'utilisateur non-root ---
+uid=10001(appuser) gid=10001(appuser) groups=10001(appuser)
+--- Vérification du HEALTHCHECK ---
+115c600cf5f84d95c9a007d2a4f0e476e44821df1e826f1667778ffca900319d
+CONTAINER ID   IMAGE                 COMMAND                  CREATED         STATUS                   PORTS                                         NAMES
+115c600cf5f8   legeni-webapp:1.0.0   "gunicorn --bind 0.0…"   7 seconds ago   Up 7 seconds (healthy)   0.0.0.0:5000->5000/tcp, [::]:5000->5000/tcp   webapp
+webapp
+--- Comparaison restaurant:ubuntu vs restaurant:alpine (single-stage) vs Défi multistage ---
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 327B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/ubuntu:24.04
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/5] FROM docker.io/library/ubuntu:24.04@sha256:73b999393d07f2bf65a40373778a44dc9a6d54ad7718d29247d8ff9413c4d6a8
+#4 resolve docker.io/library/ubuntu:24.04@sha256:73b999393d07f2bf65a40373778a44dc9a6d54ad7718d29247d8ff9413c4d6a8 0.0s done
+#4 DONE 0.0s
+
+#5 [2/5] RUN apt-get update
+#5 CACHED
+
+#6 [3/5] RUN DEBIAN_FRONTEND=noninteractive apt-get install -y nginx git
+#6 CACHED
+
+#7 [4/5] RUN rm -Rf /var/www/html/*
+#7 CACHED
+
+#8 [5/5] RUN git clone https://github.com/Legeni07/restaurant.git /var/www/html/
+#8 CACHED
+
+#9 exporting to image
+#9 exporting layers done
+#9 exporting manifest sha256:906c3d0c2161244a57b92b2e94dedd3b52a684800b60cb6112a12298a6558739 done
+#9 exporting config sha256:80fd9fcd8b9a0dbc1aa9d8adcc73752aa94ad777fc4c6fa62ee2ba4b5afc1e89 done
+#9 exporting attestation manifest sha256:079849e39b031d20a6cfbaf1c776d9a83e5b793d9c35c0dc316dfc536636942c 0.1s done
+#9 exporting manifest list sha256:7cae378b47e152c83dd4d300c8240c2354d3431d345d2d5251e180ba1ccb7453
+#9 exporting manifest list sha256:7cae378b47e152c83dd4d300c8240c2354d3431d345d2d5251e180ba1ccb7453 0.0s done
+#9 naming to docker.io/library/restaurant:ubuntu done
+#9 unpacking to docker.io/library/restaurant:ubuntu 0.0s done
+#9 DONE 0.2s
+IMAGE          CREATED       CREATED BY                                      SIZE      COMMENT
+7cae378b47e1   4 hours ago   ENTRYPOINT ["/usr/sbin/nginx" "-g" "daemon o…   0B        buildkit.dockerfile.v0
+<missing>      4 hours ago   EXPOSE [80/tcp]                                 0B        buildkit.dockerfile.v0
+<missing>      4 hours ago   RUN /bin/sh -c git clone https://github.com/…   2.3MB     buildkit.dockerfile.v0
+<missing>      4 hours ago   RUN /bin/sh -c rm -Rf /var/www/html/* # buil…   16.4kB    buildkit.dockerfile.v0
+<missing>      4 hours ago   RUN /bin/sh -c DEBIAN_FRONTEND=noninteractiv…   108MB     buildkit.dockerfile.v0
+<missing>      4 hours ago   RUN /bin/sh -c apt-get update # buildkit        55.4MB    buildkit.dockerfile.v0
+<missing>      4 hours ago   LABEL maintainer=Legeni                         0B        buildkit.dockerfile.v0
+<missing>      7 days ago    /bin/sh -c #(nop)  CMD ["/bin/bash"]            0B        
+<missing>      7 days ago    /bin/sh -c #(nop) ADD file:3c41cdb0a333e30d2…   87.7MB    
+<missing>      7 days ago    /bin/sh -c #(nop)  LABEL org.opencontainers.…   0B        
+<missing>      7 days ago    /bin/sh -c #(nop)  ARG LAUNCHPAD_BUILD_ARCH     0B        
+<missing>      7 days ago    /bin/sh -c #(nop)  ARG RELEASE                  0B        
+Cloning into '/tmp/tp26_restaurant_ctx/restaurant'...
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.alpine
+#1 transferring dockerfile: 143B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/nginx:1.27-alpine
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context:
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/2] FROM docker.io/library/nginx:1.27-alpine@sha256:65645c7bb6a0661892a8b03b89d0743208a18dd2f3f17a54ef4b76fb8e2f2a10
+#4 resolve docker.io/library/nginx:1.27-alpine@sha256:65645c7bb6a0661892a8b03b89d0743208a18dd2f3f17a54ef4b76fb8e2f2a10 0.1s done
+#4 DONE 0.1s
+
+#5 [internal] load build context
+#5 transferring context: 2.01MB 0.0s done
+#5 DONE 0.1s
+
+#4 [1/2] FROM docker.io/library/nginx:1.27-alpine@sha256:65645c7bb6a0661892a8b03b89d0743208a18dd2f3f17a54ef4b76fb8e2f2a10
+#4 CACHED
+
+#6 [2/2] COPY restaurant/ /usr/share/nginx/html/
+#6 DONE 0.1s
+
+#7 exporting to image
+#7 exporting layers
+#7 exporting layers 0.2s done
+#7 exporting manifest sha256:a601f9962544d9da79bb8033a0e14686cd7399c7da4d29e6fbc0602f272b2da5 0.0s done
+#7 exporting config sha256:99b15cab41357fac7a5e1e642d60e7091ffda7f34f5835a5def9b2d2f5a86857 0.0s done
+#7 exporting attestation manifest sha256:3d2d07e10fad4da29fab31d8c08d9641e28c3fe19898822e1302eb11d4d3571b 0.1s done
+#7 exporting manifest list sha256:73196f9dbe2625aa0632f6696b87e603a749f84e399713c441be1ebb8631449e
+#7 exporting manifest list sha256:73196f9dbe2625aa0632f6696b87e603a749f84e399713c441be1ebb8631449e 0.0s done
+#7 naming to docker.io/library/restaurant:alpine done
+#7 unpacking to docker.io/library/restaurant:alpine 0.1s done
+#7 DONE 0.6s
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.multistage
+#1 transferring dockerfile: 462B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/nginx:1.27-alpine
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/alpine/git:v2.47.1
+#3 DONE 1.3s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 2B done
+#4 DONE 0.0s
+
+#5 [stage-1 1/2] FROM docker.io/library/nginx:1.27-alpine@sha256:65645c7bb6a0661892a8b03b89d0743208a18dd2f3f17a54ef4b76fb8e2f2a10
+#5 resolve docker.io/library/nginx:1.27-alpine@sha256:65645c7bb6a0661892a8b03b89d0743208a18dd2f3f17a54ef4b76fb8e2f2a10 0.1s done
+#5 DONE 0.1s
+
+#6 [source 1/2] FROM docker.io/alpine/git:v2.47.1@sha256:29f979569a32c8ec5df5f3150c266154061f2a7abcf2911f9ac8bb15fb3bc5e7
+#6 resolve docker.io/alpine/git:v2.47.1@sha256:29f979569a32c8ec5df5f3150c266154061f2a7abcf2911f9ac8bb15fb3bc5e7 0.1s done
+#6 DONE 0.1s
+
+#7 [source 2/2] RUN git clone --depth 1 https://github.com/Legeni07/restaurant.git /src  && rm -rf /src/.git
+#7 CACHED
+
+#8 [stage-1 2/2] COPY --from=source /src/ /usr/share/nginx/html/
+#8 CACHED
+
+#9 exporting to image
+#9 exporting layers 0.0s done
+#9 exporting manifest sha256:8521f9e5a36eafb7d670430bafdd68b629fe506b46e617a9f5a3be22653f7145 done
+#9 exporting config sha256:a9f494482e5b41172abfad966a3815624cb6eadfbb4d6a44873e1c9ca98b32a7 done
+#9 exporting attestation manifest sha256:e07c63e113eda1ca09dc4e543e4a7b2c3f730f095518dff65f01a48f2c264cea 0.1s done
+#9 exporting manifest list sha256:0455ae77e0fefb948b4cd4a5b2d2954edef0b1b23f4c12b19fbea71ab6d8b8c2
+#9 exporting manifest list sha256:0455ae77e0fefb948b4cd4a5b2d2954edef0b1b23f4c12b19fbea71ab6d8b8c2 0.0s done
+#9 naming to docker.io/library/restaurant:multistage done
+#9 unpacking to docker.io/library/restaurant:multistage 0.0s done
+#9 DONE 0.2s
+WARNING: This output is designed for human readability. For machine-readable output, please use --format.
+IMAGE                   ID             DISK USAGE   CONTENT SIZE   EXTRA
+restaurant:1.0          1c8b168b80a1       95.7MB         27.3MB        
+restaurant:alpine       73196f9dbe26       77.8MB         22.9MB        
+restaurant:build-1      c3d5188dd3e3       75.7MB         21.9MB        
+restaurant:latest       44985d8fae22       95.7MB         27.3MB        
+restaurant:multistage   0455ae77e0fe       75.7MB         21.9MB        
+restaurant:ubuntu       7cae378b47e1        356MB          102MB        
+8b2344089756419cf8355ad3a8341b111ef278134c2a4dc7aeeec31389796d55
+CONTAINER ID   IMAGE                   COMMAND                  CREATED          STATUS                    PORTS     NAMES
+8b2344089756   restaurant:multistage   "/docker-entrypoint.…"   16 seconds ago   Up 16 seconds (healthy)   80/tcp    restaurant_ms
+restaurant_ms
+
+==============================================================================
+ TP 2.7 : ISOLATION 3-TIERS, TMPFS & SAUVEGARDE/RESTAURATION DE VOLUME
+==============================================================================
+=== [TP 2.7 - Partie A] Isolation réseau 3-tiers (proxy <-> web <-> redis) ===
+5aeb58684effea836e5f11418a6b09d9a4cac48f5a6608dbe948189e773fa03d
+d5bc414cbd7281685027f8aafd4442b0f1e3bd8df72a8a13b66a8e8cee7e6b91
+30332b399497a07749de8dc1a9fc1f00d6e3522edf19362372d4cc0a0a54aef9
+ceb8e74a11f952a4045020895d5177526ae16e657d65928d1be27acf048e7994
+c285c494afd37933da18922d9148e535d0aa32db8889ab938e4facfa1b9cf331
+1) web -> redis (OK) :
+PING redis (172.21.0.2): 56 data bytes
+64 bytes from 172.21.0.2: seq=0 ttl=64 time=0.138 ms
+
+--- redis ping statistics ---
+1 packets transmitted, 1 packets received, 0% packet loss
+round-trip min/avg/max = 0.138/0.138/0.138 ms
+2) proxy -> web (OK) :
+PING web (172.20.0.2): 56 data bytes
+64 bytes from 172.20.0.2: seq=0 ttl=64 time=0.136 ms
+
+--- web ping statistics ---
+1 packets transmitted, 1 packets received, 0% packet loss
+round-trip min/avg/max = 0.136/0.136/0.136 ms
+3) proxy -> redis (Doit être bloqué) :
+OK : proxy est bien isolé du réseau back (redis inaccessible)
+web
+redis
+proxy
+front
+back
+=== [TP 2.7 - Partie B - Étape 5] Bind mount (mise à jour à chaud & :ro) ===
+73cf8a5a36beffc8a058326f5c1cb1408b5d369fa52f5db338af708614491e19
+Bind mount v1 : <h1>Version 1</h1>
+Bind mount v2 : <h1>Version 2 (à chaud)</h1>
+web_bind
+touch: /usr/share/nginx/html/test.txt: Read-only file system
+OK : écriture bloquée sur :ro
+=== [TP 2.7 - Partie B - Étape 6] Stockage en mémoire vive (tmpfs) ===
+47fa394ba468957192fdcda9e59930572a372a44215d83ea3910af1b48c3cbb1
+Filesystem                Size      Used Available Use% Mounted on
+tmpfs                     1.0M      4.0K   1020.0K   0% /run/secrets
+secret
+Contenu de /run/secrets après redémarrage (doit être vide) :
+total 4
+drwxr-xr-x    2 root     root            40 Nov 17 17:32 .
+drwxr-xr-x    1 root     root          4096 Nov 17 17:32 ..
+secret
+=== [TP 2.7 - Partie B - Étape 7] Sauvegarde et restauration d'un volume Redis ===
+redis_data
+0968e1b902aef1ec3c663467039caa88e7272a836eb545959281d904a0b0ebee
+OK
+OK
+-rw-r--r-- 1 root root 476 Nov 17 18:32 /tmp/tp27_backup/redis_data.tar.gz
+Simulation de perte totale du conteneur et du volume :
+redis
+redis_data
+redis_data
+717807eeaa7080cc5054116493ed350a38381f799100c06fe93a41d88ba58a8c
+Clé 'cours' après restauration :
+devops
+=== [TP 2.7 - Défi] Exécution de backup_volume.sh avec rotation (7 archives max) ===
+Nombre d'archives conservées après 8 sauvegardes (attendu 7) : 7
+backup_redis_data_20261117_183222.tar.gz
+backup_redis_data_20261117_183223.tar.gz
+backup_redis_data_20261117_183225.tar.gz
+backup_redis_data_20261117_183227.tar.gz
+backup_redis_data_20261117_183228.tar.gz
+backup_redis_data_20261117_183230.tar.gz
+backup_redis_data_20261117_183233.tar.gz
+redis
+redis_data
+TP 2.7 terminé avec succès.
+
+==============================================================================
+ TP 2.8 : DOCKER COMPOSE MULTI-SERVICES, SCALING & TOLÉRANCE AUX PANNES
+==============================================================================
+ Image legeni-web Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 572B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 1.23kB done
+#2 DONE 0.0s
+
+#3 resolve image config for docker-image://docker.io/docker/dockerfile:1
+#3 DONE 0.8s
+
+#4 docker-image://docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e
+#4 resolve docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e 0.1s done
+#4 CACHED
+
+#5 [internal] load metadata for docker.io/library/python:3.12-slim
+#5 DONE 0.8s
+
+#6 [internal] load .dockerignore
+#6 transferring context: 143B done
+#6 DONE 0.0s
+
+#7 [internal] load build context
+#7 transferring context: 63B done
+#7 DONE 0.0s
+
+#8 [base 1/4] FROM docker.io/library/python:3.12-slim@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b
+#8 resolve docker.io/library/python:3.12-slim@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b
+#8 resolve docker.io/library/python:3.12-slim@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b 0.1s done
+#8 DONE 0.1s
+
+#9 [base 4/4] RUN pip install --no-cache-dir -r requirements.txt
+#9 CACHED
+
+#10 [runtime 1/2] RUN useradd --create-home --uid 10001 appuser
+#10 CACHED
+
+#11 [base 2/4] WORKDIR /app
+#11 CACHED
+
+#12 [base 3/4] COPY requirements.txt .
+#12 CACHED
+
+#13 [runtime 2/2] COPY app.py .
+#13 CACHED
+
+#14 exporting to image
+#14 exporting layers done
+#14 exporting manifest sha256:c054b731268403146b0fb0d810fc0508b381bde0deacaedd0cb13756a4099adc 0.0s done
+#14 exporting config sha256:648bdbe9fbb856e254c0725ff90f26f4daac107f60409c4e556418eff3f58d7b done
+#14 exporting attestation manifest sha256:08ace4083cc19371ac86821a79197f7045f731986c77262f6fb49fc01764da87 0.1s done
+#14 exporting manifest list sha256:ff6084e151cd858ce69aff3e56858a83068efd27cf7890f5033bd454b9819861
+#14 exporting manifest list sha256:ff6084e151cd858ce69aff3e56858a83068efd27cf7890f5033bd454b9819861 0.0s done
+#14 naming to docker.io/library/legeni-web:latest done
+#14 unpacking to docker.io/library/legeni-web:latest 0.0s done
+#14 DONE 0.3s
+
+#15 resolving provenance for metadata file
+#15 DONE 0.0s
+ Image legeni-web Built 
+ Network legeni_frontend Creating 
+ Network legeni_frontend Created 
+ Network legeni_backend Creating 
+ Network legeni_backend Created 
+ Volume legeni_redis_data Creating 
+ Volume legeni_redis_data Created 
+ Container legeni-redis-1 Creating 
+ Container legeni-redis-1 Created 
+ Container legeni-web-1 Creating 
+ Container legeni-web-1 Created 
+ Container legeni-proxy-1 Creating 
+ Container legeni-proxy-1 Created 
+ Container legeni-redis-1 Starting 
+ Container legeni-redis-1 Started 
+ Container legeni-redis-1 Waiting 
+ Container legeni-redis-1 Healthy 
+ Container legeni-web-1 Starting 
+ Container legeni-web-1 Started 
+ Container legeni-proxy-1 Starting 
+ Container legeni-proxy-1 Started 
+ Container legeni-web-1 Waiting 
+ Container legeni-redis-1 Waiting 
+ Container legeni-proxy-1 Waiting 
+ Container legeni-redis-1 Healthy 
+ Container legeni-proxy-1 Healthy 
+ Container legeni-web-1 Healthy 
+NAME             IMAGE               COMMAND                  SERVICE   CREATED          STATUS                    PORTS
+legeni-proxy-1   nginx:1.27-alpine   "/docker-entrypoint.…"   proxy     12 seconds ago   Up 6 seconds              0.0.0.0:8090->80/tcp, [::]:8090->80/tcp
+legeni-redis-1   redis:7.4-alpine    "docker-entrypoint.s…"   redis     13 seconds ago   Up 12 seconds (healthy)   6379/tcp
+legeni-web-1     legeni-web          "gunicorn --bind 0.0…"   web       12 seconds ago   Up 6 seconds (healthy)    5000/tcp
+--- Scaling du service web à 3 réplicas et répartition de charge ---
+ Container legeni-redis-1 Running 
+ Container legeni-web-1 Running 
+ Container legeni-web-3 Creating 
+ Container legeni-web-2 Creating 
+ Container legeni-web-2 Created 
+ Container legeni-web-3 Created 
+ Container legeni-proxy-1 Running 
+ Container legeni-redis-1 Waiting 
+ Container legeni-redis-1 Healthy 
+ Container legeni-web-2 Starting 
+ Container legeni-web-2 Started 
+ Container legeni-web-3 Starting 
+ Container legeni-web-3 Started 
+ Container legeni-proxy-1 Waiting 
+ Container legeni-web-2 Waiting 
+ Container legeni-web-3 Waiting 
+ Container legeni-web-1 Waiting 
+ Container legeni-redis-1 Waiting 
+ Container legeni-redis-1 Healthy 
+ Container legeni-proxy-1 Healthy 
+ Container legeni-web-2 Healthy 
+ Container legeni-web-3 Healthy 
+ Container legeni-web-1 Healthy 
+{"app":"legeni-webapp","env":"dev","hostname":"06708801f958","version":"1.1.0"}
+
+{"app":"legeni-webapp","env":"dev","hostname":"06708801f958","version":"1.1.0"}
+
+{"app":"legeni-webapp","env":"dev","hostname":"06708801f958","version":"1.1.0"}
+
+{"app":"legeni-webapp","env":"dev","hostname":"4dcaa39cdeee","version":"1.1.0"}
+
+{"app":"legeni-webapp","env":"dev","hostname":"4dcaa39cdeee","version":"1.1.0"}
+
+{"app":"legeni-webapp","env":"dev","hostname":"4dcaa39cdeee","version":"1.1.0"}
+
+--- Vérification de la persistance Redis après docker compose down / up -d ---
+Nombre de visites</td><td><b>1</b></td></tr>
+ Container legeni-proxy-1 Stopping 
+ Container legeni-proxy-1 Stopped 
+ Container legeni-proxy-1 Removing 
+ Container legeni-proxy-1 Removed 
+ Container legeni-web-1 Stopping 
+ Container legeni-web-2 Stopping 
+ Container legeni-web-3 Stopping 
+ Container legeni-web-1 Stopped 
+ Container legeni-web-1 Removing 
+ Container legeni-web-2 Stopped 
+ Container legeni-web-2 Removing 
+ Container legeni-web-1 Removed 
+ Container legeni-web-3 Stopped 
+ Container legeni-web-3 Removing 
+ Container legeni-web-2 Removed 
+ Container legeni-web-3 Removed 
+ Container legeni-redis-1 Stopping 
+ Container legeni-redis-1 Stopped 
+ Container legeni-redis-1 Removing 
+ Container legeni-redis-1 Removed 
+ Network legeni_frontend Removing 
+ Network legeni_backend Removing 
+ Network legeni_frontend Removed 
+ Network legeni_backend Removed 
+ Network legeni_frontend Creating 
+ Network legeni_frontend Created 
+ Network legeni_backend Creating 
+ Network legeni_backend Created 
+ Container legeni-redis-1 Creating 
+ Container legeni-redis-1 Created 
+ Container legeni-web-1 Creating 
+ Container legeni-web-1 Created 
+ Container legeni-proxy-1 Creating 
+ Container legeni-proxy-1 Created 
+ Container legeni-redis-1 Starting 
+ Container legeni-redis-1 Started 
+ Container legeni-redis-1 Waiting 
+ Container legeni-redis-1 Healthy 
+ Container legeni-web-1 Starting 
+ Container legeni-web-1 Started 
+ Container legeni-proxy-1 Starting 
+ Container legeni-proxy-1 Started 
+ Container legeni-redis-1 Waiting 
+ Container legeni-proxy-1 Waiting 
+ Container legeni-web-1 Waiting 
+ Container legeni-redis-1 Healthy 
+ Container legeni-proxy-1 Healthy 
+ Container legeni-web-1 Healthy 
+Nombre de visites</td><td><b>2</b></td></tr>
+--- Simulation de panne Redis (/ready -> 503 vs /health -> 200) ---
+ Container legeni-redis-1 Stopping 
+ Container legeni-redis-1 Stopped 
+Code /ready  (attendu 503) : 503
+Code /health (attendu 200) : 200
+ Container legeni-redis-1 Starting 
+ Container legeni-redis-1 Started 
+ Container legeni-proxy-1 Stopping 
+ Container legeni-proxy-1 Stopped 
+ Container legeni-proxy-1 Removing 
+ Container legeni-proxy-1 Removed 
+ Container legeni-web-1 Stopping 
+ Container legeni-web-1 Stopped 
+ Container legeni-web-1 Removing 
+ Container legeni-web-1 Removed 
+ Container legeni-redis-1 Stopping 
+ Container legeni-redis-1 Stopped 
+ Container legeni-redis-1 Removing 
+ Container legeni-redis-1 Removed 
+ Volume legeni_redis_data Removing 
+ Network legeni_frontend Removing 
+ Network legeni_backend Removing 
+ Volume legeni_redis_data Removed 
+ Network legeni_frontend Removed 
+ Network legeni_backend Removed 
+--- Exécution réelle du Défi TP 2.8 (WordPress + MariaDB Compose sur :8000) ---
+ Image mariadb:11.4 Pulling 
+ Image wordpress:6-apache Pulling 
+ c37670fe2f1e Pulling fs layer 0B
+ 3bcd9b27175b Pulling fs layer 0B
+ 40ec4bb877a9 Pulling fs layer 0B
+ eca30975eae4 Pulling fs layer 0B
+ edfa1eac0ec9 Pulling fs layer 0B
+ 886235a2a1ff Pulling fs layer 0B
+ 87574aeed5d7 Pulling fs layer 0B
+ 816a9fd16934 Pulling fs layer 0B
+ fa05b5032b13 Pulling fs layer 0B
+ 5b4d6ff92fc4 Pulling fs layer 0B
+ 8233764c9d8b Pulling fs layer 0B
+ dc404e2c7d84 Pulling fs layer 0B
+ b81875e03a86 Pulling fs layer 0B
+ 1cf5064b55f1 Pulling fs layer 0B
+ ba11284aac47 Pulling fs layer 0B
+ 4f4fb700ef54 Pulling fs layer 0B
+ 605298e6ae30 Pulling fs layer 0B
+ c7a376359321 Pulling fs layer 0B
+ 6bbcb046e4ae Pulling fs layer 0B
+ 8f8f3a474090 Pulling fs layer 0B
+ 0aa392ebbb80 Pulling fs layer 0B
+ 320d77ecabde Pulling fs layer 0B
+ 862ee81cb220 Pulling fs layer 0B
+ 66d57c3a38eb Pulling fs layer 0B
+ 568992dffcac Pulling fs layer 0B
+ b63b3a538829 Pulling fs layer 0B
+ e6eabff5b6a7 Pulling fs layer 0B
+ a4ec5f83fe8f Pulling fs layer 0B
+ 947d1652ed21 Pulling fs layer 0B
+ 6c395c29c615 Pulling fs layer 0B
+ 1bc391e36c98 Pulling fs layer 0B
+ 4f4fb700ef54 Already exists 0B
+ 16d3845e0e68 Download complete 0B
+ f17b221ff213 Download complete 0B
+ 568992dffcac Download complete 0B
+ e6eabff5b6a7 Downloading 1.341kB
+ 87574aeed5d7 Download complete 0B
+ c37670fe2f1e Download complete 0B
+ e6eabff5b6a7 Download complete 0B
+ e6eabff5b6a7 Pull complete 0B
+ 673dbbf30219 Downloading 1.049MB
+ 40ec4bb877a9 Download complete 0B
+ b63b3a538829 Download complete 0B
+ 673dbbf30219 Downloading 1.049MB
+ eca30975eae4 Downloading 489B
+ b81875e03a86 Downloading 226B
+ c7a376359321 Download complete 0B
+ 1cf5064b55f1 Downloading 428B
+ 3bcd9b27175b Downloading 486B
+ fa05b5032b13 Downloading 2.461kB
+ ba11284aac47 Download complete 0B
+ 8233764c9d8b Downloading 251B
+ dc404e2c7d84 Downloading 391B
+ 605298e6ae30 Downloading 18.8kB
+ 862ee81cb220 Download complete 0B
+ 673dbbf30219 Downloading 1.049MB
+ bc523d8c19ce Downloading 1.049MB
+ 886235a2a1ff Download complete 0B
+ 673dbbf30219 Downloading 1.049MB
+ bc523d8c19ce Downloading 1.049MB
+ 6c395c29c615 Download complete 0B
+ eca30975eae4 Download complete 0B
+ b81875e03a86 Download complete 0B
+ 1cf5064b55f1 Download complete 0B
+ 3bcd9b27175b Download complete 0B
+ fa05b5032b13 Download complete 0B
+ 8233764c9d8b Download complete 0B
+ dc404e2c7d84 Download complete 0B
+ 605298e6ae30 Download complete 0B
+ 5b4d6ff92fc4 Downloading 1.049MB
+ edfa1eac0ec9 Downloading 1.049MB
+ 673dbbf30219 Downloading 1.049MB
+ bc523d8c19ce Downloading 1.049MB
+ 5b4d6ff92fc4 Downloading 1.049MB
+ edfa1eac0ec9 Downloading 1.049MB
+ 673dbbf30219 Downloading 1.049MB
+ bc523d8c19ce Downloading 1.049MB
+ 1bc391e36c98 Download complete 0B
+ 5b4d6ff92fc4 Downloading 1.049MB
+ edfa1eac0ec9 Downloading 1.049MB
+ 673dbbf30219 Downloading 1.049MB
+ bc523d8c19ce Downloading 1.049MB
+ edfa1eac0ec9 Downloading 1.049MB
+ 673dbbf30219 Downloading 1.049MB
+ 5b4d6ff92fc4 Downloading 1.049MB
+ bc523d8c19ce Downloading 1.049MB
+ 673dbbf30219 Downloading 1.049MB
+ 5b4d6ff92fc4 Downloading 1.049MB
+ edfa1eac0ec9 Downloading 1.049MB
+ bc523d8c19ce Downloading 1.049MB
+ 5b4d6ff92fc4 Downloading 1.049MB
+ edfa1eac0ec9 Downloading 1.049MB
+ 673dbbf30219 Downloading 2.097MB
+ bc523d8c19ce Downloading 2.097MB
+ edfa1eac0ec9 Downloading 1.049MB
+ 673dbbf30219 Downloading 2.097MB
+ 6bbcb046e4ae Downloading 1.049MB
+ 5b4d6ff92fc4 Downloading 1.049MB
+ bc523d8c19ce Downloading 2.097MB
+ a4ec5f83fe8f Downloading 1.049MB
+ 5b4d6ff92fc4 Downloading 1.049MB
+ edfa1eac0ec9 Downloading 1.049MB
+ 673dbbf30219 Downloading 2.097MB
+ 6bbcb046e4ae Downloading 1.049MB
+ a4ec5f83fe8f Downloading 1.049MB
+ bc523d8c19ce Downloading 2.097MB
+ 5b4d6ff92fc4 Downloading 1.049MB
+ edfa1eac0ec9 Downloading 1.049MB
+ 673dbbf30219 Downloading 2.097MB
+ 6bbcb046e4ae Downloading 1.049MB
+ bc523d8c19ce Downloading 2.097MB
+ a4ec5f83fe8f Downloading 1.049MB
+ 5b4d6ff92fc4 Downloading 1.049MB
+ edfa1eac0ec9 Downloading 1.049MB
+ 673dbbf30219 Downloading 2.097MB
+ 6bbcb046e4ae Downloading 1.049MB
+ a4ec5f83fe8f Downloading 1.049MB
+ bc523d8c19ce Downloading 2.097MB
+ edfa1eac0ec9 Downloading 1.049MB
+ 0aa392ebbb80 Downloading 1.049MB
+ 673dbbf30219 Downloading 2.097MB
+ 6bbcb046e4ae Downloading 1.049MB
+ 816a9fd16934 Downloading 1.049MB
+ 320d77ecabde Downloading 1.049MB
+ 5b4d6ff92fc4 Downloading 1.049MB
+ bc523d8c19ce Downloading 2.097MB
+ a4ec5f83fe8f Downloading 1.049MB
+ edfa1eac0ec9 Downloading 1.049MB
+ 0aa392ebbb80 Downloading 1.049MB
+ 673dbbf30219 Downloading 2.097MB
+ 6bbcb046e4ae Downloading 1.049MB
+ 66d57c3a38eb Downloading 1.049MB
+ 816a9fd16934 Downloading 1.049MB
+ 8f8f3a474090 Downloading 1.049MB
+ 320d77ecabde Downloading 1.049MB
+ 5b4d6ff92fc4 Downloading 1.049MB
+ bc523d8c19ce Downloading 2.097MB
+ 947d1652ed21 Downloading 1.049MB
+ a4ec5f83fe8f Downloading 1.049MB
+ edfa1eac0ec9 Downloading 1.049MB
+ 0aa392ebbb80 Downloading 1.049MB
+ 673dbbf30219 Downloading 2.097MB
+ 6bbcb046e4ae Downloading 1.049MB
+ 66d57c3a38eb Downloading 1.049MB
+ 816a9fd16934 Downloading 1.049MB
+ 8f8f3a474090 Downloading 1.049MB
+ 320d77ecabde Downloading 1.049MB
+ 5b4d6ff92fc4 Downloading 1.049MB
+ 947d1652ed21 Downloading 1.049MB
+ a4ec5f83fe8f Downloading 1.049MB
+ bc523d8c19ce Downloading 2.097MB
+ 66d57c3a38eb Downloading 1.049MB
+ 816a9fd16934 Downloading 1.049MB
+ 8f8f3a474090 Downloading 1.049MB
+ 320d77ecabde Downloading 1.049MB
+ 5b4d6ff92fc4 Downloading 1.049MB
+ edfa1eac0ec9 Downloading 1.049MB
+ 0aa392ebbb80 Downloading 1.049MB
+ 673dbbf30219 Downloading 2.097MB
+ 6bbcb046e4ae Downloading 1.049MB
+ a4ec5f83fe8f Downloading 1.049MB
+ bc523d8c19ce Downloading 2.097MB
+ 947d1652ed21 Downloading 1.049MB
+ 66d57c3a38eb Downloading 1.049MB
+ 816a9fd16934 Downloading 1.049MB
+ 8f8f3a474090 Downloading 1.049MB
+ 320d77ecabde Downloading 1.049MB
+ 5b4d6ff92fc4 Downloading 1.049MB
+ edfa1eac0ec9 Downloading 1.049MB
+ 0aa392ebbb80 Downloading 1.049MB
+ 673dbbf30219 Downloading 2.097MB
+ 6bbcb046e4ae Downloading 1.049MB
+ 947d1652ed21 Downloading 1.049MB
+ a4ec5f83fe8f Downloading 1.049MB
+ bc523d8c19ce Downloading 2.097MB
+ 320d77ecabde Downloading 1.049MB
+ 5b4d6ff92fc4 Downloading 2.097MB
+ edfa1eac0ec9 Downloading 1.049MB
+ 0aa392ebbb80 Downloading 1.049MB
+ 673dbbf30219 Downloading 2.097MB
+ 6bbcb046e4ae Downloading 1.049MB
+ 66d57c3a38eb Downloading 1.049MB
+ 816a9fd16934 Downloading 1.049MB
+ 8f8f3a474090 Downloading 1.049MB
+ a4ec5f83fe8f Downloading 1.049MB
+ bc523d8c19ce Downloading 2.097MB
+ 947d1652ed21 Downloading 1.049MB
+ edfa1eac0ec9 Downloading 2.097MB
+ 0aa392ebbb80 Downloading 1.049MB
+ 673dbbf30219 Downloading 3.146MB
+ 6bbcb046e4ae Downloading 2.097MB
+ 66d57c3a38eb Downloading 1.049MB
+ 816a9fd16934 Downloading 1.049MB
+ 8f8f3a474090 Downloading 1.049MB
+ 320d77ecabde Downloading 1.049MB
+ 5b4d6ff92fc4 Downloading 2.097MB
+ a4ec5f83fe8f Downloading 1.049MB
+ bc523d8c19ce Downloading 3.146MB
+ 947d1652ed21 Downloading 1.049MB
+ 66d57c3a38eb Downloading 1.049MB
+ 816a9fd16934 Downloading 1.049MB
+ 8f8f3a474090 Downloading 1.049MB
+ 320d77ecabde Downloading 1.049MB
+ 5b4d6ff92fc4 Downloading 2.097MB
+ edfa1eac0ec9 Downloading 2.097MB
+ 0aa392ebbb80 Downloading 1.049MB
+ 673dbbf30219 Downloading 3.146MB
+ 6bbcb046e4ae Downloading 2.097MB
+ bc523d8c19ce Downloading 3.146MB
+ 947d1652ed21 Downloading 1.049MB
+ a4ec5f83fe8f Downloading 1.049MB
+ edfa1eac0ec9 Downloading 2.097MB
+ 0aa392ebbb80 Downloading 1.049MB
+ 673dbbf30219 Downloading 3.146MB
+ 6bbcb046e4ae Downloading 2.097MB
+ 66d57c3a38eb Downloading 1.049MB
+ 816a9fd16934 Downloading 1.049MB
+ 8f8f3a474090 Downloading 1.049MB
+ 320d77ecabde Downloading 1.049MB
+ 5b4d6ff92fc4 Downloading 2.097MB
+ bc523d8c19ce Downloading 3.146MB
+ 947d1652ed21 Downloading 1.049MB
+ a4ec5f83fe8f Downloading 2.097MB
+ 673dbbf30219 Downloading 3.146MB
+ 6bbcb046e4ae Downloading 2.097MB
+ 66d57c3a38eb Downloading 1.049MB
+ 816a9fd16934 Downloading 1.049MB
+ 8f8f3a474090 Downloading 1.049MB
+ 320d77ecabde Downloading 1.049MB
+ 5b4d6ff92fc4 Downloading 2.097MB
+ edfa1eac0ec9 Downloading 2.097MB
+ 0aa392ebbb80 Downloading 1.049MB
+ a4ec5f83fe8f Downloading 2.097MB
+ bc523d8c19ce Downloading 3.146MB
+ 947d1652ed21 Downloading 1.049MB
+ edfa1eac0ec9 Downloading 2.097MB
+ 0aa392ebbb80 Downloading 2.097MB
+ 673dbbf30219 Downloading 3.146MB
+ 6bbcb046e4ae Downloading 2.097MB
+ 66d57c3a38eb Downloading 1.049MB
+ 816a9fd16934 Downloading 1.049MB
+ 8f8f3a474090 Downloading 1.049MB
+ 320d77ecabde Downloading 1.049MB
+ 5b4d6ff92fc4 Downloading 2.097MB
+ bc523d8c19ce Downloading 3.146MB
+ 947d1652ed21 Downloading 1.049MB
+ a4ec5f83fe8f Downloading 2.097MB
+ edfa1eac0ec9 Downloading 2.097MB
+ 0aa392ebbb80 Downloading 2.097MB
+ 673dbbf30219 Downloading 4.194MB
+ 6bbcb046e4ae Downloading 2.097MB
+ 66d57c3a38eb Downloading 1.049MB
+ 816a9fd16934 Downloading 2.097MB
+ 8f8f3a474090 Downloading 1.049MB
+ 320d77ecabde Downloading 1.049MB
+ 5b4d6ff92fc4 Downloading 3.146MB
+ a4ec5f83fe8f Downloading 2.097MB
+ bc523d8c19ce Downloading 3.146MB
+ 947d1652ed21 Downloading 2.097MB
+ 673dbbf30219 Downloading 4.194MB
+ 6bbcb046e4ae Downloading 2.097MB
+ 66d57c3a38eb Downloading 1.049MB
+ 816a9fd16934 Downloading 2.097MB
+ 8f8f3a474090 Downloading 2.097MB
+ 320d77ecabde Downloading 2.097MB
+ 5b4d6ff92fc4 Downloading 3.146MB
+ edfa1eac0ec9 Downloading 2.097MB
+ 0aa392ebbb80 Downloading 2.097MB
+ a4ec5f83fe8f Downloading 2.097MB
+ bc523d8c19ce Downloading 3.146MB
+ 947d1652ed21 Downloading 2.097MB
+ 5b4d6ff92fc4 Downloading 3.146MB
+ edfa1eac0ec9 Downloading 2.097MB
+ 0aa392ebbb80 Downloading 2.097MB
+ 673dbbf30219 Downloading 4.194MB
+ 6bbcb046e4ae Downloading 3.146MB
+ 66d57c3a38eb Downloading 2.097MB
+ 816a9fd16934 Downloading 2.097MB
+ 8f8f3a474090 Downloading 2.097MB
+ 320d77ecabde Downloading 2.097MB
+ bc523d8c19ce Downloading 3.146MB
+ 947d1652ed21 Downloading 2.097MB
+ a4ec5f83fe8f Downloading 2.097MB
+ 5b4d6ff92fc4 Downloading 3.146MB
+ edfa1eac0ec9 Downloading 2.097MB
+ 0aa392ebbb80 Downloading 2.097MB
+ 673dbbf30219 Downloading 4.194MB
+ 6bbcb046e4ae Downloading 3.146MB
+ 66d57c3a38eb Downloading 2.097MB
+ 816a9fd16934 Downloading 2.097MB
+ 8f8f3a474090 Downloading 2.097MB
+ 320d77ecabde Downloading 2.097MB
+ bc523d8c19ce Downloading 4.194MB
+ 947d1652ed21 Downloading 2.097MB
+ a4ec5f83fe8f Downloading 2.097MB
+ 816a9fd16934 Downloading 2.097MB
+ 8f8f3a474090 Downloading 2.097MB
+ 320d77ecabde Downloading 2.097MB
+ 5b4d6ff92fc4 Downloading 3.146MB
+ edfa1eac0ec9 Downloading 3.146MB
+ 0aa392ebbb80 Downloading 2.097MB
+ 673dbbf30219 Downloading 4.194MB
+ 6bbcb046e4ae Downloading 3.146MB
+ 66d57c3a38eb Downloading 2.097MB
+ a4ec5f83fe8f Downloading 2.097MB
+ bc523d8c19ce Download complete 0B
+ 947d1652ed21 Downloading 2.097MB
+ 66d57c3a38eb Downloading 2.097MB
+ 816a9fd16934 Downloading 2.097MB
+ 947d1652ed21 Downloading 2.097MB
+ a4ec5f83fe8f Downloading 2.097MB
+ 8f8f3a474090 Downloading 2.097MB
+ 320d77ecabde Downloading 2.097MB
+ 5b4d6ff92fc4 Downloading 3.146MB
+ edfa1eac0ec9 Downloading 3.146MB
+ 0aa392ebbb80 Downloading 2.097MB
+ 673dbbf30219 Downloading 4.194MB
+ 6bbcb046e4ae Downloading 3.146MB
+ edfa1eac0ec9 Downloading 3.146MB
+ 0aa392ebbb80 Downloading 2.097MB
+ 673dbbf30219 Downloading 4.194MB
+ 6bbcb046e4ae Downloading 3.146MB
+ 66d57c3a38eb Downloading 2.097MB
+ 816a9fd16934 Downloading 2.097MB
+ 8f8f3a474090 Downloading 2.097MB
+ 320d77ecabde Downloading 2.097MB
+ 5b4d6ff92fc4 Downloading 3.146MB
+ 947d1652ed21 Downloading 2.097MB
+ a4ec5f83fe8f Downloading 2.097MB
+ 816a9fd16934 Downloading 2.097MB
+ 8f8f3a474090 Downloading 2.097MB
+ 320d77ecabde Downloading 2.097MB
+ 5b4d6ff92fc4 Downloading 3.146MB
+ edfa1eac0ec9 Downloading 3.146MB
+ 0aa392ebbb80 Downloading 2.097MB
+ 673dbbf30219 Downloading 4.194MB
+ 6bbcb046e4ae Downloading 3.146MB
+ 66d57c3a38eb Downloading 2.097MB
+ 947d1652ed21 Downloading 2.097MB
+ a4ec5f83fe8f Downloading 2.097MB
+ 816a9fd16934 Downloading 2.097MB
+ 8f8f3a474090 Downloading 2.097MB
+ 320d77ecabde Downloading 2.097MB
+ 5b4d6ff92fc4 Downloading 3.146MB
+ edfa1eac0ec9 Downloading 3.146MB
+ 0aa392ebbb80 Downloading 2.097MB
+ 673dbbf30219 Downloading 4.194MB
+ 6bbcb046e4ae Downloading 3.146MB
+ 66d57c3a38eb Downloading 2.097MB
+ 947d1652ed21 Downloading 2.097MB
+ a4ec5f83fe8f Downloading 3.146MB
+ 5b4d6ff92fc4 Downloading 3.146MB
+ edfa1eac0ec9 Downloading 3.146MB
+ 0aa392ebbb80 Downloading 2.097MB
+ 673dbbf30219 Downloading 4.194MB
+ 6bbcb046e4ae Downloading 3.146MB
+ 66d57c3a38eb Downloading 2.097MB
+ 816a9fd16934 Downloading 2.097MB
+ 8f8f3a474090 Downloading 2.097MB
+ 320d77ecabde Downloading 2.097MB
+ 947d1652ed21 Downloading 2.097MB
+ a4ec5f83fe8f Downloading 3.146MB
+ edfa1eac0ec9 Downloading 3.146MB
+ 0aa392ebbb80 Downloading 3.146MB
+ 673dbbf30219 Downloading 4.194MB
+ 6bbcb046e4ae Downloading 3.146MB
+ 66d57c3a38eb Downloading 2.097MB
+ 816a9fd16934 Downloading 2.097MB
+ 8f8f3a474090 Downloading 2.097MB
+ 320d77ecabde Downloading 2.097MB
+ 5b4d6ff92fc4 Downloading 3.146MB
+ 947d1652ed21 Downloading 2.097MB
+ a4ec5f83fe8f Downloading 3.146MB
+ 66d57c3a38eb Downloading 2.097MB
+ 816a9fd16934 Downloading 2.097MB
+ 8f8f3a474090 Downloading 2.097MB
+ 320d77ecabde Downloading 2.097MB
+ 5b4d6ff92fc4 Downloading 4.194MB
+ edfa1eac0ec9 Downloading 3.146MB
+ 0aa392ebbb80 Downloading 3.146MB
+ 673dbbf30219 Downloading 5.243MB
+ 6bbcb046e4ae Downloading 3.146MB
+ 947d1652ed21 Downloading 3.146MB
+ a4ec5f83fe8f Downloading 3.146MB
+ 66d57c3a38eb Downloading 2.097MB
+ 816a9fd16934 Downloading 2.097MB
+ 8f8f3a474090 Downloading 2.097MB
+ 320d77ecabde Downloading 2.097MB
+ 5b4d6ff92fc4 Downloading 4.194MB
+ edfa1eac0ec9 Downloading 3.146MB
+ 0aa392ebbb80 Downloading 3.146MB
+ 673dbbf30219 Downloading 5.243MB
+ 6bbcb046e4ae Downloading 4.194MB
+ 947d1652ed21 Downloading 3.146MB
+ a4ec5f83fe8f Downloading 3.146MB
+ edfa1eac0ec9 Downloading 3.146MB
+ 0aa392ebbb80 Downloading 3.146MB
+ 673dbbf30219 Downloading 5.243MB
+ 6bbcb046e4ae Downloading 4.194MB
+ 66d57c3a38eb Downloading 2.097MB
+ 816a9fd16934 Downloading 3.146MB
+ 8f8f3a474090 Downloading 2.097MB
+ 320d77ecabde Downloading 2.097MB
+ 5b4d6ff92fc4 Downloading 4.194MB
+ 947d1652ed21 Downloading 3.146MB
+ a4ec5f83fe8f Downloading 3.146MB
+ 947d1652ed21 Downloading 3.146MB
+ a4ec5f83fe8f Downloading 3.146MB
+ edfa1eac0ec9 Downloading 3.146MB
+ 0aa392ebbb80 Downloading 3.146MB
+ 673dbbf30219 Downloading 5.243MB
+ 6bbcb046e4ae Downloading 4.194MB
+ 66d57c3a38eb Downloading 3.146MB
+ 816a9fd16934 Downloading 3.146MB
+ 8f8f3a474090 Downloading 3.146MB
+ 320d77ecabde Downloading 3.146MB
+ 5b4d6ff92fc4 Downloading 4.194MB
+ 816a9fd16934 Downloading 3.146MB
+ 8f8f3a474090 Downloading 3.146MB
+ 320d77ecabde Downloading 3.146MB
+ 5b4d6ff92fc4 Downloading 4.194MB
+ edfa1eac0ec9 Downloading 3.146MB
+ 0aa392ebbb80 Downloading 3.146MB
+ 673dbbf30219 Downloading 5.243MB
+ 6bbcb046e4ae Downloading 4.194MB
+ 66d57c3a38eb Downloading 3.146MB
+ 947d1652ed21 Downloading 3.146MB
+ a4ec5f83fe8f Downloading 3.146MB
+ edfa1eac0ec9 Downloading 4.194MB
+ 0aa392ebbb80 Downloading 3.146MB
+ 673dbbf30219 Downloading 5.243MB
+ 6bbcb046e4ae Downloading 4.194MB
+ 66d57c3a38eb Downloading 3.146MB
+ 816a9fd16934 Downloading 3.146MB
+ 8f8f3a474090 Downloading 3.146MB
+ 320d77ecabde Downloading 3.146MB
+ 5b4d6ff92fc4 Downloading 4.194MB
+ a4ec5f83fe8f Downloading 3.146MB
+ 947d1652ed21 Downloading 3.146MB
+ edfa1eac0ec9 Downloading 4.194MB
+ 0aa392ebbb80 Downloading 3.146MB
+ 673dbbf30219 Downloading 5.243MB
+ 6bbcb046e4ae Downloading 4.194MB
+ 66d57c3a38eb Downloading 3.146MB
+ 816a9fd16934 Downloading 3.146MB
+ 8f8f3a474090 Downloading 3.146MB
+ 320d77ecabde Downloading 3.146MB
+ 5b4d6ff92fc4 Downloading 4.194MB
+ 947d1652ed21 Downloading 3.146MB
+ a4ec5f83fe8f Downloading 3.146MB
+ 816a9fd16934 Downloading 3.146MB
+ 8f8f3a474090 Downloading 3.146MB
+ 320d77ecabde Downloading 3.146MB
+ 5b4d6ff92fc4 Downloading 4.194MB
+ edfa1eac0ec9 Downloading 4.194MB
+ 0aa392ebbb80 Downloading 3.146MB
+ 673dbbf30219 Downloading 5.243MB
+ 6bbcb046e4ae Downloading 4.194MB
+ 66d57c3a38eb Downloading 3.146MB
+ a4ec5f83fe8f Downloading 3.146MB
+ 947d1652ed21 Downloading 3.146MB
+ 5b4d6ff92fc4 Downloading 4.194MB
+ edfa1eac0ec9 Downloading 4.194MB
+ 0aa392ebbb80 Downloading 4.194MB
+ 673dbbf30219 Downloading 6.291MB
+ 6bbcb046e4ae Downloading 4.194MB
+ 66d57c3a38eb Downloading 3.146MB
+ 816a9fd16934 Downloading 3.146MB
+ 8f8f3a474090 Downloading 3.146MB
+ 320d77ecabde Downloading 3.146MB
+ 947d1652ed21 Downloading 3.146MB
+ a4ec5f83fe8f Downloading 3.146MB
+ 320d77ecabde Downloading 3.146MB
+ 5b4d6ff92fc4 Downloading 4.194MB
+ edfa1eac0ec9 Downloading 4.194MB
+ 0aa392ebbb80 Downloading 4.194MB
+ 673dbbf30219 Downloading 6.291MB
+ 6bbcb046e4ae Downloading 5.243MB
+ 66d57c3a38eb Downloading 3.146MB
+ 816a9fd16934 Downloading 3.146MB
+ 8f8f3a474090 Downloading 3.146MB
+ 947d1652ed21 Downloading 3.146MB
+ a4ec5f83fe8f Downloading 3.146MB
+ 8f8f3a474090 Downloading 3.146MB
+ 320d77ecabde Downloading 3.146MB
+ 5b4d6ff92fc4 Downloading 5.243MB
+ edfa1eac0ec9 Downloading 4.194MB
+ 0aa392ebbb80 Downloading 4.194MB
+ 673dbbf30219 Downloading 6.291MB
+ 6bbcb046e4ae Downloading 5.243MB
+ 66d57c3a38eb Downloading 3.146MB
+ 816a9fd16934 Downloading 3.146MB
+ 947d1652ed21 Downloading 3.146MB
+ a4ec5f83fe8f Downloading 4.194MB
+ 5b4d6ff92fc4 Downloading 5.243MB
+ edfa1eac0ec9 Downloading 4.194MB
+ 0aa392ebbb80 Downloading 4.194MB
+ 673dbbf30219 Downloading 6.291MB
+ 6bbcb046e4ae Downloading 5.243MB
+ 66d57c3a38eb Downloading 3.146MB
+ 816a9fd16934 Downloading 3.146MB
+ 8f8f3a474090 Downloading 3.146MB
+ 320d77ecabde Downloading 3.146MB
+ a4ec5f83fe8f Downloading 4.194MB
+ 947d1652ed21 Downloading 4.194MB
+ edfa1eac0ec9 Downloading 4.194MB
+ 0aa392ebbb80 Downloading 4.194MB
+ 673dbbf30219 Downloading 6.291MB
+ 6bbcb046e4ae Downloading 5.243MB
+ 66d57c3a38eb Downloading 3.146MB
+ 816a9fd16934 Downloading 3.146MB
+ 8f8f3a474090 Downloading 3.146MB
+ 320d77ecabde Downloading 3.146MB
+ 5b4d6ff92fc4 Downloading 5.243MB
+ 947d1652ed21 Downloading 4.194MB
+ a4ec5f83fe8f Downloading 4.194MB
+ 5b4d6ff92fc4 Downloading 5.243MB
+ edfa1eac0ec9 Downloading 4.194MB
+ 0aa392ebbb80 Downloading 4.194MB
+ 673dbbf30219 Downloading 6.291MB
+ 6bbcb046e4ae Downloading 5.243MB
+ 66d57c3a38eb Downloading 3.146MB
+ 816a9fd16934 Downloading 3.146MB
+ 8f8f3a474090 Downloading 3.146MB
+ 320d77ecabde Downloading 3.146MB
+ a4ec5f83fe8f Downloading 4.194MB
+ 947d1652ed21 Downloading 4.194MB
+ 320d77ecabde Downloading 3.146MB
+ 5b4d6ff92fc4 Downloading 5.243MB
+ edfa1eac0ec9 Downloading 4.194MB
+ 0aa392ebbb80 Downloading 4.194MB
+ 673dbbf30219 Downloading 6.291MB
+ 6bbcb046e4ae Downloading 5.243MB
+ 66d57c3a38eb Downloading 3.146MB
+ 816a9fd16934 Downloading 4.194MB
+ 8f8f3a474090 Downloading 3.146MB
+ 947d1652ed21 Downloading 4.194MB
+ a4ec5f83fe8f Downloading 4.194MB
+ 320d77ecabde Downloading 4.194MB
+ 5b4d6ff92fc4 Downloading 5.243MB
+ edfa1eac0ec9 Downloading 4.194MB
+ 0aa392ebbb80 Downloading 4.194MB
+ 673dbbf30219 Downloading 6.291MB
+ 6bbcb046e4ae Downloading 5.243MB
+ 66d57c3a38eb Downloading 3.146MB
+ 816a9fd16934 Downloading 4.194MB
+ 8f8f3a474090 Downloading 4.228MB
+ a4ec5f83fe8f Downloading 4.194MB
+ 947d1652ed21 Downloading 4.194MB
+ 947d1652ed21 Downloading 4.194MB
+ a4ec5f83fe8f Downloading 4.194MB
+ 5b4d6ff92fc4 Downloading 5.243MB
+ edfa1eac0ec9 Downloading 4.194MB
+ 0aa392ebbb80 Downloading 4.194MB
+ 673dbbf30219 Downloading 6.291MB
+ 6bbcb046e4ae Downloading 5.243MB
+ 66d57c3a38eb Downloading 4.194MB
+ 816a9fd16934 Downloading 4.194MB
+ 8f8f3a474090 Download complete 0B
+ 320d77ecabde Downloading 4.194MB
+ 947d1652ed21 Downloading 4.194MB
+ a4ec5f83fe8f Downloading 4.194MB
+ 5b4d6ff92fc4 Downloading 5.243MB
+ edfa1eac0ec9 Downloading 5.243MB
+ 0aa392ebbb80 Downloading 4.194MB
+ 673dbbf30219 Downloading 6.291MB
+ 6bbcb046e4ae Downloading 5.243MB
+ 66d57c3a38eb Downloading 4.194MB
+ 816a9fd16934 Downloading 4.194MB
+ 320d77ecabde Downloading 4.194MB
+ 947d1652ed21 Downloading 4.194MB
+ a4ec5f83fe8f Downloading 4.194MB
+ edfa1eac0ec9 Downloading 5.243MB
+ 0aa392ebbb80 Downloading 5.243MB
+ 673dbbf30219 Downloading 7.34MB
+ 6bbcb046e4ae Downloading 5.243MB
+ 66d57c3a38eb Downloading 4.194MB
+ 816a9fd16934 Downloading 4.194MB
+ 320d77ecabde Downloading 4.194MB
+ 5b4d6ff92fc4 Downloading 5.243MB
+ 947d1652ed21 Downloading 4.194MB
+ a4ec5f83fe8f Downloading 4.194MB
+ 816a9fd16934 Downloading 4.194MB
+ 320d77ecabde Downloading 4.194MB
+ 5b4d6ff92fc4 Downloading 5.243MB
+ edfa1eac0ec9 Downloading 5.243MB
+ 0aa392ebbb80 Downloading 5.243MB
+ 673dbbf30219 Downloading 7.34MB
+ 6bbcb046e4ae Downloading 5.243MB
+ 66d57c3a38eb Downloading 4.194MB
+ 947d1652ed21 Downloading 5.243MB
+ a4ec5f83fe8f Downloading 4.194MB
+ 320d77ecabde Downloading 4.194MB
+ 5b4d6ff92fc4 Downloading 6.291MB
+ edfa1eac0ec9 Downloading 5.243MB
+ 0aa392ebbb80 Downloading 5.243MB
+ 673dbbf30219 Downloading 7.34MB
+ 6bbcb046e4ae Downloading 6.291MB
+ 66d57c3a38eb Downloading 4.194MB
+ 816a9fd16934 Downloading 4.194MB
+ 947d1652ed21 Downloading 5.243MB
+ a4ec5f83fe8f Download complete 0B
+ a4ec5f83fe8f Extracting 1B
+ 816a9fd16934 Downloading 4.194MB
+ 320d77ecabde Downloading 4.194MB
+ 5b4d6ff92fc4 Downloading 6.291MB
+ edfa1eac0ec9 Downloading 5.243MB
+ 0aa392ebbb80 Downloading 5.243MB
+ 673dbbf30219 Downloading 7.34MB
+ 6bbcb046e4ae Downloading 6.291MB
+ 66d57c3a38eb Downloading 4.194MB
+ 947d1652ed21 Downloading 5.243MB
+ a4ec5f83fe8f Extracting 1B
+ 66d57c3a38eb Downloading 4.194MB
+ 816a9fd16934 Downloading 4.194MB
+ 320d77ecabde Downloading 4.194MB
+ 5b4d6ff92fc4 Downloading 6.291MB
+ edfa1eac0ec9 Downloading 5.243MB
+ 0aa392ebbb80 Downloading 5.243MB
+ 673dbbf30219 Downloading 7.34MB
+ 6bbcb046e4ae Downloading 6.291MB
+ 947d1652ed21 Downloading 5.243MB
+ a4ec5f83fe8f Extracting 1B
+ 320d77ecabde Downloading 4.194MB
+ 5b4d6ff92fc4 Downloading 6.291MB
+ edfa1eac0ec9 Downloading 5.243MB
+ 0aa392ebbb80 Downloading 5.243MB
+ 673dbbf30219 Downloading 7.34MB
+ 6bbcb046e4ae Downloading 6.291MB
+ 66d57c3a38eb Downloading 4.194MB
+ 816a9fd16934 Downloading 4.194MB
+ 947d1652ed21 Downloading 5.243MB
+ a4ec5f83fe8f Extracting 1B
+ 947d1652ed21 Downloading 5.243MB
+ 320d77ecabde Downloading 4.194MB
+ 5b4d6ff92fc4 Downloading 6.291MB
+ edfa1eac0ec9 Downloading 5.243MB
+ 0aa392ebbb80 Downloading 5.243MB
+ 673dbbf30219 Downloading 7.34MB
+ 6bbcb046e4ae Downloading 6.291MB
+ 66d57c3a38eb Downloading 4.194MB
+ 816a9fd16934 Downloading 5.243MB
+ a4ec5f83fe8f Extracting 1B
+ 947d1652ed21 Downloading 5.243MB
+ a4ec5f83fe8f Extracting 1B
+ 66d57c3a38eb Downloading 5.243MB
+ 816a9fd16934 Downloading 5.243MB
+ 320d77ecabde Downloading 5.243MB
+ 5b4d6ff92fc4 Downloading 6.291MB
+ edfa1eac0ec9 Downloading 5.243MB
+ 0aa392ebbb80 Downloading 5.243MB
+ 673dbbf30219 Downloading 7.34MB
+ 6bbcb046e4ae Downloading 6.291MB
+ 947d1652ed21 Downloading 5.243MB
+ a4ec5f83fe8f Extracting 1B
+ 0aa392ebbb80 Downloading 6.291MB
+ 673dbbf30219 Downloading 8.389MB
+ 6bbcb046e4ae Downloading 7.34MB
+ 66d57c3a38eb Downloading 5.243MB
+ 816a9fd16934 Downloading 5.243MB
+ 320d77ecabde Downloading 5.243MB
+ 5b4d6ff92fc4 Downloading 6.291MB
+ edfa1eac0ec9 Downloading 6.291MB
+ 947d1652ed21 Downloading 5.243MB
+ a4ec5f83fe8f Extracting 1B
+ 320d77ecabde Downloading 5.243MB
+ 5b4d6ff92fc4 Downloading 6.291MB
+ edfa1eac0ec9 Downloading 6.291MB
+ 0aa392ebbb80 Downloading 6.291MB
+ 673dbbf30219 Downloading 8.697MB
+ 6bbcb046e4ae Downloading 7.34MB
+ 66d57c3a38eb Downloading 5.243MB
+ 816a9fd16934 Downloading 5.243MB
+ 947d1652ed21 Downloading 5.243MB
+ a4ec5f83fe8f Extracting 1B
+ 673dbbf30219 Downloading 8.697MB
+ 6bbcb046e4ae Downloading 7.34MB
+ 66d57c3a38eb Downloading 5.243MB
+ 816a9fd16934 Downloading 5.243MB
+ 320d77ecabde Downloading 5.243MB
+ 5b4d6ff92fc4 Downloading 6.291MB
+ edfa1eac0ec9 Downloading 6.291MB
+ 0aa392ebbb80 Downloading 6.291MB
+ 947d1652ed21 Downloading 6.291MB
+ a4ec5f83fe8f Extracting 1B
+ 320d77ecabde Downloading 5.243MB
+ 5b4d6ff92fc4 Downloading 7.34MB
+ edfa1eac0ec9 Downloading 6.291MB
+ 0aa392ebbb80 Downloading 6.291MB
+ 673dbbf30219 Download complete 0B
+ 6bbcb046e4ae Downloading 7.34MB
+ 66d57c3a38eb Downloading 5.243MB
+ 816a9fd16934 Downloading 5.243MB
+ 947d1652ed21 Downloading 6.291MB
+ a4ec5f83fe8f Extracting 2B
+ 947d1652ed21 Downloading 6.291MB
+ 5b4d6ff92fc4 Downloading 7.34MB
+ edfa1eac0ec9 Downloading 6.291MB
+ 0aa392ebbb80 Downloading 6.291MB
+ 6bbcb046e4ae Downloading 7.34MB
+ 66d57c3a38eb Downloading 5.243MB
+ 816a9fd16934 Downloading 5.243MB
+ 320d77ecabde Downloading 5.243MB
+ a4ec5f83fe8f Pull complete 0B
+ 947d1652ed21 Downloading 6.291MB
+ 0aa392ebbb80 Downloading 6.291MB
+ 6bbcb046e4ae Downloading 7.34MB
+ 66d57c3a38eb Downloading 5.243MB
+ 816a9fd16934 Downloading 6.291MB
+ 320d77ecabde Downloading 5.243MB
+ 5b4d6ff92fc4 Downloading 7.34MB
+ edfa1eac0ec9 Downloading 6.291MB
+ 1bc391e36c98 Pull complete 0B
+ 947d1652ed21 Downloading 6.291MB
+ b63b3a538829 Pull complete 0B
+ 5b4d6ff92fc4 Downloading 7.34MB
+ edfa1eac0ec9 Downloading 6.291MB
+ 0aa392ebbb80 Downloading 6.291MB
+ 6bbcb046e4ae Downloading 8.389MB
+ 66d57c3a38eb Downloading 6.291MB
+ 816a9fd16934 Downloading 6.291MB
+ 320d77ecabde Downloading 6.291MB
+ 947d1652ed21 Downloading 6.291MB
+ 5b4d6ff92fc4 Downloading 7.34MB
+ edfa1eac0ec9 Downloading 6.291MB
+ 0aa392ebbb80 Downloading 6.291MB
+ 6bbcb046e4ae Downloading 8.389MB
+ 66d57c3a38eb Downloading 6.291MB
+ 816a9fd16934 Downloading 6.291MB
+ 320d77ecabde Downloading 6.291MB
+ 947d1652ed21 Downloading 6.291MB
+ edfa1eac0ec9 Downloading 7.34MB
+ 0aa392ebbb80 Downloading 7.34MB
+ 6bbcb046e4ae Downloading 8.389MB
+ 66d57c3a38eb Downloading 6.291MB
+ 816a9fd16934 Downloading 6.291MB
+ 320d77ecabde Downloading 6.291MB
+ 5b4d6ff92fc4 Downloading 7.34MB
+ 947d1652ed21 Downloading 7.34MB
+ 66d57c3a38eb Downloading 6.291MB
+ 816a9fd16934 Downloading 6.291MB
+ 320d77ecabde Downloading 6.291MB
+ 5b4d6ff92fc4 Downloading 8.389MB
+ edfa1eac0ec9 Downloading 7.34MB
+ 0aa392ebbb80 Downloading 7.34MB
+ 6bbcb046e4ae Downloading 8.389MB
+ 6bbcb046e4ae Downloading 8.389MB
+ 66d57c3a38eb Downloading 6.291MB
+ 816a9fd16934 Downloading 6.291MB
+ 320d77ecabde Downloading 6.291MB
+ 5b4d6ff92fc4 Downloading 8.389MB
+ edfa1eac0ec9 Downloading 7.34MB
+ 0aa392ebbb80 Downloading 7.34MB
+ 947d1652ed21 Downloading 7.34MB
+ 947d1652ed21 Downloading 7.34MB
+ 6bbcb046e4ae Downloading 8.389MB
+ 66d57c3a38eb Downloading 6.291MB
+ 816a9fd16934 Downloading 6.291MB
+ 320d77ecabde Downloading 6.291MB
+ 5b4d6ff92fc4 Downloading 8.389MB
+ edfa1eac0ec9 Downloading 7.34MB
+ 0aa392ebbb80 Downloading 7.34MB
+ 6bbcb046e4ae Downloading 9.437MB
+ 66d57c3a38eb Downloading 6.291MB
+ 816a9fd16934 Downloading 6.291MB
+ 320d77ecabde Downloading 6.291MB
+ 5b4d6ff92fc4 Downloading 8.389MB
+ edfa1eac0ec9 Downloading 7.34MB
+ 0aa392ebbb80 Downloading 7.34MB
+ 947d1652ed21 Downloading 7.34MB
+ edfa1eac0ec9 Downloading 7.34MB
+ 0aa392ebbb80 Downloading 7.34MB
+ 6bbcb046e4ae Downloading 9.437MB
+ 66d57c3a38eb Downloading 6.291MB
+ 816a9fd16934 Downloading 7.34MB
+ 320d77ecabde Downloading 6.291MB
+ 5b4d6ff92fc4 Downloading 8.389MB
+ 947d1652ed21 Downloading 7.34MB
+ 6bbcb046e4ae Downloading 9.437MB
+ 66d57c3a38eb Downloading 6.291MB
+ 816a9fd16934 Downloading 7.34MB
+ 320d77ecabde Downloading 7.34MB
+ 5b4d6ff92fc4 Downloading 8.389MB
+ edfa1eac0ec9 Downloading 7.34MB
+ 0aa392ebbb80 Downloading 7.34MB
+ 947d1652ed21 Downloading 7.34MB
+ 816a9fd16934 Downloading 7.34MB
+ 320d77ecabde Downloading 7.34MB
+ 5b4d6ff92fc4 Downloading 8.389MB
+ edfa1eac0ec9 Downloading 7.34MB
+ 0aa392ebbb80 Downloading 7.34MB
+ 6bbcb046e4ae Downloading 9.437MB
+ 66d57c3a38eb Downloading 7.34MB
+ 947d1652ed21 Downloading 7.34MB
+ edfa1eac0ec9 Downloading 7.34MB
+ 0aa392ebbb80 Downloading 8.389MB
+ 6bbcb046e4ae Downloading 9.437MB
+ 66d57c3a38eb Downloading 7.34MB
+ 816a9fd16934 Downloading 7.34MB
+ 320d77ecabde Downloading 7.34MB
+ 5b4d6ff92fc4 Downloading 8.389MB
+ 947d1652ed21 Downloading 7.34MB
+ 947d1652ed21 Downloading 7.34MB
+ 5b4d6ff92fc4 Downloading 8.389MB
+ edfa1eac0ec9 Downloading 8.389MB
+ 0aa392ebbb80 Downloading 8.389MB
+ 6bbcb046e4ae Downloading 9.437MB
+ 66d57c3a38eb Downloading 7.34MB
+ 816a9fd16934 Downloading 7.34MB
+ 320d77ecabde Downloading 7.34MB
+ 5b4d6ff92fc4 Downloading 8.389MB
+ edfa1eac0ec9 Downloading 8.389MB
+ 0aa392ebbb80 Downloading 8.389MB
+ 6bbcb046e4ae Downloading 9.437MB
+ 66d57c3a38eb Downloading 7.34MB
+ 816a9fd16934 Downloading 7.34MB
+ 320d77ecabde Downloading 7.34MB
+ 947d1652ed21 Downloading 7.34MB
+ 947d1652ed21 Downloading 8.389MB
+ 6bbcb046e4ae Downloading 9.437MB
+ 66d57c3a38eb Downloading 7.34MB
+ 816a9fd16934 Downloading 7.34MB
+ 320d77ecabde Downloading 7.34MB
+ 5b4d6ff92fc4 Downloading 9.437MB
+ edfa1eac0ec9 Downloading 8.389MB
+ 0aa392ebbb80 Downloading 8.389MB
+ 947d1652ed21 Downloading 8.389MB
+ edfa1eac0ec9 Downloading 8.389MB
+ 0aa392ebbb80 Downloading 8.389MB
+ 6bbcb046e4ae Downloading 9.437MB
+ 66d57c3a38eb Downloading 7.34MB
+ 816a9fd16934 Downloading 7.34MB
+ 320d77ecabde Downloading 7.34MB
+ 5b4d6ff92fc4 Downloading 9.437MB
+ 816a9fd16934 Downloading 7.34MB
+ 320d77ecabde Downloading 7.34MB
+ 5b4d6ff92fc4 Downloading 9.437MB
+ edfa1eac0ec9 Downloading 8.389MB
+ 0aa392ebbb80 Downloading 8.389MB
+ 6bbcb046e4ae Downloading 10.49MB
+ 66d57c3a38eb Downloading 7.34MB
+ 947d1652ed21 Downloading 8.389MB
+ 947d1652ed21 Downloading 8.389MB
+ 816a9fd16934 Downloading 8.389MB
+ 320d77ecabde Downloading 8.389MB
+ 5b4d6ff92fc4 Downloading 9.437MB
+ edfa1eac0ec9 Downloading 8.389MB
+ 0aa392ebbb80 Downloading 8.389MB
+ 6bbcb046e4ae Downloading 10.49MB
+ 66d57c3a38eb Downloading 7.34MB
+ 320d77ecabde Downloading 8.389MB
+ 5b4d6ff92fc4 Downloading 9.437MB
+ edfa1eac0ec9 Downloading 8.389MB
+ 0aa392ebbb80 Downloading 8.389MB
+ 6bbcb046e4ae Downloading 10.49MB
+ 66d57c3a38eb Downloading 8.389MB
+ 816a9fd16934 Downloading 8.389MB
+ 947d1652ed21 Downloading 8.389MB
+ 947d1652ed21 Downloading 8.389MB
+ 6bbcb046e4ae Downloading 10.49MB
+ 66d57c3a38eb Downloading 8.389MB
+ 816a9fd16934 Downloading 8.389MB
+ 320d77ecabde Downloading 8.389MB
+ 5b4d6ff92fc4 Downloading 9.437MB
+ edfa1eac0ec9 Downloading 9.437MB
+ 0aa392ebbb80 Downloading 9.437MB
+ 947d1652ed21 Downloading 8.389MB
+ edfa1eac0ec9 Downloading 9.437MB
+ 0aa392ebbb80 Downloading 9.437MB
+ 6bbcb046e4ae Downloading 10.49MB
+ 66d57c3a38eb Downloading 8.389MB
+ 816a9fd16934 Downloading 8.389MB
+ 320d77ecabde Downloading 8.389MB
+ 5b4d6ff92fc4 Downloading 10.49MB
+ 947d1652ed21 Downloading 9.437MB
+ edfa1eac0ec9 Downloading 9.437MB
+ 0aa392ebbb80 Downloading 9.437MB
+ 6bbcb046e4ae Downloading 10.49MB
+ 66d57c3a38eb Downloading 8.389MB
+ 816a9fd16934 Downloading 8.389MB
+ 320d77ecabde Downloading 8.389MB
+ 5b4d6ff92fc4 Downloading 10.49MB
+ 947d1652ed21 Downloading 9.437MB
+ 947d1652ed21 Downloading 9.437MB
+ 5b4d6ff92fc4 Downloading 10.49MB
+ edfa1eac0ec9 Downloading 9.437MB
+ 0aa392ebbb80 Downloading 9.437MB
+ 6bbcb046e4ae Downloading 11.53MB
+ 66d57c3a38eb Downloading 8.389MB
+ 816a9fd16934 Downloading 9.437MB
+ 320d77ecabde Downloading 8.389MB
+ 947d1652ed21 Downloading 9.437MB
+ 0aa392ebbb80 Downloading 9.437MB
+ 6bbcb046e4ae Downloading 11.53MB
+ 66d57c3a38eb Downloading 9.437MB
+ 816a9fd16934 Downloading 9.437MB
+ 320d77ecabde Downloading 9.437MB
+ 5b4d6ff92fc4 Downloading 10.49MB
+ edfa1eac0ec9 Downloading 9.437MB
+ 947d1652ed21 Downloading 9.437MB
+ 5b4d6ff92fc4 Downloading 10.49MB
+ edfa1eac0ec9 Downloading 9.437MB
+ 0aa392ebbb80 Downloading 9.437MB
+ 6bbcb046e4ae Downloading 11.53MB
+ 66d57c3a38eb Downloading 9.437MB
+ 816a9fd16934 Downloading 9.437MB
+ 320d77ecabde Downloading 9.437MB
+ 947d1652ed21 Downloading 9.437MB
+ 5b4d6ff92fc4 Downloading 10.49MB
+ edfa1eac0ec9 Downloading 10.49MB
+ 0aa392ebbb80 Downloading 10.49MB
+ 6bbcb046e4ae Downloading 11.53MB
+ 66d57c3a38eb Downloading 9.437MB
+ 816a9fd16934 Downloading 9.437MB
+ 320d77ecabde Downloading 9.437MB
+ 947d1652ed21 Downloading 9.437MB
+ 816a9fd16934 Downloading 9.437MB
+ 320d77ecabde Downloading 9.437MB
+ 5b4d6ff92fc4 Downloading 10.49MB
+ edfa1eac0ec9 Downloading 10.49MB
+ 0aa392ebbb80 Downloading 10.49MB
+ 6bbcb046e4ae Downloading 11.53MB
+ 66d57c3a38eb Downloading 9.437MB
+ 947d1652ed21 Downloading 10.49MB
+ edfa1eac0ec9 Downloading 10.49MB
+ 0aa392ebbb80 Downloading 10.49MB
+ 6bbcb046e4ae Downloading 11.53MB
+ 66d57c3a38eb Downloading 9.437MB
+ 816a9fd16934 Downloading 9.437MB
+ 320d77ecabde Downloading 9.437MB
+ 5b4d6ff92fc4 Downloading 11.53MB
+ 947d1652ed21 Downloading 10.49MB
+ 947d1652ed21 Downloading 10.49MB
+ 6bbcb046e4ae Downloading 12.58MB
+ 66d57c3a38eb Downloading 9.437MB
+ 816a9fd16934 Downloading 9.437MB
+ 320d77ecabde Downloading 9.437MB
+ 5b4d6ff92fc4 Downloading 11.53MB
+ edfa1eac0ec9 Downloading 10.49MB
+ 0aa392ebbb80 Downloading 10.49MB
+ 947d1652ed21 Downloading 10.49MB
+ edfa1eac0ec9 Downloading 10.49MB
+ 0aa392ebbb80 Downloading 10.49MB
+ 6bbcb046e4ae Downloading 12.58MB
+ 66d57c3a38eb Downloading 9.437MB
+ 816a9fd16934 Downloading 10.49MB
+ 320d77ecabde Downloading 10.49MB
+ 5b4d6ff92fc4 Downloading 11.53MB
+ 947d1652ed21 Downloading 10.49MB
+ edfa1eac0ec9 Downloading 10.49MB
+ 0aa392ebbb80 Downloading 11.53MB
+ 6bbcb046e4ae Downloading 12.58MB
+ 66d57c3a38eb Downloading 10.49MB
+ 816a9fd16934 Downloading 10.49MB
+ 320d77ecabde Downloading 10.49MB
+ 5b4d6ff92fc4 Downloading 11.53MB
+ 947d1652ed21 Downloading 10.49MB
+ 66d57c3a38eb Downloading 10.49MB
+ 816a9fd16934 Downloading 10.49MB
+ 320d77ecabde Downloading 10.49MB
+ 5b4d6ff92fc4 Downloading 12.58MB
+ edfa1eac0ec9 Downloading 11.53MB
+ 0aa392ebbb80 Downloading 11.53MB
+ 6bbcb046e4ae Downloading 12.58MB
+ 0aa392ebbb80 Downloading 11.53MB
+ 6bbcb046e4ae Downloading 12.58MB
+ 66d57c3a38eb Downloading 10.49MB
+ 816a9fd16934 Downloading 10.49MB
+ 320d77ecabde Downloading 10.49MB
+ 5b4d6ff92fc4 Downloading 12.58MB
+ edfa1eac0ec9 Downloading 11.53MB
+ 947d1652ed21 Downloading 10.49MB
+ 6bbcb046e4ae Downloading 12.58MB
+ 66d57c3a38eb Downloading 10.49MB
+ 816a9fd16934 Downloading 10.49MB
+ 320d77ecabde Downloading 10.49MB
+ 5b4d6ff92fc4 Downloading 12.58MB
+ edfa1eac0ec9 Downloading 11.53MB
+ 0aa392ebbb80 Downloading 11.53MB
+ 947d1652ed21 Downloading 11.53MB
+ 6bbcb046e4ae Downloading 13.63MB
+ 66d57c3a38eb Downloading 10.49MB
+ 816a9fd16934 Downloading 10.49MB
+ 320d77ecabde Downloading 10.49MB
+ 5b4d6ff92fc4 Downloading 12.58MB
+ edfa1eac0ec9 Downloading 11.53MB
+ 0aa392ebbb80 Downloading 11.53MB
+ 947d1652ed21 Downloading 11.53MB
+ 947d1652ed21 Downloading 11.53MB
+ 6bbcb046e4ae Downloading 13.63MB
+ 66d57c3a38eb Downloading 11.53MB
+ 816a9fd16934 Downloading 11.53MB
+ 320d77ecabde Downloading 10.49MB
+ 5b4d6ff92fc4 Downloading 12.58MB
+ edfa1eac0ec9 Downloading 11.53MB
+ 0aa392ebbb80 Downloading 11.53MB
+ 5b4d6ff92fc4 Downloading 12.58MB
+ edfa1eac0ec9 Downloading 11.53MB
+ 0aa392ebbb80 Downloading 11.53MB
+ 6bbcb046e4ae Downloading 13.63MB
+ 66d57c3a38eb Downloading 11.53MB
+ 816a9fd16934 Downloading 11.53MB
+ 320d77ecabde Downloading 10.49MB
+ 947d1652ed21 Downloading 11.53MB
+ 947d1652ed21 Downloading 11.53MB
+ 320d77ecabde Downloading 10.49MB
+ 5b4d6ff92fc4 Downloading 12.58MB
+ edfa1eac0ec9 Downloading 11.53MB
+ 0aa392ebbb80 Downloading 12.58MB
+ 6bbcb046e4ae Downloading 13.63MB
+ 66d57c3a38eb Downloading 11.53MB
+ 816a9fd16934 Downloading 11.53MB
+ 947d1652ed21 Downloading 11.53MB
+ edfa1eac0ec9 Downloading 11.53MB
+ 0aa392ebbb80 Downloading 12.58MB
+ 6bbcb046e4ae Downloading 13.63MB
+ 66d57c3a38eb Downloading 11.53MB
+ 816a9fd16934 Downloading 11.53MB
+ 320d77ecabde Downloading 10.49MB
+ 5b4d6ff92fc4 Downloading 12.58MB
+ 947d1652ed21 Downloading 11.53MB
+ 816a9fd16934 Downloading 11.53MB
+ 320d77ecabde Downloading 10.49MB
+ 5b4d6ff92fc4 Downloading 13.63MB
+ edfa1eac0ec9 Downloading 11.53MB
+ 0aa392ebbb80 Downloading 12.58MB
+ 6bbcb046e4ae Downloading 13.63MB
+ 66d57c3a38eb Downloading 11.53MB
+ 947d1652ed21 Downloading 12.58MB
+ 816a9fd16934 Downloading 11.53MB
+ 320d77ecabde Downloading 11.53MB
+ 5b4d6ff92fc4 Downloading 13.63MB
+ edfa1eac0ec9 Downloading 12.58MB
+ 0aa392ebbb80 Downloading 12.58MB
+ 6bbcb046e4ae Downloading 13.63MB
+ 66d57c3a38eb Downloading 11.53MB
+ 947d1652ed21 Downloading 12.58MB
+ edfa1eac0ec9 Downloading 12.58MB
+ 0aa392ebbb80 Downloading 12.58MB
+ 6bbcb046e4ae Downloading 14.68MB
+ 66d57c3a38eb Downloading 11.53MB
+ 816a9fd16934 Downloading 11.53MB
+ 320d77ecabde Downloading 11.53MB
+ 5b4d6ff92fc4 Downloading 13.63MB
+ 947d1652ed21 Downloading 12.58MB
+ 66d57c3a38eb Downloading 11.53MB
+ 816a9fd16934 Downloading 11.53MB
+ 320d77ecabde Downloading 11.72MB
+ 5b4d6ff92fc4 Downloading 13.63MB
+ edfa1eac0ec9 Downloading 12.58MB
+ 0aa392ebbb80 Downloading 12.58MB
+ 6bbcb046e4ae Downloading 14.68MB
+ 947d1652ed21 Downloading 12.58MB
+ 816a9fd16934 Downloading 11.53MB
+ 320d77ecabde Download complete 0B
+ 5b4d6ff92fc4 Downloading 13.63MB
+ edfa1eac0ec9 Downloading 12.58MB
+ 0aa392ebbb80 Downloading 12.58MB
+ 6bbcb046e4ae Downloading 14.68MB
+ 66d57c3a38eb Downloading 11.53MB
+ 947d1652ed21 Downloading 12.58MB
+ edfa1eac0ec9 Downloading 12.58MB
+ 0aa392ebbb80 Downloading 13.63MB
+ 6bbcb046e4ae Downloading 14.68MB
+ 66d57c3a38eb Downloading 12.58MB
+ 816a9fd16934 Downloading 12.77MB
+ 5b4d6ff92fc4 Downloading 13.63MB
+ 947d1652ed21 Downloading 12.58MB
+ 5b4d6ff92fc4 Downloading 14.68MB
+ edfa1eac0ec9 Downloading 13.63MB
+ 0aa392ebbb80 Downloading 13.63MB
+ 6bbcb046e4ae Downloading 14.68MB
+ 66d57c3a38eb Downloading 12.58MB
+ 816a9fd16934 Download complete 0B
+ 947d1652ed21 Downloading 12.58MB
+ 5b4d6ff92fc4 Downloading 14.68MB
+ edfa1eac0ec9 Downloading 13.63MB
+ 0aa392ebbb80 Downloading 13.63MB
+ 6bbcb046e4ae Downloading 14.68MB
+ 66d57c3a38eb Downloading 12.58MB
+ 947d1652ed21 Downloading 13.63MB
+ 6bbcb046e4ae Downloading 15.73MB
+ 66d57c3a38eb Downloading 12.58MB
+ 5b4d6ff92fc4 Downloading 14.68MB
+ edfa1eac0ec9 Downloading 13.63MB
+ 0aa392ebbb80 Downloading 13.63MB
+ 947d1652ed21 Downloading 13.63MB
+ 6bbcb046e4ae Downloading 15.73MB
+ 66d57c3a38eb Downloading 12.58MB
+ 5b4d6ff92fc4 Downloading 14.68MB
+ edfa1eac0ec9 Downloading 13.63MB
+ 0aa392ebbb80 Downloading 13.63MB
+ 947d1652ed21 Downloading 13.63MB
+ 6bbcb046e4ae Downloading 15.73MB
+ 66d57c3a38eb Downloading 13.63MB
+ 5b4d6ff92fc4 Downloading 14.68MB
+ edfa1eac0ec9 Downloading 13.63MB
+ 0aa392ebbb80 Downloading 13.63MB
+ 947d1652ed21 Downloading 13.63MB
+ 5b4d6ff92fc4 Downloading 15.73MB
+ edfa1eac0ec9 Downloading 14.68MB
+ 0aa392ebbb80 Downloading 14.68MB
+ 6bbcb046e4ae Downloading 15.73MB
+ 66d57c3a38eb Downloading 13.63MB
+ 6bbcb046e4ae Downloading 15.73MB
+ 66d57c3a38eb Downloading 13.63MB
+ 5b4d6ff92fc4 Downloading 15.73MB
+ edfa1eac0ec9 Downloading 14.68MB
+ 0aa392ebbb80 Downloading 14.68MB
+ 947d1652ed21 Downloading 13.63MB
+ 947d1652ed21 Downloading 14.68MB
+ 5b4d6ff92fc4 Downloading 15.73MB
+ edfa1eac0ec9 Downloading 14.68MB
+ 0aa392ebbb80 Downloading 14.68MB
+ 6bbcb046e4ae Downloading 15.73MB
+ 66d57c3a38eb Downloading 13.63MB
+ 947d1652ed21 Downloading 14.68MB
+ 5b4d6ff92fc4 Downloading 15.73MB
+ edfa1eac0ec9 Downloading 14.68MB
+ 0aa392ebbb80 Downloading 14.68MB
+ 6bbcb046e4ae Downloading 15.73MB
+ 66d57c3a38eb Downloading 13.63MB
+ 947d1652ed21 Downloading 14.68MB
+ edfa1eac0ec9 Downloading 14.68MB
+ 0aa392ebbb80 Downloading 14.68MB
+ 6bbcb046e4ae Downloading 16.78MB
+ 66d57c3a38eb Downloading 13.63MB
+ 5b4d6ff92fc4 Downloading 15.73MB
+ 947d1652ed21 Downloading 14.68MB
+ 5b4d6ff92fc4 Downloading 15.73MB
+ edfa1eac0ec9 Downloading 14.68MB
+ 0aa392ebbb80 Downloading 14.68MB
+ 6bbcb046e4ae Downloading 16.78MB
+ 66d57c3a38eb Downloading 14.68MB
+ edfa1eac0ec9 Downloading 14.68MB
+ 0aa392ebbb80 Downloading 15.73MB
+ 6bbcb046e4ae Downloading 16.78MB
+ 66d57c3a38eb Downloading 14.68MB
+ 5b4d6ff92fc4 Downloading 15.73MB
+ 947d1652ed21 Downloading 14.68MB
+ 5b4d6ff92fc4 Downloading 15.73MB
+ edfa1eac0ec9 Downloading 14.68MB
+ 0aa392ebbb80 Downloading 15.73MB
+ 6bbcb046e4ae Downloading 16.78MB
+ 66d57c3a38eb Downloading 14.68MB
+ 947d1652ed21 Downloading 14.68MB
+ 5b4d6ff92fc4 Downloading 15.73MB
+ edfa1eac0ec9 Downloading 14.68MB
+ 0aa392ebbb80 Downloading 15.73MB
+ 6bbcb046e4ae Downloading 16.78MB
+ 66d57c3a38eb Downloading 14.68MB
+ 947d1652ed21 Downloading 14.68MB
+ edfa1eac0ec9 Downloading 15.73MB
+ 0aa392ebbb80 Downloading 15.73MB
+ 6bbcb046e4ae Downloading 16.78MB
+ 66d57c3a38eb Downloading 14.68MB
+ 5b4d6ff92fc4 Downloading 15.73MB
+ 947d1652ed21 Downloading 14.68MB
+ 5b4d6ff92fc4 Downloading 15.73MB
+ edfa1eac0ec9 Downloading 15.73MB
+ 0aa392ebbb80 Downloading 15.73MB
+ 6bbcb046e4ae Downloading 16.78MB
+ 66d57c3a38eb Downloading 14.68MB
+ 947d1652ed21 Downloading 15.73MB
+ 6bbcb046e4ae Downloading 16.78MB
+ 66d57c3a38eb Downloading 14.68MB
+ 5b4d6ff92fc4 Downloading 16.78MB
+ edfa1eac0ec9 Downloading 15.73MB
+ 0aa392ebbb80 Downloading 15.73MB
+ 947d1652ed21 Downloading 15.73MB
+ 5b4d6ff92fc4 Downloading 16.78MB
+ edfa1eac0ec9 Downloading 15.73MB
+ 0aa392ebbb80 Downloading 15.73MB
+ 6bbcb046e4ae Downloading 17.83MB
+ 66d57c3a38eb Downloading 15.73MB
+ 947d1652ed21 Downloading 15.73MB
+ 947d1652ed21 Downloading 15.73MB
+ edfa1eac0ec9 Downloading 16.78MB
+ 0aa392ebbb80 Downloading 16.78MB
+ 6bbcb046e4ae Downloading 17.83MB
+ 66d57c3a38eb Downloading 15.73MB
+ 5b4d6ff92fc4 Downloading 16.78MB
+ 0aa392ebbb80 Downloading 16.78MB
+ 6bbcb046e4ae Downloading 17.83MB
+ 66d57c3a38eb Downloading 15.73MB
+ 5b4d6ff92fc4 Downloading 16.78MB
+ edfa1eac0ec9 Downloading 16.78MB
+ 947d1652ed21 Downloading 15.73MB
+ 5b4d6ff92fc4 Downloading 16.78MB
+ edfa1eac0ec9 Downloading 16.78MB
+ 0aa392ebbb80 Downloading 16.78MB
+ 6bbcb046e4ae Downloading 17.83MB
+ 66d57c3a38eb Downloading 15.73MB
+ 947d1652ed21 Downloading 15.73MB
+ 5b4d6ff92fc4 Downloading 16.78MB
+ edfa1eac0ec9 Downloading 16.78MB
+ 0aa392ebbb80 Downloading 16.78MB
+ 6bbcb046e4ae Downloading 17.83MB
+ 66d57c3a38eb Downloading 15.73MB
+ 947d1652ed21 Downloading 15.73MB
+ 947d1652ed21 Downloading 16.78MB
+ 5b4d6ff92fc4 Downloading 16.93MB
+ edfa1eac0ec9 Downloading 16.78MB
+ 0aa392ebbb80 Downloading 16.78MB
+ 6bbcb046e4ae Downloading 18.87MB
+ 66d57c3a38eb Downloading 16.78MB
+ 947d1652ed21 Downloading 16.78MB
+ edfa1eac0ec9 Downloading 16.78MB
+ 0aa392ebbb80 Downloading 16.78MB
+ 6bbcb046e4ae Downloading 18.87MB
+ 66d57c3a38eb Downloading 16.78MB
+ 5b4d6ff92fc4 Downloading 17.83MB
+ 947d1652ed21 Downloading 16.78MB
+ 6bbcb046e4ae Downloading 18.87MB
+ 66d57c3a38eb Downloading 16.78MB
+ 5b4d6ff92fc4 Downloading 17.83MB
+ edfa1eac0ec9 Downloading 16.78MB
+ 0aa392ebbb80 Downloading 16.78MB
+ 947d1652ed21 Downloading 16.78MB
+ edfa1eac0ec9 Downloading 16.78MB
+ 0aa392ebbb80 Downloading 16.78MB
+ 6bbcb046e4ae Downloading 18.87MB
+ 66d57c3a38eb Downloading 16.78MB
+ 5b4d6ff92fc4 Downloading 17.83MB
+ 947d1652ed21 Downloading 16.78MB
+ 5b4d6ff92fc4 Downloading 17.83MB
+ edfa1eac0ec9 Downloading 16.78MB
+ 0aa392ebbb80 Downloading 16.78MB
+ 6bbcb046e4ae Downloading 18.87MB
+ 66d57c3a38eb Downloading 16.78MB
+ 947d1652ed21 Downloading 16.78MB
+ 5b4d6ff92fc4 Downloading 17.83MB
+ edfa1eac0ec9 Downloading 16.78MB
+ 0aa392ebbb80 Downloading 16.78MB
+ 6bbcb046e4ae Downloading 18.87MB
+ 66d57c3a38eb Downloading 16.78MB
+ edfa1eac0ec9 Downloading 16.78MB
+ 0aa392ebbb80 Downloading 16.78MB
+ 6bbcb046e4ae Downloading 18.87MB
+ 66d57c3a38eb Downloading 16.78MB
+ 5b4d6ff92fc4 Downloading 17.83MB
+ 947d1652ed21 Downloading 16.78MB
+ edfa1eac0ec9 Downloading 17.83MB
+ 0aa392ebbb80 Downloading 17.83MB
+ 6bbcb046e4ae Downloading 18.87MB
+ 66d57c3a38eb Downloading 16.78MB
+ 5b4d6ff92fc4 Downloading 17.83MB
+ 947d1652ed21 Downloading 16.78MB
+ 5b4d6ff92fc4 Downloading 17.83MB
+ edfa1eac0ec9 Downloading 17.83MB
+ 0aa392ebbb80 Downloading 17.83MB
+ 6bbcb046e4ae Downloading 18.87MB
+ 66d57c3a38eb Downloading 16.78MB
+ 947d1652ed21 Downloading 16.78MB
+ 66d57c3a38eb Downloading 16.78MB
+ 5b4d6ff92fc4 Downloading 17.83MB
+ edfa1eac0ec9 Downloading 17.83MB
+ 0aa392ebbb80 Downloading 17.83MB
+ 6bbcb046e4ae Downloading 18.87MB
+ 947d1652ed21 Downloading 17.83MB
+ 947d1652ed21 Downloading 17.83MB
+ 5b4d6ff92fc4 Downloading 17.83MB
+ edfa1eac0ec9 Downloading 17.83MB
+ 0aa392ebbb80 Downloading 17.83MB
+ 6bbcb046e4ae Downloading 19.92MB
+ 66d57c3a38eb Downloading 16.78MB
+ 947d1652ed21 Downloading 17.83MB
+ 0aa392ebbb80 Downloading 17.83MB
+ 6bbcb046e4ae Downloading 19.92MB
+ 66d57c3a38eb Downloading 17.83MB
+ 5b4d6ff92fc4 Downloading 18.87MB
+ edfa1eac0ec9 Downloading 17.83MB
+ 947d1652ed21 Downloading 17.83MB
+ 6bbcb046e4ae Downloading 19.92MB
+ 66d57c3a38eb Downloading 17.83MB
+ 5b4d6ff92fc4 Downloading 18.87MB
+ edfa1eac0ec9 Downloading 18.87MB
+ 0aa392ebbb80 Downloading 18.87MB
+ 6bbcb046e4ae Downloading 19.92MB
+ 66d57c3a38eb Downloading 17.83MB
+ 5b4d6ff92fc4 Downloading 18.87MB
+ edfa1eac0ec9 Downloading 18.87MB
+ 0aa392ebbb80 Downloading 18.87MB
+ 947d1652ed21 Downloading 17.83MB
+ edfa1eac0ec9 Downloading 18.87MB
+ 0aa392ebbb80 Downloading 18.87MB
+ 6bbcb046e4ae Downloading 19.92MB
+ 66d57c3a38eb Downloading 17.83MB
+ 5b4d6ff92fc4 Downloading 18.87MB
+ 947d1652ed21 Downloading 17.83MB
+ 5b4d6ff92fc4 Downloading 18.87MB
+ edfa1eac0ec9 Downloading 18.87MB
+ 0aa392ebbb80 Downloading 18.87MB
+ 6bbcb046e4ae Downloading 20.97MB
+ 66d57c3a38eb Downloading 17.83MB
+ 947d1652ed21 Downloading 18.87MB
+ 947d1652ed21 Downloading 18.87MB
+ 5b4d6ff92fc4 Downloading 18.87MB
+ edfa1eac0ec9 Downloading 18.87MB
+ 0aa392ebbb80 Downloading 18.87MB
+ 6bbcb046e4ae Downloading 20.97MB
+ 66d57c3a38eb Downloading 18.87MB
+ 6bbcb046e4ae Downloading 20.97MB
+ 66d57c3a38eb Downloading 18.87MB
+ 5b4d6ff92fc4 Downloading 18.87MB
+ edfa1eac0ec9 Downloading 18.87MB
+ 0aa392ebbb80 Downloading 18.87MB
+ 947d1652ed21 Downloading 18.87MB
+ 947d1652ed21 Downloading 18.87MB
+ 6bbcb046e4ae Downloading 20.97MB
+ 66d57c3a38eb Downloading 18.87MB
+ 5b4d6ff92fc4 Downloading 19.92MB
+ edfa1eac0ec9 Downloading 19.92MB
+ 0aa392ebbb80 Downloading 19.92MB
+ edfa1eac0ec9 Downloading 19.92MB
+ 0aa392ebbb80 Downloading 19.92MB
+ 6bbcb046e4ae Downloading 20.97MB
+ 66d57c3a38eb Downloading 18.87MB
+ 5b4d6ff92fc4 Downloading 19.92MB
+ 947d1652ed21 Downloading 18.87MB
+ 5b4d6ff92fc4 Downloading 19.92MB
+ edfa1eac0ec9 Downloading 19.92MB
+ 0aa392ebbb80 Downloading 19.92MB
+ 6bbcb046e4ae Downloading 22.02MB
+ 66d57c3a38eb Downloading 18.87MB
+ 947d1652ed21 Downloading 19.92MB
+ 5b4d6ff92fc4 Downloading 19.92MB
+ edfa1eac0ec9 Downloading 19.92MB
+ 0aa392ebbb80 Downloading 19.92MB
+ 6bbcb046e4ae Downloading 22.02MB
+ 66d57c3a38eb Downloading 18.87MB
+ 947d1652ed21 Downloading 19.92MB
+ 947d1652ed21 Downloading 19.92MB
+ 6bbcb046e4ae Downloading 22.02MB
+ 66d57c3a38eb Downloading 19.92MB
+ 5b4d6ff92fc4 Downloading 19.92MB
+ edfa1eac0ec9 Downloading 19.92MB
+ 0aa392ebbb80 Downloading 19.92MB
+ 947d1652ed21 Downloading 19.92MB
+ 5b4d6ff92fc4 Downloading 20.97MB
+ edfa1eac0ec9 Downloading 20.97MB
+ 0aa392ebbb80 Downloading 20.97MB
+ 6bbcb046e4ae Downloading 22.02MB
+ 66d57c3a38eb Downloading 19.92MB
+ 947d1652ed21 Downloading 19.92MB
+ edfa1eac0ec9 Downloading 20.97MB
+ 0aa392ebbb80 Downloading 20.97MB
+ 6bbcb046e4ae Downloading 22.02MB
+ 66d57c3a38eb Downloading 19.92MB
+ 5b4d6ff92fc4 Downloading 20.97MB
+ 947d1652ed21 Downloading 19.92MB
+ edfa1eac0ec9 Downloading 20.97MB
+ 0aa392ebbb80 Downloading 20.97MB
+ 6bbcb046e4ae Downloading 23.07MB
+ 66d57c3a38eb Downloading 19.92MB
+ 5b4d6ff92fc4 Downloading 20.97MB
+ 947d1652ed21 Downloading 20.97MB
+ edfa1eac0ec9 Downloading 20.97MB
+ 0aa392ebbb80 Downloading 20.97MB
+ 6bbcb046e4ae Downloading 23.07MB
+ 66d57c3a38eb Downloading 19.92MB
+ 5b4d6ff92fc4 Downloading 20.97MB
+ 947d1652ed21 Downloading 20.97MB
+ edfa1eac0ec9 Downloading 20.97MB
+ 0aa392ebbb80 Downloading 20.97MB
+ 6bbcb046e4ae Downloading 23.07MB
+ 66d57c3a38eb Downloading 20.97MB
+ 5b4d6ff92fc4 Downloading 20.97MB
+ 66d57c3a38eb Downloading 20.97MB
+ 5b4d6ff92fc4 Downloading 20.97MB
+ edfa1eac0ec9 Downloading 20.97MB
+ 0aa392ebbb80 Downloading 20.97MB
+ 6bbcb046e4ae Downloading 23.07MB
+ 947d1652ed21 Downloading 20.97MB
+ 947d1652ed21 Downloading 20.97MB
+ 5b4d6ff92fc4 Downloading 22.02MB
+ edfa1eac0ec9 Downloading 20.97MB
+ 0aa392ebbb80 Downloading 22.02MB
+ 6bbcb046e4ae Downloading 23.07MB
+ 66d57c3a38eb Downloading 20.97MB
+ 947d1652ed21 Downloading 20.97MB
+ 5b4d6ff92fc4 Downloading 22.02MB
+ edfa1eac0ec9 Downloading 22.02MB
+ 0aa392ebbb80 Downloading 22.02MB
+ 6bbcb046e4ae Downloading 23.07MB
+ 66d57c3a38eb Downloading 20.97MB
+ 947d1652ed21 Downloading 22.02MB
+ edfa1eac0ec9 Downloading 22.02MB
+ 0aa392ebbb80 Downloading 22.02MB
+ 6bbcb046e4ae Downloading 24.12MB
+ 66d57c3a38eb Downloading 20.97MB
+ 5b4d6ff92fc4 Downloading 22.02MB
+ 947d1652ed21 Downloading 22.02MB
+ 5b4d6ff92fc4 Downloading 22.02MB
+ edfa1eac0ec9 Downloading 22.02MB
+ 0aa392ebbb80 Downloading 22.02MB
+ 6bbcb046e4ae Downloading 24.12MB
+ 66d57c3a38eb Downloading 22.02MB
+ 947d1652ed21 Downloading 22.02MB
+ 66d57c3a38eb Downloading 22.02MB
+ 5b4d6ff92fc4 Downloading 22.02MB
+ edfa1eac0ec9 Downloading 22.02MB
+ 0aa392ebbb80 Downloading 22.02MB
+ 6bbcb046e4ae Downloading 24.12MB
+ 947d1652ed21 Downloading 22.02MB
+ edfa1eac0ec9 Downloading 23.07MB
+ 0aa392ebbb80 Downloading 23.07MB
+ 6bbcb046e4ae Downloading 24.12MB
+ 66d57c3a38eb Downloading 22.02MB
+ 5b4d6ff92fc4 Downloading 23.07MB
+ 947d1652ed21 Downloading 22.02MB
+ 5b4d6ff92fc4 Downloading 23.07MB
+ edfa1eac0ec9 Downloading 23.07MB
+ 0aa392ebbb80 Downloading 23.07MB
+ 6bbcb046e4ae Downloading 24.12MB
+ 66d57c3a38eb Downloading 22.02MB
+ 947d1652ed21 Downloading 22.02MB
+ 6bbcb046e4ae Downloading 24.12MB
+ 66d57c3a38eb Downloading 22.02MB
+ 5b4d6ff92fc4 Downloading 23.07MB
+ edfa1eac0ec9 Downloading 23.07MB
+ 0aa392ebbb80 Downloading 23.07MB
+ edfa1eac0ec9 Downloading 23.07MB
+ 0aa392ebbb80 Downloading 23.07MB
+ 6bbcb046e4ae Downloading 25.17MB
+ 66d57c3a38eb Downloading 22.02MB
+ 5b4d6ff92fc4 Downloading 23.07MB
+ 947d1652ed21 Downloading 23.07MB
+ 5b4d6ff92fc4 Downloading 23.07MB
+ edfa1eac0ec9 Downloading 23.07MB
+ 0aa392ebbb80 Downloading 23.07MB
+ 6bbcb046e4ae Downloading 25.17MB
+ 66d57c3a38eb Downloading 22.02MB
+ 947d1652ed21 Downloading 23.07MB
+ 6bbcb046e4ae Downloading 25.17MB
+ 66d57c3a38eb Downloading 22.02MB
+ 5b4d6ff92fc4 Downloading 23.07MB
+ edfa1eac0ec9 Downloading 23.07MB
+ 0aa392ebbb80 Downloading 23.07MB
+ 947d1652ed21 Downloading 23.07MB
+ 5b4d6ff92fc4 Downloading 23.07MB
+ edfa1eac0ec9 Downloading 23.07MB
+ 0aa392ebbb80 Downloading 23.07MB
+ 6bbcb046e4ae Downloading 25.17MB
+ 66d57c3a38eb Downloading 22.02MB
+ 947d1652ed21 Downloading 23.07MB
+ edfa1eac0ec9 Downloading 23.07MB
+ 0aa392ebbb80 Downloading 23.07MB
+ 6bbcb046e4ae Downloading 25.17MB
+ 66d57c3a38eb Downloading 22.02MB
+ 5b4d6ff92fc4 Downloading 23.07MB
+ 947d1652ed21 Downloading 23.07MB
+ 5b4d6ff92fc4 Downloading 23.07MB
+ edfa1eac0ec9 Downloading 23.07MB
+ 0aa392ebbb80 Downloading 23.07MB
+ 6bbcb046e4ae Downloading 25.17MB
+ 66d57c3a38eb Downloading 23.07MB
+ 947d1652ed21 Downloading 23.07MB
+ 5b4d6ff92fc4 Downloading 23.07MB
+ edfa1eac0ec9 Downloading 24.12MB
+ 0aa392ebbb80 Downloading 23.07MB
+ 6bbcb046e4ae Downloading 25.17MB
+ 66d57c3a38eb Downloading 23.07MB
+ 947d1652ed21 Downloading 23.07MB
+ 947d1652ed21 Downloading 23.07MB
+ 5b4d6ff92fc4 Downloading 24.12MB
+ edfa1eac0ec9 Downloading 24.12MB
+ 0aa392ebbb80 Downloading 24.12MB
+ 6bbcb046e4ae Downloading 25.17MB
+ 66d57c3a38eb Downloading 23.07MB
+ 947d1652ed21 Downloading 24.12MB
+ 6bbcb046e4ae Downloading 26.21MB
+ 66d57c3a38eb Downloading 23.07MB
+ 5b4d6ff92fc4 Downloading 24.12MB
+ edfa1eac0ec9 Downloading 24.12MB
+ 0aa392ebbb80 Downloading 24.12MB
+ 947d1652ed21 Downloading 24.12MB
+ 5b4d6ff92fc4 Downloading 24.12MB
+ edfa1eac0ec9 Downloading 24.12MB
+ 0aa392ebbb80 Downloading 24.12MB
+ 6bbcb046e4ae Downloading 26.21MB
+ 66d57c3a38eb Downloading 24.12MB
+ 6bbcb046e4ae Downloading 26.21MB
+ 66d57c3a38eb Downloading 24.12MB
+ 5b4d6ff92fc4 Downloading 24.12MB
+ edfa1eac0ec9 Downloading 25.17MB
+ 0aa392ebbb80 Downloading 24.12MB
+ 947d1652ed21 Downloading 24.12MB
+ edfa1eac0ec9 Downloading 25.17MB
+ 0aa392ebbb80 Downloading 25.17MB
+ 6bbcb046e4ae Downloading 26.21MB
+ 66d57c3a38eb Downloading 24.12MB
+ 5b4d6ff92fc4 Downloading 25.17MB
+ 947d1652ed21 Downloading 24.12MB
+ 66d57c3a38eb Downloading 24.12MB
+ 5b4d6ff92fc4 Downloading 25.17MB
+ edfa1eac0ec9 Downloading 25.17MB
+ 0aa392ebbb80 Downloading 25.17MB
+ 6bbcb046e4ae Downloading 27.26MB
+ 947d1652ed21 Downloading 25.17MB
+ 5b4d6ff92fc4 Downloading 25.17MB
+ edfa1eac0ec9 Downloading 25.17MB
+ 0aa392ebbb80 Downloading 25.17MB
+ 6bbcb046e4ae Downloading 27.26MB
+ 66d57c3a38eb Downloading 24.12MB
+ 947d1652ed21 Downloading 25.17MB
+ 5b4d6ff92fc4 Downloading 25.17MB
+ edfa1eac0ec9 Downloading 25.17MB
+ 0aa392ebbb80 Downloading 25.17MB
+ 6bbcb046e4ae Downloading 27.26MB
+ 66d57c3a38eb Downloading 25.17MB
+ 947d1652ed21 Downloading 25.17MB
+ 6bbcb046e4ae Downloading 27.26MB
+ 66d57c3a38eb Downloading 25.17MB
+ 5b4d6ff92fc4 Downloading 25.17MB
+ edfa1eac0ec9 Downloading 25.17MB
+ 0aa392ebbb80 Downloading 25.17MB
+ 947d1652ed21 Downloading 25.17MB
+ edfa1eac0ec9 Downloading 26.21MB
+ 0aa392ebbb80 Downloading 26.21MB
+ 6bbcb046e4ae Downloading 27.26MB
+ 66d57c3a38eb Downloading 25.17MB
+ 5b4d6ff92fc4 Downloading 25.17MB
+ 947d1652ed21 Downloading 25.17MB
+ 5b4d6ff92fc4 Downloading 26.21MB
+ edfa1eac0ec9 Downloading 26.21MB
+ 0aa392ebbb80 Downloading 26.21MB
+ 6bbcb046e4ae Downloading 27.26MB
+ 66d57c3a38eb Downloading 25.17MB
+ 947d1652ed21 Downloading 25.17MB
+ 947d1652ed21 Downloading 25.17MB
+ 5b4d6ff92fc4 Downloading 26.21MB
+ edfa1eac0ec9 Downloading 26.21MB
+ 0aa392ebbb80 Downloading 26.21MB
+ 6bbcb046e4ae Downloading 28.31MB
+ 66d57c3a38eb Downloading 25.17MB
+ 5b4d6ff92fc4 Downloading 26.21MB
+ edfa1eac0ec9 Downloading 26.21MB
+ 0aa392ebbb80 Downloading 26.21MB
+ 6bbcb046e4ae Downloading 28.31MB
+ 66d57c3a38eb Downloading 25.17MB
+ 947d1652ed21 Downloading 25.17MB
+ 5b4d6ff92fc4 Downloading 26.21MB
+ 0aa392ebbb80 Downloading 26.21MB
+ 6bbcb046e4ae Downloading 28.31MB
+ 66d57c3a38eb Downloading 26.21MB
+ 947d1652ed21 Downloading 26.21MB
+ 5b4d6ff92fc4 Downloading 27.26MB
+ edfa1eac0ec9 Download complete 0B
+ 0aa392ebbb80 Downloading 27.26MB
+ 6bbcb046e4ae Downloading 28.31MB
+ 66d57c3a38eb Downloading 26.21MB
+ 947d1652ed21 Downloading 26.21MB
+ 6bbcb046e4ae Downloading 28.31MB
+ 66d57c3a38eb Downloading 26.21MB
+ 5b4d6ff92fc4 Downloading 27.26MB
+ 0aa392ebbb80 Downloading 27.26MB
+ 947d1652ed21 Downloading 27.26MB
+ 5b4d6ff92fc4 Downloading 27.26MB
+ 0aa392ebbb80 Downloading 27.26MB
+ 6bbcb046e4ae Downloading 29.36MB
+ 66d57c3a38eb Downloading 26.21MB
+ 947d1652ed21 Downloading 27.26MB
+ 5b4d6ff92fc4 Downloading 27.26MB
+ 0aa392ebbb80 Downloading 27.26MB
+ 6bbcb046e4ae Downloading 29.94MB
+ 66d57c3a38eb Downloading 27.26MB
+ 947d1652ed21 Downloading 27.26MB
+ 0aa392ebbb80 Downloading 28.31MB
+ 947d1652ed21 Downloading 28.31MB
+ 6bbcb046e4ae Download complete 0B
+ 66d57c3a38eb Downloading 27.26MB
+ 5b4d6ff92fc4 Downloading 28.31MB
+ 66d57c3a38eb Downloading 27.26MB
+ 5b4d6ff92fc4 Downloading 28.31MB
+ 0aa392ebbb80 Downloading 28.31MB
+ 947d1652ed21 Downloading 28.31MB
+ 947d1652ed21 Downloading 28.31MB
+ 5b4d6ff92fc4 Downloading 28.31MB
+ 0aa392ebbb80 Downloading 28.31MB
+ 66d57c3a38eb Downloading 27.26MB
+ 947d1652ed21 Downloading 28.31MB
+ 66d57c3a38eb Downloading 28.31MB
+ 5b4d6ff92fc4 Downloading 28.31MB
+ 0aa392ebbb80 Downloading 28.31MB
+ 5b4d6ff92fc4 Downloading 28.31MB
+ 0aa392ebbb80 Downloading 28.31MB
+ 66d57c3a38eb Downloading 28.31MB
+ 947d1652ed21 Downloading 28.31MB
+ 947d1652ed21 Downloading 29.36MB
+ 5b4d6ff92fc4 Downloading 29.36MB
+ 0aa392ebbb80 Downloading 29.36MB
+ 66d57c3a38eb Downloading 28.31MB
+ 947d1652ed21 Downloading 29.36MB
+ 0aa392ebbb80 Downloading 29.36MB
+ 66d57c3a38eb Downloading 28.31MB
+ 947d1652ed21 Downloading 29.36MB
+ 66d57c3a38eb Downloading 29.36MB
+ 5b4d6ff92fc4 Download complete 0B
+ 0aa392ebbb80 Downloading 30.41MB
+ 947d1652ed21 Downloading 30.41MB
+ 5b4d6ff92fc4 Extracting 1B
+ 0aa392ebbb80 Downloading 30.41MB
+ 66d57c3a38eb Downloading 29.36MB
+ 947d1652ed21 Downloading 30.41MB
+ 947d1652ed21 Downloading 30.41MB
+ 5b4d6ff92fc4 Extracting 1B
+ 0aa392ebbb80 Downloading 31.46MB
+ 66d57c3a38eb Downloading 30.41MB
+ 947d1652ed21 Downloading 31.46MB
+ 5b4d6ff92fc4 Extracting 1B
+ 0aa392ebbb80 Downloading 31.46MB
+ 66d57c3a38eb Downloading 30.41MB
+ 947d1652ed21 Downloading 31.46MB
+ 5b4d6ff92fc4 Extracting 1B
+ 0aa392ebbb80 Downloading 31.46MB
+ 66d57c3a38eb Downloading 30.41MB
+ 947d1652ed21 Downloading 31.46MB
+ 947d1652ed21 Downloading 31.46MB
+ 5b4d6ff92fc4 Extracting 1B
+ 0aa392ebbb80 Downloading 32.51MB
+ 66d57c3a38eb Downloading 31.46MB
+ 947d1652ed21 Downloading 32.51MB
+ 5b4d6ff92fc4 Extracting 1B
+ 0aa392ebbb80 Downloading 32.51MB
+ 66d57c3a38eb Downloading 31.46MB
+ 947d1652ed21 Downloading 32.51MB
+ 947d1652ed21 Downloading 32.51MB
+ 5b4d6ff92fc4 Extracting 1B
+ 0aa392ebbb80 Downloading 32.51MB
+ 66d57c3a38eb Downloading 31.46MB
+ 947d1652ed21 Downloading 32.51MB
+ 5b4d6ff92fc4 Extracting 1B
+ 0aa392ebbb80 Downloading 32.51MB
+ 66d57c3a38eb Downloading 31.46MB
+ 947d1652ed21 Downloading 32.51MB
+ 5b4d6ff92fc4 Extracting 2B
+ 0aa392ebbb80 Downloading 32.51MB
+ 66d57c3a38eb Downloading 31.46MB
+ 947d1652ed21 Downloading 32.51MB
+ 5b4d6ff92fc4 Extracting 2B
+ 0aa392ebbb80 Downloading 33.55MB
+ 66d57c3a38eb Downloading 32.51MB
+ 947d1652ed21 Downloading 32.51MB
+ 5b4d6ff92fc4 Extracting 2B
+ 0aa392ebbb80 Downloading 33.55MB
+ 66d57c3a38eb Downloading 32.51MB
+ 947d1652ed21 Downloading 32.51MB
+ 947d1652ed21 Downloading 33.55MB
+ 5b4d6ff92fc4 Extracting 2B
+ 0aa392ebbb80 Downloading 33.55MB
+ 66d57c3a38eb Downloading 32.96MB
+ 947d1652ed21 Downloading 33.55MB
+ 5b4d6ff92fc4 Extracting 2B
+ 0aa392ebbb80 Downloading 33.55MB
+ 66d57c3a38eb Download complete 0B
+ 947d1652ed21 Downloading 33.55MB
+ 947d1652ed21 Downloading 34.6MB
+ 5b4d6ff92fc4 Extracting 2B
+ 0aa392ebbb80 Downloading 34.6MB
+ 947d1652ed21 Downloading 34.6MB
+ 5b4d6ff92fc4 Extracting 2B
+ 947d1652ed21 Downloading 34.6MB
+ 0aa392ebbb80 Downloading 34.6MB
+ 947d1652ed21 Downloading 35.65MB
+ 5b4d6ff92fc4 Extracting 3B
+ 0aa392ebbb80 Downloading 35.65MB
+ 947d1652ed21 Downloading 35.65MB
+ 5b4d6ff92fc4 Extracting 3B
+ 947d1652ed21 Downloading 36.7MB
+ 0aa392ebbb80 Downloading 35.65MB
+ 947d1652ed21 Downloading 36.7MB
+ 5b4d6ff92fc4 Extracting 3B
+ 0aa392ebbb80 Downloading 36.7MB
+ 947d1652ed21 Downloading 36.7MB
+ 947d1652ed21 Downloading 36.7MB
+ 5b4d6ff92fc4 Extracting 3B
+ 0aa392ebbb80 Downloading 37.75MB
+ 947d1652ed21 Downloading 37.75MB
+ 947d1652ed21 Downloading 37.75MB
+ 5b4d6ff92fc4 Pull complete 0B
+ 0aa392ebbb80 Downloading 37.75MB
+ 947d1652ed21 Downloading 37.75MB
+ b81875e03a86 Pull complete 0B
+ 0aa392ebbb80 Downloading 38.8MB
+ 947d1652ed21 Downloading 38.8MB
+ 947d1652ed21 Downloading 38.8MB
+ 0aa392ebbb80 Downloading 38.8MB
+ 947d1652ed21 Downloading 38.8MB
+ 0aa392ebbb80 Downloading 38.8MB
+ 0aa392ebbb80 Downloading 38.8MB
+ 947d1652ed21 Downloading 38.8MB
+ 947d1652ed21 Downloading 38.8MB
+ 0aa392ebbb80 Downloading 38.8MB
+ 947d1652ed21 Downloading 39.85MB
+ 0aa392ebbb80 Downloading 38.8MB
+ 947d1652ed21 Downloading 39.85MB
+ 0aa392ebbb80 Downloading 38.8MB
+ 947d1652ed21 Downloading 39.85MB
+ 0aa392ebbb80 Downloading 39.85MB
+ 947d1652ed21 Downloading 40.89MB
+ 0aa392ebbb80 Downloading 39.85MB
+ 947d1652ed21 Downloading 40.89MB
+ 0aa392ebbb80 Downloading 40.89MB
+ 947d1652ed21 Downloading 41.94MB
+ 0aa392ebbb80 Downloading 40.89MB
+ 947d1652ed21 Downloading 41.94MB
+ 0aa392ebbb80 Downloading 41.94MB
+ 947d1652ed21 Downloading 41.94MB
+ 0aa392ebbb80 Downloading 41.94MB
+ 947d1652ed21 Downloading 42.99MB
+ 0aa392ebbb80 Downloading 42.99MB
+ 947d1652ed21 Downloading 42.99MB
+ 0aa392ebbb80 Downloading 42.99MB
+ 947d1652ed21 Downloading 44.04MB
+ 0aa392ebbb80 Downloading 42.99MB
+ 947d1652ed21 Downloading 44.04MB
+ 947d1652ed21 Downloading 44.04MB
+ 0aa392ebbb80 Downloading 44.04MB
+ 947d1652ed21 Downloading 45.09MB
+ 0aa392ebbb80 Downloading 45.09MB
+ 947d1652ed21 Downloading 45.09MB
+ 0aa392ebbb80 Downloading 45.09MB
+ 947d1652ed21 Downloading 45.09MB
+ 0aa392ebbb80 Downloading 45.09MB
+ 947d1652ed21 Downloading 45.09MB
+ 947d1652ed21 Downloading 45.09MB
+ 0aa392ebbb80 Downloading 45.09MB
+ 947d1652ed21 Downloading 46.14MB
+ 0aa392ebbb80 Downloading 46.14MB
+ 0aa392ebbb80 Downloading 46.14MB
+ 947d1652ed21 Downloading 47.19MB
+ 0aa392ebbb80 Downloading 47.19MB
+ 947d1652ed21 Downloading 47.19MB
+ 0aa392ebbb80 Downloading 47.19MB
+ 947d1652ed21 Downloading 48.23MB
+ 0aa392ebbb80 Downloading 47.19MB
+ 947d1652ed21 Downloading 48.23MB
+ 947d1652ed21 Downloading 48.23MB
+ 0aa392ebbb80 Downloading 48.23MB
+ 947d1652ed21 Downloading 48.23MB
+ 0aa392ebbb80 Downloading 48.23MB
+ 947d1652ed21 Downloading 49.28MB
+ 0aa392ebbb80 Downloading 49.28MB
+ 947d1652ed21 Downloading 50.33MB
+ 0aa392ebbb80 Downloading 49.28MB
+ 947d1652ed21 Downloading 50.33MB
+ 0aa392ebbb80 Downloading 50.33MB
+ 947d1652ed21 Downloading 51.38MB
+ 0aa392ebbb80 Downloading 50.33MB
+ 947d1652ed21 Downloading 51.38MB
+ 0aa392ebbb80 Downloading 51.38MB
+ 947d1652ed21 Downloading 52.43MB
+ 0aa392ebbb80 Downloading 51.38MB
+ 0aa392ebbb80 Downloading 52.43MB
+ 947d1652ed21 Downloading 52.43MB
+ 0aa392ebbb80 Downloading 52.43MB
+ 947d1652ed21 Downloading 52.43MB
+ 0aa392ebbb80 Downloading 52.43MB
+ 947d1652ed21 Downloading 53.48MB
+ 0aa392ebbb80 Downloading 53.48MB
+ 947d1652ed21 Downloading 53.48MB
+ 0aa392ebbb80 Downloading 53.48MB
+ 947d1652ed21 Downloading 53.48MB
+ 0aa392ebbb80 Downloading 53.48MB
+ 947d1652ed21 Downloading 54.53MB
+ 947d1652ed21 Downloading 54.53MB
+ 0aa392ebbb80 Downloading 54.53MB
+ 947d1652ed21 Downloading 54.53MB
+ 0aa392ebbb80 Downloading 54.53MB
+ 947d1652ed21 Downloading 55.57MB
+ 0aa392ebbb80 Downloading 55.57MB
+ 947d1652ed21 Downloading 56.62MB
+ 0aa392ebbb80 Downloading 56.62MB
+ 947d1652ed21 Downloading 56.62MB
+ 0aa392ebbb80 Downloading 56.62MB
+ 947d1652ed21 Downloading 57.67MB
+ 0aa392ebbb80 Downloading 57.67MB
+ 947d1652ed21 Downloading 57.67MB
+ 0aa392ebbb80 Downloading 57.67MB
+ 947d1652ed21 Downloading 57.67MB
+ 0aa392ebbb80 Downloading 57.67MB
+ 947d1652ed21 Downloading 57.67MB
+ 0aa392ebbb80 Downloading 57.67MB
+ 947d1652ed21 Downloading 57.67MB
+ 0aa392ebbb80 Downloading 57.67MB
+ 947d1652ed21 Downloading 57.67MB
+ 0aa392ebbb80 Downloading 57.67MB
+ 947d1652ed21 Downloading 57.67MB
+ 0aa392ebbb80 Downloading 57.67MB
+ 0aa392ebbb80 Downloading 57.67MB
+ 947d1652ed21 Downloading 57.67MB
+ 0aa392ebbb80 Downloading 57.67MB
+ 947d1652ed21 Downloading 57.67MB
+ 0aa392ebbb80 Downloading 57.67MB
+ 947d1652ed21 Downloading 57.67MB
+ 0aa392ebbb80 Downloading 57.67MB
+ 947d1652ed21 Downloading 57.67MB
+ 0aa392ebbb80 Downloading 57.67MB
+ 947d1652ed21 Downloading 57.67MB
+ 0aa392ebbb80 Downloading 57.67MB
+ 947d1652ed21 Downloading 58.72MB
+ 0aa392ebbb80 Downloading 57.67MB
+ 947d1652ed21 Downloading 58.72MB
+ 0aa392ebbb80 Downloading 57.67MB
+ 947d1652ed21 Downloading 58.72MB
+ 0aa392ebbb80 Downloading 57.67MB
+ 947d1652ed21 Downloading 58.72MB
+ 0aa392ebbb80 Downloading 57.67MB
+ 947d1652ed21 Downloading 58.72MB
+ 0aa392ebbb80 Downloading 57.67MB
+ 947d1652ed21 Downloading 58.72MB
+ 947d1652ed21 Downloading 58.72MB
+ 0aa392ebbb80 Downloading 58.72MB
+ 0aa392ebbb80 Downloading 58.72MB
+ 947d1652ed21 Downloading 59.77MB
+ 0aa392ebbb80 Downloading 58.72MB
+ 947d1652ed21 Downloading 59.77MB
+ 0aa392ebbb80 Downloading 59.77MB
+ 947d1652ed21 Downloading 59.77MB
+ 0aa392ebbb80 Downloading 59.77MB
+ 947d1652ed21 Downloading 59.77MB
+ 0aa392ebbb80 Downloading 59.77MB
+ 947d1652ed21 Downloading 60.82MB
+ 0aa392ebbb80 Downloading 59.77MB
+ 947d1652ed21 Downloading 60.82MB
+ 0aa392ebbb80 Downloading 59.77MB
+ 947d1652ed21 Downloading 60.82MB
+ 0aa392ebbb80 Downloading 59.77MB
+ 947d1652ed21 Downloading 60.82MB
+ 0aa392ebbb80 Downloading 59.77MB
+ 947d1652ed21 Downloading 60.82MB
+ 0aa392ebbb80 Downloading 59.77MB
+ 947d1652ed21 Downloading 60.82MB
+ 0aa392ebbb80 Downloading 59.77MB
+ 947d1652ed21 Downloading 60.82MB
+ 0aa392ebbb80 Downloading 60.82MB
+ 947d1652ed21 Downloading 60.82MB
+ 947d1652ed21 Downloading 60.82MB
+ 0aa392ebbb80 Downloading 60.82MB
+ 0aa392ebbb80 Downloading 60.82MB
+ 947d1652ed21 Downloading 61.87MB
+ 0aa392ebbb80 Downloading 60.82MB
+ 947d1652ed21 Downloading 61.87MB
+ 0aa392ebbb80 Downloading 60.82MB
+ 947d1652ed21 Downloading 61.87MB
+ 947d1652ed21 Downloading 61.87MB
+ 0aa392ebbb80 Downloading 61.87MB
+ 0aa392ebbb80 Downloading 61.87MB
+ 947d1652ed21 Downloading 61.87MB
+ 0aa392ebbb80 Downloading 61.87MB
+ 947d1652ed21 Downloading 61.87MB
+ 0aa392ebbb80 Downloading 61.87MB
+ 947d1652ed21 Downloading 61.87MB
+ 0aa392ebbb80 Downloading 61.87MB
+ 947d1652ed21 Downloading 61.87MB
+ 947d1652ed21 Downloading 62.91MB
+ 0aa392ebbb80 Downloading 61.87MB
+ 947d1652ed21 Downloading 62.91MB
+ 947d1652ed21 Downloading 62.91MB
+ 0aa392ebbb80 Downloading 61.87MB
+ 947d1652ed21 Downloading 62.91MB
+ 0aa392ebbb80 Downloading 62.91MB
+ 947d1652ed21 Downloading 62.91MB
+ 947d1652ed21 Downloading 62.91MB
+ 0aa392ebbb80 Downloading 62.91MB
+ 947d1652ed21 Downloading 62.91MB
+ 0aa392ebbb80 Downloading 62.91MB
+ 947d1652ed21 Downloading 62.91MB
+ 0aa392ebbb80 Downloading 62.91MB
+ 947d1652ed21 Downloading 62.91MB
+ 0aa392ebbb80 Downloading 62.91MB
+ 947d1652ed21 Downloading 62.91MB
+ 947d1652ed21 Downloading 62.91MB
+ 0aa392ebbb80 Downloading 62.91MB
+ 947d1652ed21 Downloading 63.96MB
+ 0aa392ebbb80 Downloading 62.91MB
+ 947d1652ed21 Downloading 63.96MB
+ 0aa392ebbb80 Downloading 62.91MB
+ 947d1652ed21 Downloading 63.96MB
+ 0aa392ebbb80 Downloading 62.91MB
+ 947d1652ed21 Downloading 63.96MB
+ 0aa392ebbb80 Downloading 62.91MB
+ 947d1652ed21 Downloading 63.96MB
+ 0aa392ebbb80 Downloading 62.91MB
+ 947d1652ed21 Downloading 63.96MB
+ 0aa392ebbb80 Downloading 62.91MB
+ 0aa392ebbb80 Downloading 63.33MB
+ 947d1652ed21 Downloading 63.96MB
+ 0aa392ebbb80 Downloading 63.96MB
+ 947d1652ed21 Downloading 63.96MB
+ 0aa392ebbb80 Downloading 63.96MB
+ 947d1652ed21 Downloading 63.96MB
+ 0aa392ebbb80 Downloading 63.96MB
+ 947d1652ed21 Downloading 63.96MB
+ 947d1652ed21 Downloading 63.96MB
+ 0aa392ebbb80 Downloading 63.96MB
+ 0aa392ebbb80 Downloading 63.96MB
+ 947d1652ed21 Downloading 63.96MB
+ 0aa392ebbb80 Downloading 63.96MB
+ 947d1652ed21 Downloading 63.96MB
+ 0aa392ebbb80 Downloading 63.96MB
+ 947d1652ed21 Downloading 63.96MB
+ 0aa392ebbb80 Downloading 63.96MB
+ 947d1652ed21 Downloading 63.96MB
+ 0aa392ebbb80 Downloading 63.96MB
+ 947d1652ed21 Downloading 63.96MB
+ 0aa392ebbb80 Downloading 63.96MB
+ 947d1652ed21 Downloading 63.96MB
+ 0aa392ebbb80 Downloading 63.96MB
+ 947d1652ed21 Downloading 63.96MB
+ 0aa392ebbb80 Downloading 63.96MB
+ 947d1652ed21 Downloading 63.96MB
+ 0aa392ebbb80 Downloading 63.96MB
+ 947d1652ed21 Downloading 63.96MB
+ 0aa392ebbb80 Downloading 63.96MB
+ 947d1652ed21 Downloading 63.96MB
+ 0aa392ebbb80 Downloading 63.96MB
+ 947d1652ed21 Downloading 63.96MB
+ 0aa392ebbb80 Downloading 63.96MB
+ 947d1652ed21 Downloading 63.96MB
+ 0aa392ebbb80 Downloading 65.01MB
+ 947d1652ed21 Downloading 63.96MB
+ 0aa392ebbb80 Downloading 65.01MB
+ 947d1652ed21 Downloading 63.96MB
+ 947d1652ed21 Downloading 65.01MB
+ 0aa392ebbb80 Downloading 65.01MB
+ 0aa392ebbb80 Downloading 65.01MB
+ 947d1652ed21 Downloading 65.01MB
+ 947d1652ed21 Downloading 65.01MB
+ 0aa392ebbb80 Downloading 65.01MB
+ 947d1652ed21 Downloading 65.01MB
+ 0aa392ebbb80 Downloading 65.01MB
+ 947d1652ed21 Downloading 65.01MB
+ 0aa392ebbb80 Downloading 65.01MB
+ 947d1652ed21 Downloading 65.01MB
+ 0aa392ebbb80 Downloading 65.01MB
+ 947d1652ed21 Downloading 65.01MB
+ 0aa392ebbb80 Downloading 65.01MB
+ 0aa392ebbb80 Downloading 65.01MB
+ 947d1652ed21 Downloading 65.01MB
+ 0aa392ebbb80 Downloading 65.01MB
+ 947d1652ed21 Downloading 65.01MB
+ 0aa392ebbb80 Downloading 65.01MB
+ 947d1652ed21 Downloading 65.01MB
+ 0aa392ebbb80 Downloading 65.01MB
+ 947d1652ed21 Downloading 65.01MB
+ 0aa392ebbb80 Downloading 65.01MB
+ 947d1652ed21 Downloading 65.01MB
+ 0aa392ebbb80 Downloading 65.01MB
+ 947d1652ed21 Downloading 65.01MB
+ 0aa392ebbb80 Downloading 65.01MB
+ 947d1652ed21 Downloading 65.01MB
+ 0aa392ebbb80 Downloading 65.01MB
+ 947d1652ed21 Downloading 65.01MB
+ 947d1652ed21 Downloading 65.01MB
+ 0aa392ebbb80 Downloading 65.01MB
+ 947d1652ed21 Downloading 65.01MB
+ 0aa392ebbb80 Downloading 65.01MB
+ 947d1652ed21 Downloading 65.01MB
+ 947d1652ed21 Downloading 65.01MB
+ 0aa392ebbb80 Downloading 65.01MB
+ 947d1652ed21 Downloading 65.01MB
+ 0aa392ebbb80 Downloading 65.01MB
+ 947d1652ed21 Downloading 65.01MB
+ 947d1652ed21 Downloading 65.01MB
+ 0aa392ebbb80 Downloading 65.01MB
+ 947d1652ed21 Downloading 65.01MB
+ 0aa392ebbb80 Downloading 66.06MB
+ 947d1652ed21 Downloading 65.01MB
+ 947d1652ed21 Downloading 65.01MB
+ 0aa392ebbb80 Downloading 66.06MB
+ 947d1652ed21 Downloading 65.01MB
+ 0aa392ebbb80 Downloading 66.06MB
+ 947d1652ed21 Downloading 65.01MB
+ 0aa392ebbb80 Downloading 66.06MB
+ 947d1652ed21 Downloading 65.01MB
+ 947d1652ed21 Downloading 65.01MB
+ 0aa392ebbb80 Downloading 66.06MB
+ 947d1652ed21 Downloading 66.06MB
+ 0aa392ebbb80 Downloading 66.06MB
+ 947d1652ed21 Downloading 66.06MB
+ 0aa392ebbb80 Downloading 66.06MB
+ 947d1652ed21 Downloading 66.06MB
+ 0aa392ebbb80 Downloading 66.06MB
+ 947d1652ed21 Downloading 66.06MB
+ 0aa392ebbb80 Downloading 66.06MB
+ 947d1652ed21 Downloading 66.06MB
+ 0aa392ebbb80 Downloading 66.06MB
+ 947d1652ed21 Downloading 66.06MB
+ 947d1652ed21 Downloading 66.06MB
+ 0aa392ebbb80 Downloading 66.06MB
+ 947d1652ed21 Downloading 66.06MB
+ 0aa392ebbb80 Downloading 66.06MB
+ 947d1652ed21 Downloading 66.06MB
+ 0aa392ebbb80 Downloading 66.06MB
+ 947d1652ed21 Downloading 66.06MB
+ 0aa392ebbb80 Downloading 66.06MB
+ 947d1652ed21 Downloading 66.06MB
+ 0aa392ebbb80 Downloading 66.06MB
+ 947d1652ed21 Downloading 66.06MB
+ 0aa392ebbb80 Downloading 66.06MB
+ 947d1652ed21 Downloading 66.06MB
+ 0aa392ebbb80 Downloading 66.06MB
+ 0aa392ebbb80 Downloading 66.06MB
+ 947d1652ed21 Downloading 66.06MB
+ 0aa392ebbb80 Downloading 66.06MB
+ 947d1652ed21 Downloading 66.06MB
+ 0aa392ebbb80 Downloading 66.06MB
+ 947d1652ed21 Downloading 66.06MB
+ 0aa392ebbb80 Downloading 66.06MB
+ 947d1652ed21 Downloading 66.06MB
+ 0aa392ebbb80 Downloading 66.06MB
+ 947d1652ed21 Downloading 66.06MB
+ 0aa392ebbb80 Downloading 66.06MB
+ 947d1652ed21 Downloading 66.06MB
+ 0aa392ebbb80 Downloading 66.06MB
+ 947d1652ed21 Downloading 66.06MB
+ 947d1652ed21 Downloading 66.06MB
+ 0aa392ebbb80 Downloading 66.06MB
+ 0aa392ebbb80 Downloading 67.11MB
+ 947d1652ed21 Downloading 66.06MB
+ 0aa392ebbb80 Downloading 67.11MB
+ 947d1652ed21 Downloading 66.06MB
+ 0aa392ebbb80 Downloading 67.11MB
+ 947d1652ed21 Downloading 66.06MB
+ 0aa392ebbb80 Downloading 67.11MB
+ 947d1652ed21 Downloading 66.06MB
+ 0aa392ebbb80 Downloading 67.11MB
+ 947d1652ed21 Downloading 66.06MB
+ 947d1652ed21 Downloading 66.06MB
+ 0aa392ebbb80 Downloading 67.11MB
+ 947d1652ed21 Downloading 66.06MB
+ 0aa392ebbb80 Downloading 67.11MB
+ 947d1652ed21 Downloading 66.06MB
+ 0aa392ebbb80 Downloading 67.11MB
+ 947d1652ed21 Downloading 66.06MB
+ 0aa392ebbb80 Downloading 67.11MB
+ 947d1652ed21 Downloading 66.06MB
+ 947d1652ed21 Downloading 67.11MB
+ 0aa392ebbb80 Downloading 67.11MB
+ 947d1652ed21 Downloading 67.11MB
+ 0aa392ebbb80 Downloading 67.11MB
+ 947d1652ed21 Downloading 67.11MB
+ 0aa392ebbb80 Downloading 67.11MB
+ 947d1652ed21 Downloading 67.11MB
+ 947d1652ed21 Downloading 67.11MB
+ 0aa392ebbb80 Downloading 67.11MB
+ 947d1652ed21 Downloading 67.11MB
+ 0aa392ebbb80 Downloading 67.11MB
+ 947d1652ed21 Downloading 67.11MB
+ 947d1652ed21 Downloading 67.11MB
+ 0aa392ebbb80 Downloading 67.11MB
+ 947d1652ed21 Downloading 67.11MB
+ 0aa392ebbb80 Downloading 67.11MB
+ 947d1652ed21 Downloading 67.11MB
+ 947d1652ed21 Downloading 67.11MB
+ 0aa392ebbb80 Downloading 67.11MB
+ 947d1652ed21 Downloading 67.11MB
+ 0aa392ebbb80 Downloading 67.11MB
+ 947d1652ed21 Downloading 67.11MB
+ 0aa392ebbb80 Downloading 67.11MB
+ 947d1652ed21 Downloading 67.11MB
+ 0aa392ebbb80 Downloading 68.16MB
+ 0aa392ebbb80 Downloading 68.16MB
+ 947d1652ed21 Downloading 67.11MB
+ 0aa392ebbb80 Downloading 68.16MB
+ 947d1652ed21 Downloading 67.11MB
+ 0aa392ebbb80 Downloading 68.16MB
+ 947d1652ed21 Downloading 67.11MB
+ 0aa392ebbb80 Downloading 68.16MB
+ 947d1652ed21 Downloading 67.11MB
+ 0aa392ebbb80 Downloading 68.16MB
+ 947d1652ed21 Downloading 67.11MB
+ 0aa392ebbb80 Downloading 68.16MB
+ 947d1652ed21 Downloading 68.16MB
+ 0aa392ebbb80 Downloading 68.16MB
+ 947d1652ed21 Downloading 68.16MB
+ 0aa392ebbb80 Downloading 68.16MB
+ 947d1652ed21 Downloading 68.16MB
+ 0aa392ebbb80 Downloading 68.16MB
+ 947d1652ed21 Downloading 68.16MB
+ 0aa392ebbb80 Downloading 68.16MB
+ 947d1652ed21 Downloading 68.16MB
+ 0aa392ebbb80 Downloading 68.16MB
+ 947d1652ed21 Downloading 68.16MB
+ 0aa392ebbb80 Downloading 68.16MB
+ 947d1652ed21 Downloading 68.16MB
+ 0aa392ebbb80 Downloading 68.16MB
+ 947d1652ed21 Downloading 68.16MB
+ 0aa392ebbb80 Downloading 69.21MB
+ 947d1652ed21 Downloading 68.16MB
+ 0aa392ebbb80 Downloading 69.21MB
+ 947d1652ed21 Downloading 68.16MB
+ 0aa392ebbb80 Downloading 69.21MB
+ 947d1652ed21 Downloading 68.16MB
+ 0aa392ebbb80 Downloading 69.21MB
+ 947d1652ed21 Downloading 68.16MB
+ 0aa392ebbb80 Downloading 69.21MB
+ 947d1652ed21 Downloading 68.16MB
+ 0aa392ebbb80 Downloading 69.21MB
+ 947d1652ed21 Downloading 68.16MB
+ 0aa392ebbb80 Downloading 69.21MB
+ 947d1652ed21 Downloading 69.21MB
+ 0aa392ebbb80 Downloading 69.21MB
+ 947d1652ed21 Downloading 69.21MB
+ 0aa392ebbb80 Downloading 69.21MB
+ 947d1652ed21 Downloading 69.21MB
+ 0aa392ebbb80 Downloading 69.21MB
+ 947d1652ed21 Downloading 69.21MB
+ 0aa392ebbb80 Downloading 69.21MB
+ 947d1652ed21 Downloading 69.21MB
+ 0aa392ebbb80 Downloading 70.25MB
+ 947d1652ed21 Downloading 69.21MB
+ 0aa392ebbb80 Downloading 70.25MB
+ 947d1652ed21 Downloading 69.21MB
+ 0aa392ebbb80 Downloading 70.25MB
+ 947d1652ed21 Downloading 69.21MB
+ 0aa392ebbb80 Downloading 70.25MB
+ 947d1652ed21 Downloading 69.21MB
+ 0aa392ebbb80 Downloading 70.25MB
+ 947d1652ed21 Downloading 69.21MB
+ 0aa392ebbb80 Downloading 70.25MB
+ 947d1652ed21 Downloading 70.22MB
+ 0aa392ebbb80 Downloading 70.25MB
+ 947d1652ed21 Downloading 70.25MB
+ 947d1652ed21 Downloading 70.25MB
+ 0aa392ebbb80 Downloading 71.3MB
+ 947d1652ed21 Downloading 70.6MB
+ 0aa392ebbb80 Downloading 71.3MB
+ 947d1652ed21 Download complete 0B
+ 947d1652ed21 Extracting 1B
+ 0aa392ebbb80 Downloading 71.3MB
+ 947d1652ed21 Extracting 1B
+ 947d1652ed21 Extracting 1B
+ 947d1652ed21 Extracting 1B
+ 0aa392ebbb80 Downloading 72.35MB
+ 947d1652ed21 Extracting 1B
+ 947d1652ed21 Extracting 1B
+ 0aa392ebbb80 Downloading 72.35MB
+ 947d1652ed21 Extracting 1B
+ 0aa392ebbb80 Downloading 72.35MB
+ 947d1652ed21 Extracting 1B
+ 947d1652ed21 Extracting 1B
+ 947d1652ed21 Extracting 1B
+ 0aa392ebbb80 Downloading 73.4MB
+ 947d1652ed21 Extracting 1B
+ 0aa392ebbb80 Downloading 73.4MB
+ 947d1652ed21 Extracting 2B
+ 947d1652ed21 Extracting 2B
+ 0aa392ebbb80 Downloading 73.4MB
+ 947d1652ed21 Extracting 2B
+ 0aa392ebbb80 Downloading 73.4MB
+ 947d1652ed21 Extracting 2B
+ 947d1652ed21 Extracting 2B
+ 947d1652ed21 Extracting 2B
+ 0aa392ebbb80 Downloading 74.45MB
+ 947d1652ed21 Extracting 2B
+ 947d1652ed21 Extracting 2B
+ 0aa392ebbb80 Downloading 74.45MB
+ 947d1652ed21 Extracting 2B
+ 0aa392ebbb80 Downloading 74.45MB
+ 947d1652ed21 Extracting 2B
+ 0aa392ebbb80 Downloading 74.45MB
+ 947d1652ed21 Extracting 3B
+ 0aa392ebbb80 Downloading 75.5MB
+ 947d1652ed21 Extracting 3B
+ 0aa392ebbb80 Downloading 75.5MB
+ 947d1652ed21 Extracting 3B
+ 0aa392ebbb80 Downloading 75.5MB
+ 947d1652ed21 Extracting 3B
+ 0aa392ebbb80 Downloading 76.55MB
+ 947d1652ed21 Extracting 3B
+ 0aa392ebbb80 Downloading 76.55MB
+ 947d1652ed21 Extracting 3B
+ 0aa392ebbb80 Downloading 76.55MB
+ 947d1652ed21 Extracting 3B
+ 947d1652ed21 Extracting 3B
+ 0aa392ebbb80 Downloading 77.59MB
+ 947d1652ed21 Extracting 3B
+ 0aa392ebbb80 Downloading 77.59MB
+ 947d1652ed21 Extracting 3B
+ 0aa392ebbb80 Downloading 78.64MB
+ 947d1652ed21 Extracting 4B
+ 947d1652ed21 Extracting 4B
+ 0aa392ebbb80 Downloading 78.64MB
+ 947d1652ed21 Extracting 4B
+ 0aa392ebbb80 Downloading 79.69MB
+ 947d1652ed21 Extracting 4B
+ 0aa392ebbb80 Downloading 80.74MB
+ 947d1652ed21 Extracting 4B
+ 0aa392ebbb80 Downloading 80.74MB
+ 947d1652ed21 Extracting 4B
+ 0aa392ebbb80 Downloading 81.79MB
+ 947d1652ed21 Extracting 4B
+ 0aa392ebbb80 Downloading 82.84MB
+ 947d1652ed21 Extracting 4B
+ 0aa392ebbb80 Downloading 83.89MB
+ 947d1652ed21 Extracting 4B
+ 947d1652ed21 Extracting 4B
+ 0aa392ebbb80 Downloading 84.93MB
+ 947d1652ed21 Extracting 5B
+ 0aa392ebbb80 Downloading 85.42MB
+ 947d1652ed21 Extracting 5B
+ 0aa392ebbb80 Downloading 87.03MB
+ 947d1652ed21 Extracting 5B
+ 0aa392ebbb80 Downloading 88.08MB
+ 947d1652ed21 Extracting 5B
+ 0aa392ebbb80 Downloading 88.08MB
+ 947d1652ed21 Extracting 5B
+ 0aa392ebbb80 Downloading 90.18MB
+ 947d1652ed21 Extracting 5B
+ 0aa392ebbb80 Downloading 90.18MB
+ 947d1652ed21 Extracting 5B
+ 0aa392ebbb80 Downloading 91.23MB
+ 947d1652ed21 Extracting 5B
+ 0aa392ebbb80 Downloading 92.27MB
+ 947d1652ed21 Extracting 5B
+ 947d1652ed21 Extracting 5B
+ 0aa392ebbb80 Downloading 94.37MB
+ 947d1652ed21 Extracting 6B
+ 0aa392ebbb80 Downloading 95.42MB
+ 947d1652ed21 Extracting 6B
+ 0aa392ebbb80 Downloading 96.47MB
+ 947d1652ed21 Extracting 6B
+ 0aa392ebbb80 Downloading 97.52MB
+ 947d1652ed21 Extracting 6B
+ 947d1652ed21 Extracting 6B
+ 0aa392ebbb80 Downloading 98.57MB
+ 947d1652ed21 Extracting 6B
+ 0aa392ebbb80 Downloading 99.61MB
+ 947d1652ed21 Extracting 6B
+ 0aa392ebbb80 Downloading 100.7MB
+ 947d1652ed21 Pull complete 0B
+ 0aa392ebbb80 Downloading 100.7MB
+ 568992dffcac Pull complete 0B
+ 6c395c29c615 Pull complete 0B
+ Image mariadb:11.4 Pulled 
+ 0aa392ebbb80 Downloading 100.7MB
+ 0aa392ebbb80 Downloading 101.7MB
+ 0aa392ebbb80 Downloading 101.7MB
+ 0aa392ebbb80 Downloading 102.8MB
+ 0aa392ebbb80 Downloading 103.8MB
+ 0aa392ebbb80 Downloading 103.8MB
+ 0aa392ebbb80 Downloading 103.8MB
+ 0aa392ebbb80 Downloading 104.9MB
+ 0aa392ebbb80 Downloading 105.9MB
+ 0aa392ebbb80 Downloading 107MB
+ 0aa392ebbb80 Downloading 107MB
+ 0aa392ebbb80 Downloading 108MB
+ 0aa392ebbb80 Downloading 109.1MB
+ 0aa392ebbb80 Downloading 109.1MB
+ 0aa392ebbb80 Downloading 110.6MB
+ 0aa392ebbb80 Downloading 112.2MB
+ 0aa392ebbb80 Downloading 112.2MB
+ 0aa392ebbb80 Downloading 113.2MB
+ 0aa392ebbb80 Downloading 113.2MB
+ 0aa392ebbb80 Downloading 113.2MB
+ 0aa392ebbb80 Downloading 113.2MB
+ 0aa392ebbb80 Downloading 113.2MB
+ 0aa392ebbb80 Downloading 113.2MB
+ 0aa392ebbb80 Downloading 114.3MB
+ 0aa392ebbb80 Downloading 114.3MB
+ 0aa392ebbb80 Downloading 114.3MB
+ 0aa392ebbb80 Downloading 114.3MB
+ 0aa392ebbb80 Downloading 115.3MB
+ 0aa392ebbb80 Downloading 116.4MB
+ 0aa392ebbb80 Downloading 117.4MB
+ 0aa392ebbb80 Downloading 117.8MB
+ 0aa392ebbb80 Download complete 0B
+ 0aa392ebbb80 Extracting 1B
+ 0aa392ebbb80 Extracting 1B
+ 0aa392ebbb80 Extracting 1B
+ 0aa392ebbb80 Extracting 1B
+ 0aa392ebbb80 Extracting 1B
+ 0aa392ebbb80 Extracting 1B
+ 0aa392ebbb80 Extracting 1B
+ 0aa392ebbb80 Extracting 1B
+ 0aa392ebbb80 Extracting 1B
+ 0aa392ebbb80 Extracting 1B
+ 0aa392ebbb80 Extracting 2B
+ 0aa392ebbb80 Extracting 2B
+ 0aa392ebbb80 Extracting 2B
+ 0aa392ebbb80 Extracting 2B
+ 0aa392ebbb80 Extracting 2B
+ 0aa392ebbb80 Extracting 2B
+ 0aa392ebbb80 Extracting 2B
+ 0aa392ebbb80 Extracting 2B
+ 0aa392ebbb80 Extracting 2B
+ 0aa392ebbb80 Extracting 2B
+ 0aa392ebbb80 Extracting 3B
+ 0aa392ebbb80 Extracting 3B
+ 0aa392ebbb80 Extracting 3B
+ 0aa392ebbb80 Extracting 3B
+ 0aa392ebbb80 Extracting 3B
+ 0aa392ebbb80 Extracting 3B
+ 0aa392ebbb80 Extracting 3B
+ 0aa392ebbb80 Extracting 3B
+ 0aa392ebbb80 Extracting 3B
+ 0aa392ebbb80 Extracting 4B
+ 0aa392ebbb80 Extracting 4B
+ 0aa392ebbb80 Extracting 4B
+ 0aa392ebbb80 Extracting 4B
+ 0aa392ebbb80 Extracting 4B
+ 0aa392ebbb80 Extracting 4B
+ 0aa392ebbb80 Extracting 4B
+ 0aa392ebbb80 Extracting 4B
+ 0aa392ebbb80 Extracting 4B
+ 0aa392ebbb80 Extracting 5B
+ 0aa392ebbb80 Extracting 5B
+ 0aa392ebbb80 Extracting 5B
+ 0aa392ebbb80 Extracting 5B
+ 0aa392ebbb80 Extracting 5B
+ 0aa392ebbb80 Extracting 5B
+ 0aa392ebbb80 Extracting 5B
+ 0aa392ebbb80 Extracting 5B
+ 0aa392ebbb80 Extracting 5B
+ 0aa392ebbb80 Extracting 6B
+ 0aa392ebbb80 Extracting 6B
+ 0aa392ebbb80 Extracting 6B
+ 0aa392ebbb80 Extracting 6B
+ 0aa392ebbb80 Extracting 6B
+ 0aa392ebbb80 Extracting 6B
+ 0aa392ebbb80 Extracting 6B
+ 0aa392ebbb80 Extracting 6B
+ 0aa392ebbb80 Extracting 6B
+ 0aa392ebbb80 Extracting 6B
+ 0aa392ebbb80 Extracting 7B
+ 0aa392ebbb80 Extracting 7B
+ 0aa392ebbb80 Extracting 7B
+ 0aa392ebbb80 Extracting 7B
+ 0aa392ebbb80 Extracting 7B
+ 0aa392ebbb80 Extracting 7B
+ 0aa392ebbb80 Extracting 7B
+ 0aa392ebbb80 Extracting 7B
+ 0aa392ebbb80 Extracting 7B
+ 0aa392ebbb80 Extracting 7B
+ 0aa392ebbb80 Extracting 8B
+ 0aa392ebbb80 Extracting 8B
+ 0aa392ebbb80 Pull complete 0B
+ ba11284aac47 Pull complete 0B
+ 8f8f3a474090 Extracting 1B
+ 8f8f3a474090 Extracting 1B
+ 8f8f3a474090 Extracting 1B
+ 8f8f3a474090 Extracting 1B
+ 8f8f3a474090 Pull complete 0B
+ 1cf5064b55f1 Pull complete 0B
+ 3bcd9b27175b Pull complete 0B
+ 816a9fd16934 Extracting 1B
+ 816a9fd16934 Extracting 1B
+ 816a9fd16934 Pull complete 0B
+ eca30975eae4 Pull complete 0B
+ 320d77ecabde Extracting 1B
+ 320d77ecabde Extracting 1B
+ 320d77ecabde Extracting 1B
+ 320d77ecabde Extracting 1B
+ 320d77ecabde Extracting 1B
+ 320d77ecabde Extracting 1B
+ 320d77ecabde Extracting 1B
+ 320d77ecabde Extracting 1B
+ fa05b5032b13 Pull complete 0B
+ 320d77ecabde Pull complete 0B
+ c7a376359321 Pull complete 0B
+ 862ee81cb220 Extracting 1B
+ 8233764c9d8b Pull complete 0B
+ 4f4fb700ef54 Pull complete 0B
+ 862ee81cb220 Pull complete 0B
+ 66d57c3a38eb Extracting 1B
+ 66d57c3a38eb Extracting 1B
+ 66d57c3a38eb Extracting 1B
+ 66d57c3a38eb Extracting 1B
+ 66d57c3a38eb Extracting 1B
+ 66d57c3a38eb Extracting 1B
+ 66d57c3a38eb Extracting 1B
+ 66d57c3a38eb Extracting 1B
+ 66d57c3a38eb Extracting 1B
+ 66d57c3a38eb Extracting 1B
+ 66d57c3a38eb Extracting 1B
+ 66d57c3a38eb Extracting 2B
+ 66d57c3a38eb Extracting 2B
+ 66d57c3a38eb Extracting 2B
+ 66d57c3a38eb Extracting 2B
+ 6bbcb046e4ae Extracting 1B
+ 66d57c3a38eb Pull complete 0B
+ 6bbcb046e4ae Extracting 1B
+ 6bbcb046e4ae Extracting 1B
+ 6bbcb046e4ae Extracting 1B
+ 6bbcb046e4ae Extracting 1B
+ 6bbcb046e4ae Extracting 1B
+ 6bbcb046e4ae Extracting 1B
+ 6bbcb046e4ae Extracting 1B
+ 6bbcb046e4ae Extracting 1B
+ 6bbcb046e4ae Extracting 1B
+ 6bbcb046e4ae Extracting 1B
+ 6bbcb046e4ae Pull complete 0B
+ c37670fe2f1e Pull complete 0B
+ dc404e2c7d84 Pull complete 0B
+ 605298e6ae30 Extracting 1B
+ 605298e6ae30 Pull complete 0B
+ edfa1eac0ec9 Extracting 1B
+ edfa1eac0ec9 Extracting 1B
+ edfa1eac0ec9 Extracting 1B
+ edfa1eac0ec9 Extracting 1B
+ edfa1eac0ec9 Extracting 1B
+ edfa1eac0ec9 Extracting 1B
+ edfa1eac0ec9 Extracting 1B
+ edfa1eac0ec9 Extracting 1B
+ edfa1eac0ec9 Extracting 1B
+ edfa1eac0ec9 Extracting 1B
+ edfa1eac0ec9 Extracting 1B
+ edfa1eac0ec9 Extracting 2B
+ edfa1eac0ec9 Extracting 2B
+ edfa1eac0ec9 Extracting 2B
+ edfa1eac0ec9 Extracting 2B
+ edfa1eac0ec9 Extracting 2B
+ edfa1eac0ec9 Extracting 2B
+ edfa1eac0ec9 Extracting 2B
+ 886235a2a1ff Extracting 1B
+ edfa1eac0ec9 Pull complete 0B
+ 87574aeed5d7 Pull complete 0B
+ 40ec4bb877a9 Pull complete 0B
+ 886235a2a1ff Pull complete 0B
+ Image wordpress:6-apache Pulled 
+ Network wordpress_default Creating 
+ Network wordpress_default Created 
+ Volume wordpress_wp_content Creating 
+ Volume wordpress_wp_content Created 
+ Volume wordpress_db_data Creating 
+ Volume wordpress_db_data Created 
+ Container wordpress-db-1 Creating 
+ Container wordpress-db-1 Created 
+ Container wordpress-wordpress-1 Creating 
+ Container wordpress-wordpress-1 Created 
+ Container wordpress-db-1 Starting 
+ Container wordpress-db-1 Started 
+ Container wordpress-db-1 Waiting 
+ Container wordpress-db-1 Healthy 
+ Container wordpress-wordpress-1 Starting 
+ Container wordpress-wordpress-1 Started 
+ Container wordpress-wordpress-1 Waiting 
+ Container wordpress-db-1 Waiting 
+ Container wordpress-db-1 Healthy 
+ Container wordpress-wordpress-1 Healthy 
+Code HTTP WordPress Compose (:8000) : 200
+ Container wordpress-wordpress-1 Stopping 
+ Container wordpress-wordpress-1 Stopped 
+ Container wordpress-wordpress-1 Removing 
+ Container wordpress-wordpress-1 Removed 
+ Container wordpress-db-1 Stopping 
+ Container wordpress-db-1 Stopped 
+ Container wordpress-db-1 Removing 
+ Container wordpress-db-1 Removed 
+ Volume wordpress_db_data Removing 
+ Volume wordpress_wp_content Removing 
+ Network wordpress_default Removing 
+ Volume wordpress_db_data Removed 
+ Volume wordpress_wp_content Removed 
+ Network wordpress_default Removed 
+
+==============================================================================
+ TP 2.9 : REGISTRE PRIVÉ, STRATÉGIE DE TAGS, TRIVY & HADOLINT
+==============================================================================
+56eb4c1a5f6e6ffe8bb7a56981b9dcce7ae771627ae75a412a78aeaf55e6fdff
+--- Lint Hadolint sur app-fil-rouge/Dockerfile et Dockerfile.restaurant.clean ---
+Hadolint app-fil-rouge OK (0 erreur) !
+Hadolint restaurant.clean OK (0 avertissement DL3008/DL3009) !
+--- Exécution du Défi TP 2.9 (release.sh vers le registre local localhost:5000) ---
+=== 1. Exécution des tests unitaires et du linter (cible test) ===
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 1.23kB done
+#1 DONE 0.0s
+
+#2 resolve image config for docker-image://docker.io/docker/dockerfile:1
+#2 DONE 1.5s
+
+#3 docker-image://docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e
+#3 resolve docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e 0.0s done
+#3 CACHED
+
+#4 [internal] load metadata for docker.io/library/python:3.12-slim
+#4 DONE 0.9s
+
+#5 [internal] load .dockerignore
+#5 transferring context: 143B done
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 DONE 0.0s
+
+#7 [base 1/4] FROM docker.io/library/python:3.12-slim@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b
+#7 resolve docker.io/library/python:3.12-slim@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b 0.0s done
+#7 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 5.67kB done
+#6 DONE 0.0s
+
+#8 [test 2/4] RUN pip install --no-cache-dir -r requirements-dev.txt
+#8 CACHED
+
+#9 [test 1/4] COPY requirements-dev.txt .
+#9 CACHED
+
+#10 [test 3/4] COPY . .
+#10 CACHED
+
+#11 [base 2/4] WORKDIR /app
+#11 CACHED
+
+#12 [base 3/4] COPY requirements.txt .
+#12 CACHED
+
+#13 [base 4/4] RUN pip install --no-cache-dir -r requirements.txt
+#13 CACHED
+
+#14 [test 4/4] RUN flake8 . && pytest -q
+#14 CACHED
+
+#15 exporting to image
+#15 exporting layers done
+#15 exporting manifest sha256:b8bcf2431182593435d1cf349f0a7ffeca86b9171270c750755a3031d15ce678 done
+#15 exporting config sha256:79dc6f75060f57a7a7d374000892096f32d345fdb3a65dac91f3e3194cf0a0b8 done
+#15 exporting attestation manifest sha256:bc88f710a8f398a10954519b548be5aa141984afd772bc9d432f793e180ea831 0.1s done
+#15 exporting manifest list sha256:c7a2030c8406448f83723e385c391e0079000463e461b21f2bffb4b8139f8234
+#15 exporting manifest list sha256:c7a2030c8406448f83723e385c391e0079000463e461b21f2bffb4b8139f8234 0.0s done
+#15 naming to docker.io/library/legeni-webapp:test done
+#15 unpacking to docker.io/library/legeni-webapp:test 0.0s done
+#15 DONE 0.2s
+=== 2. Build de l'image de production (localhost:5000/legeni-webapp:1.0.0 et localhost:5000/legeni-webapp:sha-local) ===
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 1.23kB done
+#1 DONE 0.0s
+
+#2 resolve image config for docker-image://docker.io/docker/dockerfile:1
+#2 DONE 0.3s
+
+#3 docker-image://docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e
+#3 resolve docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e 0.0s done
+#3 CACHED
+
+#4 [internal] load metadata for docker.io/library/python:3.12-slim
+#4 DONE 0.3s
+
+#5 [internal] load .dockerignore
+#5 transferring context: 143B done
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 63B done
+#6 DONE 0.0s
+
+#7 [base 1/4] FROM docker.io/library/python:3.12-slim@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b
+#7 resolve docker.io/library/python:3.12-slim@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b 0.0s done
+#7 DONE 0.0s
+
+#8 [base 3/4] COPY requirements.txt .
+#8 CACHED
+
+#9 [base 4/4] RUN pip install --no-cache-dir -r requirements.txt
+#9 CACHED
+
+#10 [runtime 1/2] RUN useradd --create-home --uid 10001 appuser
+#10 CACHED
+
+#11 [base 2/4] WORKDIR /app
+#11 CACHED
+
+#12 [runtime 2/2] COPY app.py .
+#12 CACHED
+
+#13 exporting to image
+#13 exporting layers done
+#13 exporting manifest sha256:552ff2a7eb9c3b6c6ff5328d572775d17f1742b45bcd5e55496c00950f32698a done
+#13 exporting config sha256:37b828f0f7a6124972d5c6bd64f9749a4fe724658930dbff692b196110ad3c05 done
+#13 exporting attestation manifest sha256:906d262b2414e590ef938c162d1bc99a95f564bea66cc7ae7c9644cea93006b2 0.1s done
+#13 exporting manifest list sha256:3b1ea94ed77f1071760c8b4f55787c0fbec11c33657f72bf2d11b8f6f9b9b448
+#13 exporting manifest list sha256:3b1ea94ed77f1071760c8b4f55787c0fbec11c33657f72bf2d11b8f6f9b9b448 0.0s done
+#13 naming to localhost:5000/legeni-webapp:1.0.0 done
+#13 unpacking to localhost:5000/legeni-webapp:1.0.0 0.0s done
+#13 naming to localhost:5000/legeni-webapp:sha-local done
+#13 unpacking to localhost:5000/legeni-webapp:sha-local 0.0s done
+#13 DONE 0.2s
+=== 3. Scan de sécurité Trivy (Quality Gate : échec si CRITICAL corrigeable) ===
+2026-11-17T17:35:07Z	INFO	[vuln] Vulnerability scanning is enabled
+2026-11-17T17:35:07Z	INFO	[secret] Secret scanning is enabled
+2026-11-17T17:35:07Z	INFO	[secret] If your scanning is slow, please try '--scanners vuln' to disable secret scanning
+2026-11-17T17:35:07Z	INFO	[secret] Please see also https://aquasecurity.github.io/trivy/v0.57/docs/scanner/secret#recommendation for faster secret detection
+2026-11-17T17:35:08Z	INFO	Detected OS	family="debian" version="13.7"
+2026-11-17T17:35:08Z	INFO	[debian] Detecting vulnerabilities...	os_version="13" pkg_num=87
+2026-11-17T17:35:08Z	INFO	Number of language-specific files	num=1
+2026-11-17T17:35:08Z	INFO	[python-pkg] Detecting vulnerabilities...
+2026-11-17T17:35:08Z	WARN	Using severities from other vendors for some vulnerabilities. Read https://aquasecurity.github.io/trivy/v0.57/docs/scanner/vulnerability#severity-selection for details.
+
+localhost:5000/legeni-webapp:1.0.0 (debian 13.7)
+================================================
+Total: 0 (CRITICAL: 0)
+
+=== 4. Publication vers le registre (localhost:5000) ===
+The push refers to repository [localhost:5000/legeni-webapp]
+5f35901a4289: Pushed
+68bced9e0afa: Pushed
+d23f5ccb1b46: Pushed
+7b8628e6fdf4: Pushed
+2fd7f26ea92f: Pushed
+05e0eee5572e: Pushed
+78d8ae49cc3f: Pushed
+b9038de2a1aa: Pushed
+2dc99d2d0a39: Pushed
+37fb86c2a767: Pushed
+1.0.0: digest: sha256:3b1ea94ed77f1071760c8b4f55787c0fbec11c33657f72bf2d11b8f6f9b9b448 size: 856
+The push refers to repository [localhost:5000/legeni-webapp]
+05e0eee5572e: Layer already exists
+5f35901a4289: Layer already exists
+2dc99d2d0a39: Layer already exists
+78d8ae49cc3f: Layer already exists
+68bced9e0afa: Layer already exists
+b9038de2a1aa: Layer already exists
+37fb86c2a767: Layer already exists
+d23f5ccb1b46: Layer already exists
+7b8628e6fdf4: Already exists
+2fd7f26ea92f: Layer already exists
+sha-local: digest: sha256:3b1ea94ed77f1071760c8b4f55787c0fbec11c33657f72bf2d11b8f6f9b9b448 size: 856
+Release 1.0.0 (sha-local) publiée avec succès !
+--- Vérification du catalogue et test pull depuis zéro du registre privé ---
+{"repositories":["legeni-webapp"]}
+
+{"name":"legeni-webapp","tags":["1.0.0","sha-local"]}
+
+Untagged: localhost:5000/legeni-webapp:1.0.0
+1.0.0: Pulling from legeni-webapp
+Digest: sha256:3b1ea94ed77f1071760c8b4f55787c0fbec11c33657f72bf2d11b8f6f9b9b448
+Status: Downloaded newer image for localhost:5000/legeni-webapp:1.0.0
+localhost:5000/legeni-webapp:1.0.0
+2026-11-17T17:35:10Z	INFO	[vuln] Vulnerability scanning is enabled
+2026-11-17T17:35:10Z	INFO	[secret] Secret scanning is enabled
+2026-11-17T17:35:10Z	INFO	[secret] If your scanning is slow, please try '--scanners vuln' to disable secret scanning
+2026-11-17T17:35:10Z	INFO	[secret] Please see also https://aquasecurity.github.io/trivy/v0.57/docs/scanner/secret#recommendation for faster secret detection
+2026-11-17T17:35:10Z	INFO	Detected OS	family="debian" version="13.7"
+2026-11-17T17:35:10Z	INFO	[debian] Detecting vulnerabilities...	os_version="13" pkg_num=87
+2026-11-17T17:35:10Z	INFO	Number of language-specific files	num=1
+2026-11-17T17:35:10Z	INFO	[python-pkg] Detecting vulnerabilities...
+2026-11-17T17:35:10Z	WARN	Using severities from other vendors for some vulnerabilities. Read https://aquasecurity.github.io/trivy/v0.57/docs/scanner/vulnerability#severity-selection for details.
+
+localhost:5000/legeni-webapp:1.0.0 (debian 13.7)
+================================================
+Total: 1 (HIGH: 1, CRITICAL: 0)
+
+┌─────────┬────────────────┬──────────┬────────┬─────────────────────────────┬──────────────────────────────────┬────────────────────────────────────────────────────────┐
+│ Library │ Vulnerability  │ Severity │ Status │      Installed Version      │          Fixed Version           │                         Title                          │
+├─────────┼────────────────┼──────────┼────────┼─────────────────────────────┼──────────────────────────────────┼────────────────────────────────────────────────────────┤
+│ zlib1g  │ CVE-2026-85091 │ HIGH     │ fixed  │ 1:1.3.dfsg+really1.3.1-1+b1 │ 1:1.3.dfsg+really1.3.1-1+deb13u1 │ zlib: zlib: Heap buffer overflow in gz_vacate() allows │
+│         │                │          │        │                             │                                  │ arbitrary code execution                               │
+│         │                │          │        │                             │                                  │ https://avd.aquasec.com/nvd/cve-2026-85091             │
+└─────────┴────────────────┴──────────┴────────┴─────────────────────────────┴──────────────────────────────────┴────────────────────────────────────────────────────────┘
+registry
+registry_data
+
+==============================================================================
+ TP 2.10 : EXPLOITATION, LIMITES CPU/RAM & RÉSOLUTION DES 5 PANNES
+==============================================================================
+--- Test OOMKilled (limite mémoire 32m) ---
+ExitCode=137 OOMKilled=true
+oom
+--- Résolution automatisée des 5 pannes (Partie B) ---
+==================================================================
+TP 2.10 : DIAGNOSTIC ET RÉSOLUTION DES 5 PANNES
+==================================================================
+
+--- PANNE 1 : Le conteneur s'arrête tout de suite ---
+ffeb22cfcd3889eeea31d60bb3ae77baff67e109c18dda0488684c79d5116e1d
+[Diagnostic] État du conteneur p1 :
+NAMES     STATUS                    COMMAND
+p1        Exited (0) 1 second ago   "/bin/bash"
+[Cause] bash n'a pas de terminal (TTY) ni de processus maintenu au premier plan.
+[Correction] Lancer avec sleep infinity (ou -dit) :
+p1
+02b4cf494c322b08c3aa2c034ceaf6c94e15b5a61493a5ada74ac9f3cec82657
+NAMES     STATUS                  COMMAND
+p1        Up Less than a second   "sleep infinity"
+p1
+
+--- PANNE 2 : Port déjà utilisé sur l'hôte ---
+aa599b43f6acaf30e790aa5354826ac003691e45ad43a7d6d8ac4a13a0efa99d
+[Diagnostic] Tentative de lancer p2b sur le même port 8085 :
+eabe76829526810bd8201cf136b1306d7b11a8a4e747ca70ef65e188ca020e16
+docker: Error response from daemon: failed to set up container networking: driver failed programming external connectivity on endpoint p2b (ec761a8e4d7004201f6ec545726d6a5d6fc4bd31e9df4f7dfef3efd760a9a040): Bind for 0.0.0.0:8085 failed: port is already allocated
+
+Run 'docker run --help' for more information
+[Cause] Conflit de port hôte 8085 déjà alloué à p2a.
+p2b
+[Correction] Publier p2b sur un port hôte libre (ex: 8095:80) :
+36bd6ae240f2ca117fe9e59290b410c4e0ba2a129df7adb470b609438cb2d407
+NAMES     PORTS
+p2b       0.0.0.0:8095->80/tcp, [::]:8095->80/tcp
+p2a       0.0.0.0:8085->80/tcp, [::]:8085->80/tcp
+p2a
+p2b
+
+--- PANNE 3 : L'application ne répond pas depuis le navigateur ---
+397532a115a6d4ebf303d72c9d83a08f9df8cdbe9d6fce2758b7579d919517b6
+[Diagnostic] Vérification des ports et logs de p3 :
+curl: (56) Recv failure: Connection reset by peer
+80/tcp -> 0.0.0.0:8086
+80/tcp -> [::]:8086
+[2026-11-17 17:35:19 +0000] [1] [INFO] Starting gunicorn 23.0.0
+[2026-11-17 17:35:19 +0000] [1] [INFO] Listening at: http://0.0.0.0:5000 (1)
+[2026-11-17 17:35:19 +0000] [1] [INFO] Using worker: sync
+[2026-11-17 17:35:19 +0000] [7] [INFO] Booting worker with pid: 7
+[2026-11-17 17:35:19 +0000] [8] [INFO] Booting worker with pid: 8
+[Cause] Gunicorn écoute sur le port 5000 dans le conteneur, or on a mappé le port 80 (-p 8086:80).
+[Correction] Mapper -p 8086:5000 :
+p3
+3c5d1499c9180f1f2921c79e36af5e6e50d90f980d7f884dc10569c56d2b6a3c
+{"app":"legeni-webapp","env":"dev","hostname":"3c5d1499c918","version":"1.0.0"}
+
+p3
+
+--- PANNE 4 : L'application ne trouve pas Redis (/ready renvoie 503) ---
+4260ed72d5bf94df1f4486ba25b969ef06f2230ac2380928914ec7e4f909e632
+245e3ccb5b940941a5213a19dbd0c03895a455835c33477dfbbf89654312cb8d
+095733301ab189967ae865b65a6ea77de32d8e4a57a3549e42d53ffe3f6efe63
+[Diagnostic] Code HTTP de /ready :
+{"status":"redis indisponible"}
+ (HTTP 503)
+[Cause] 1) p4 est sur le bridge par défaut (pas sur p4net). 2) Le conteneur Redis s'appelle 'cache' et non 'redis'.
+[Correction] Placer p4 sur --network p4net avec -e REDIS_HOST=cache :
+p4
+78ed7fbb8ee90d1b624e832b9651bac86239009760334a96a1398bf7aa9c9709
+{"status":"ready"}
+ (HTTP 200)
+p4
+cache
+p4net
+
+--- PANNE 5 : Permission denied sur un bind mount ---
+[Diagnostic] Tentative d'écriture par appuser (UID 10001) dans /tmp/p5 (propriétaire root 755) :
+sh: 1: cannot create /data/f: Permission denied
+[Cause] L'image legeni-webapp tourne sous l'utilisateur non-root appuser (UID 10001).
+[Correction] Attribuer les droits UID 10001 au dossier hôte (ou utiliser un volume nommé) :
+Écriture réussie par appuser
+
+=== Les 5 pannes du TP 2.10 ont été diagnostiquées et corrigées avec succès ! ===
+
+==============================================================================
+ TOUS LES TPs DOCKER DEMANDÉS SONT TERMINÉS AVEC SUCCÈS !
+ Les traces complètes sont disponibles dans : /home/win11_pro/Dominique/TP docker/logs_execution_tp_docker.txt
+ Le compte-rendu complet est dans : /home/win11_pro/Dominique/TP docker/COMPTE_RENDU_TP_DOCKER.md
+==============================================================================

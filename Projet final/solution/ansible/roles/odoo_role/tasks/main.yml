@@ -1,0 +1,20 @@
+---
+- name: Créer les répertoires de déploiement et de persistance BDD Odoo
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: "0755"
+  loop:
+    - "{{ odoo_deploy_dir }}"
+    - "{{ odoo_db_host_path }}"
+
+- name: Générer le fichier docker-compose.yml d'Odoo à partir du template
+  ansible.builtin.template:
+    src: docker-compose.odoo.yml.j2
+    dest: "{{ odoo_deploy_dir }}/docker-compose.yml"
+    mode: "0644"
+
+- name: Déployer la stack Odoo avec Docker Compose
+  community.docker.docker_compose_v2:
+    project_src: "{{ odoo_deploy_dir }}"
+    state: present

@@ -1,0 +1,4 @@
+#!/bin/sh
+docker run --rm -v "$PWD":/src -w /src python:3.12-slim \
+  sh -c "pip install -q flake8==7.1.1 && flake8 ." || {
+  echo "flake8 a trouvé des erreurs : commit refusé"; exit 1; }

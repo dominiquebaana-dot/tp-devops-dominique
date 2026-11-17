@@ -1,0 +1,22 @@
+# Clés SSH et secrets générés localement
+TP ansible/lab/keys/
+**/kubeconfig-jenkins.yml
+**/.vault_pass
+**/vars/vault.yml
+**/icgroup-secrets.yaml
+**/.env
+!.env.example
+
+# Fichiers temporaires Python / tests / Ansible
+.venv/
+**/.venv/
+__pycache__/
+**/__pycache__/
+*.pyc
+.pytest_cache/
+**/.pytest_cache/
+.coverage
+**/.coverage
+**/reports/
+*.retry
+**/*.retry

@@ -1,0 +1,10 @@
+---
+# Lot 2 (IaC) : Provisionnement idempotent de l'infrastructure complète (Docker, Jenkins, Minikube)
+# Exécution : ansible-playbook provision.yml
+- name: Provisionnement de l'infrastructure DevOps (Docker + Jenkins + Minikube)
+  hosts: ci_k8s
+  become: true
+  roles:
+    - role: docker
+    - role: minikube
+    - role: jenkins

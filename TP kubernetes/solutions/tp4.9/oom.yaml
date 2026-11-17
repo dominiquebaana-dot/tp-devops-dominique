@@ -1,0 +1,18 @@
+# TP 4.9 - Étape 4 : Pod déclenchant OOMKilled (limite 32Mi, allocation ~200Mo)
+apiVersion: v1
+kind: Pod
+metadata:
+  name: oom
+  namespace: legeni-dev
+  labels:
+    env: dev
+spec:
+  restartPolicy: Never
+  containers:
+    - name: oom
+      image: python:3.12-slim
+      command: ["python", "-c", "x = bytearray(200*1024*1024)"]
+      resources:
+        limits:
+          memory: "32Mi"
+          cpu: "100m"

@@ -1,0 +1,55 @@
+---
+# TP 5.2 + Défi : installer nginx, publier une page et exposer /nginx_status sur le port 8090
+- name: Installer et configurer nginx
+  hosts: web
+  become: true
+
+  tasks:
+    - name: Installer nginx
+      ansible.builtin.apt:
+        name: nginx
+        state: present
+        update_cache: true
+        cache_valid_time: 3600
+
+    - name: Publier la page d'accueil
+      ansible.builtin.template:
+        src: templates/index.html.j2
+        dest: /var/www/html/index.html
+        mode: "0644"
+      notify: Recharger nginx
+
+    - name: Démarrer nginx et l'activer au démarrage
+      ansible.builtin.service:
+        name: nginx
+        state: started
+        enabled: true
+
+    - name: Configurer la page de statut (Défi TP 5.2)
+      ansible.builtin.copy:
+        dest: /etc/nginx/conf.d/status.conf
+        mode: "0644"
+        content: |
+          server {
+            listen 8090;
+            location /nginx_status { stub_status; }
+          }
+      notify: Recharger nginx
+
+    - name: Vérifier la configuration nginx
+      ansible.builtin.command: nginx -t
+      changed_when: false
+
+    - name: Appliquer les handlers maintenant
+      ansible.builtin.meta: flush_handlers
+
+    - name: Vérifier la page de statut
+      ansible.builtin.uri:
+        url: http://127.0.0.1:8090/nginx_status
+        status_code: 200
+
+  handlers:
+    - name: Recharger nginx
+      ansible.builtin.service:
+        name: nginx
+        state: reloaded

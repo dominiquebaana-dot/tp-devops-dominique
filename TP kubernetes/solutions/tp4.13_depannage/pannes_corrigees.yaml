@@ -1,0 +1,119 @@
+# TP 4.13 : Les 6 pannes corrigées prêtes à être déployées dans le namespace depannage
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: depannage
+---
+# Panne 1 corrigée : nginx:1.27-alpine (au lieu de nginx:1.27-alpnie)
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: front, namespace: depannage}
+spec:
+  replicas: 2
+  selector: {matchLabels: {app: front}}
+  template:
+    metadata: {labels: {app: front}}
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.27-alpine
+---
+# Panne 2 corrigée : image legeni-webapp:1.0.0 (contenant Flask et un serveur continu)
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: api, namespace: depannage}
+spec:
+  replicas: 1
+  selector: {matchLabels: {app: api}}
+  template:
+    metadata: {labels: {app: api}}
+    spec:
+      containers:
+        - name: api
+          image: legeni-webapp:1.0.0
+          imagePullPolicy: IfNotPresent
+---
+# Panne 3 corrigée : selector {app: web} aligné sur les labels des pods
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: web, namespace: depannage}
+spec:
+  replicas: 2
+  selector: {matchLabels: {app: web}}
+  template:
+    metadata: {labels: {app: web, tier: front}}
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.27-alpine
+---
+apiVersion: v1
+kind: Service
+metadata: {name: web, namespace: depannage}
+spec:
+  selector: {app: web}
+  ports: [{port: 80, targetPort: 80}]
+---
+# Panne 4 corrigée : targetPort: 80 (port d'écoute réel de nginx)
+apiVersion: v1
+kind: Service
+metadata: {name: app, namespace: depannage}
+spec:
+  selector: {app: app}
+  ports: [{port: 80, targetPort: 80}]
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: app, namespace: depannage}
+spec:
+  replicas: 1
+  selector: {matchLabels: {app: app}}
+  template:
+    metadata: {labels: {app: app}}
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.27-alpine
+---
+# Panne 5 corrigée : création de la ConfigMap config-app manquante
+apiVersion: v1
+kind: ConfigMap
+metadata: {name: config-app, namespace: depannage}
+data:
+  APP_MODE: "production"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: conf, namespace: depannage}
+spec:
+  replicas: 1
+  selector: {matchLabels: {app: conf}}
+  template:
+    metadata: {labels: {app: conf}}
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.27-alpine
+          envFrom:
+            - configMapRef: {name: config-app}
+---
+# Panne 6 corrigée : storageClassName: standard (au lieu de rapide inexistant)
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata: {name: data, namespace: depannage}
+spec:
+  storageClassName: standard
+  accessModes: [ReadWriteOnce]
+  resources: {requests: {storage: 1Gi}}
+---
+apiVersion: v1
+kind: Pod
+metadata: {name: db, namespace: depannage}
+spec:
+  containers:
+    - name: redis
+      image: redis:7.4-alpine
+      volumeMounts: [{name: data, mountPath: /data}]
+  volumes:
+    - name: data
+      persistentVolumeClaim: {claimName: data}

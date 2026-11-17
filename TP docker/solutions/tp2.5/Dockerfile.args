@@ -1,0 +1,5 @@
+FROM alpine:3.20
+ARG BUILD_VERSION=dev
+ENV APP_MESSAGE="Bonjour"
+RUN echo "Construit en version ${BUILD_VERSION}" > /version.txt
+CMD ["sh", "-c", "cat /version.txt; echo \"BUILD_VERSION=$BUILD_VERSION APP_MESSAGE=$APP_MESSAGE\""]

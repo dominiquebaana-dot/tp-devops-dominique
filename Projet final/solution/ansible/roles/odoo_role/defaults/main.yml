@@ -1,0 +1,14 @@
+---
+# Variables par défaut du rôle odoo_role (toutes variabilisées selon le cahier des charges)
+odoo_deploy_dir: "/opt/icgroup/odoo"
+odoo_network_name: "icgroup_odoo_net"
+odoo_volume_name: "icgroup_odoo_data"
+odoo_db_host_path: "/srv/icgroup/odoo_postgres_data"
+odoo_service_name: "odoo_erp"
+odoo_container_name: "icgroup_odoo_container"
+postgres_service_name: "odoo_db"
+postgres_container_name: "icgroup_postgres_container"
+odoo_port: 8069
+postgres_user: "odoo"
+postgres_password: "odoo_secret_password"
+postgres_db: "postgres"

@@ -1,0 +1,9 @@
+---
+k8s_namespace: legeni-prod
+app_env: prod
+app_color: "#2da44e"
+app_replicas: 3
+app_node_port: 30082
+ingress_host: legeni.local
+enable_hpa: true
+enable_cronjob: true

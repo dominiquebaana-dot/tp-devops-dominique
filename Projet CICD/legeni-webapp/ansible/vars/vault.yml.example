@@ -1,0 +1,4 @@
+---
+# Exemple de fichier de secrets (chiffré en production dans vars/vault.yml via ansible-vault)
+vault_redis_password_staging: "Staging_R3d1s_S3cr3t_2026!"
+vault_redis_password_prod: "Prod_R3d1s_UltraS3cr3t_2026!"

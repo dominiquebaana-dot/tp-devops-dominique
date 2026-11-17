@@ -1,0 +1,7 @@
+---
+minikube_cpus: 2
+minikube_memory: 4096
+minikube_user: "{{ ansible_env.SUDO_USER | default(ansible_user_id) }}"
+minikube_addons:
+  - metrics-server
+  - ingress

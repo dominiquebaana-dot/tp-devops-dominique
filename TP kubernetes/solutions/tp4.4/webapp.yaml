@@ -1,0 +1,82 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp-deployment
+  labels:
+    app: webapp
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: webapp
+  template:
+    metadata:
+      labels:
+        app: webapp
+    spec:
+      containers:
+        - name: webapp-container
+          image: legeni-webapp:1.0.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5000
+          env:
+            - name: APP_ENV
+              value: "k8s-dev"
+            - name: APP_COLOR
+              value: "#2da44e"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: webapp-service
+spec:
+  type: NodePort
+  selector:
+    app: webapp
+  ports:
+    - port: 8180
+      targetPort: 5000
+      nodePort: 30180
+---
+# Défi TP 4.4 : Seconde instance webapp-prod coexistante (nodePort 30181)
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp-prod
+  labels:
+    app: webapp-prod
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: webapp-prod
+  template:
+    metadata:
+      labels:
+        app: webapp-prod
+    spec:
+      containers:
+        - name: webapp-container
+          image: legeni-webapp:1.0.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5000
+          env:
+            - name: APP_ENV
+              value: "prod"
+            - name: APP_COLOR
+              value: "#d1242f"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: webapp-prod
+spec:
+  type: NodePort
+  selector:
+    app: webapp-prod
+  ports:
+    - port: 8180
+      targetPort: 5000
+      nodePort: 30181

@@ -1,0 +1,306 @@
+# Partie 3 (IC GROUP) : Manifests Kubernetes complets dans le namespace 'icgroup' avec label 'env: prod'
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: icgroup
+  labels:
+    env: prod
+---
+# ConfigMap contenant le fichier /pgadmin4/servers.json pour pré-configurer la connexion à la BDD Odoo
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pgadmin-servers-config
+  namespace: icgroup
+  labels:
+    env: prod
+data:
+  servers.json: |
+    {
+      "Servers": {
+        "1": {
+          "Name": "Odoo PostgreSQL DB",
+          "Group": "ICGROUP",
+          "Host": "postgres-service",
+          "Port": 5432,
+          "MaintenanceDB": "postgres",
+          "Username": "odoo",
+          "SSLMode": "prefer"
+        }
+      }
+    }
+---
+# PVC pour persister la base PostgreSQL d'Odoo et les paramètres de pgAdmin
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-pvc
+  namespace: icgroup
+  labels:
+    env: prod
+spec:
+  accessModes: [ReadWriteOnce]
+  resources:
+    requests:
+      storage: 2Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pgadmin-pvc
+  namespace: icgroup
+  labels:
+    env: prod
+spec:
+  accessModes: [ReadWriteOnce]
+  resources:
+    requests:
+      storage: 1Gi
+---
+# 1. Base de données PostgreSQL (1 réplica + Service ClusterIP interne)
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-deployment
+  namespace: icgroup
+  labels:
+    app: postgres
+    env: prod
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: postgres
+      env: prod
+  template:
+    metadata:
+      labels:
+        app: postgres
+        env: prod
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:15-alpine
+          ports:
+            - containerPort: 5432
+          env:
+            - name: PGDATA
+              value: "/var/lib/postgresql/data/pgdata"
+            - name: POSTGRES_DB
+              value: "postgres"
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: icgroup-secrets
+                  key: postgres-user
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: icgroup-secrets
+                  key: postgres-password
+          volumeMounts:
+            - name: postgres-storage
+              mountPath: /var/lib/postgresql/data
+      volumes:
+        - name: postgres-storage
+          persistentVolumeClaim:
+            claimName: postgres-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-service
+  namespace: icgroup
+  labels:
+    app: postgres
+    env: prod
+spec:
+  type: ClusterIP
+  selector:
+    app: postgres
+    env: prod
+  ports:
+    - port: 5432
+      targetPort: 5432
+---
+# 2. Application ERP Odoo (2 réplicas + Service NodePort 30069)
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: odoo-deployment
+  namespace: icgroup
+  labels:
+    app: odoo
+    env: prod
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: odoo
+      env: prod
+  template:
+    metadata:
+      labels:
+        app: odoo
+        env: prod
+    spec:
+      containers:
+        - name: odoo
+          image: odoo:17.0
+          ports:
+            - containerPort: 8069
+          env:
+            - name: HOST
+              value: "postgres-service"
+            - name: USER
+              valueFrom:
+                secretKeyRef:
+                  name: icgroup-secrets
+                  key: postgres-user
+            - name: PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: icgroup-secrets
+                  key: postgres-password
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: odoo-service
+  namespace: icgroup
+  labels:
+    app: odoo
+    env: prod
+spec:
+  type: NodePort
+  selector:
+    app: odoo
+    env: prod
+  ports:
+    - port: 8069
+      targetPort: 8069
+      nodePort: 30069
+---
+# 3. Interface d'administration pgAdmin 4 (1 réplica + PVC /var/lib/pgadmin + servers.json + Service NodePort 30050)
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pgadmin-deployment
+  namespace: icgroup
+  labels:
+    app: pgadmin
+    env: prod
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pgadmin
+      env: prod
+  template:
+    metadata:
+      labels:
+        app: pgadmin
+        env: prod
+    spec:
+      securityContext:
+        fsGroup: 5050
+      containers:
+        - name: pgadmin
+          image: dpage/pgadmin4:latest
+          ports:
+            - containerPort: 80
+          env:
+            - name: PGADMIN_DEFAULT_EMAIL
+              valueFrom:
+                secretKeyRef:
+                  name: icgroup-secrets
+                  key: pgadmin-email
+            - name: PGADMIN_DEFAULT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: icgroup-secrets
+                  key: pgadmin-password
+          volumeMounts:
+            - name: pgadmin-data
+              mountPath: /var/lib/pgadmin
+            - name: pgadmin-servers
+              mountPath: /pgadmin4/servers.json
+              subPath: servers.json
+      volumes:
+        - name: pgadmin-data
+          persistentVolumeClaim:
+            claimName: pgadmin-pvc
+        - name: pgadmin-servers
+          configMap:
+            name: pgadmin-servers-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pgadmin-service
+  namespace: icgroup
+  labels:
+    app: pgadmin
+    env: prod
+spec:
+  type: NodePort
+  selector:
+    app: pgadmin
+    env: prod
+  ports:
+    - port: 80
+      targetPort: 80
+      nodePort: 30050
+---
+# 4. Portail Vitrine Legeni Academy (2 réplicas + Service NodePort 30085)
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: legeni-academy-deployment
+  namespace: icgroup
+  labels:
+    app: legeni-academy
+    env: prod
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: legeni-academy
+      env: prod
+  template:
+    metadata:
+      labels:
+        app: legeni-academy
+        env: prod
+    spec:
+      containers:
+        - name: legeni-academy
+          image: legeni-academy:1.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          env:
+            - name: ODOO_URL
+              value: "http://localhost:30069"
+            - name: PGADMIN_URL
+              value: "http://localhost:30050"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: legeni-academy-service
+  namespace: icgroup
+  labels:
+    app: legeni-academy
+    env: prod
+spec:
+  type: NodePort
+  selector:
+    app: legeni-academy
+    env: prod
+  ports:
+    - port: 8080
+      targetPort: 8080
+      nodePort: 30085

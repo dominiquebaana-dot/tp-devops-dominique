@@ -1,0 +1,7 @@
+---
+# Installation du rôle docker sur les nœuds cibles
+- name: Installer Docker sur les nœuds web
+  hosts: web
+  become: true
+  roles:
+    - docker

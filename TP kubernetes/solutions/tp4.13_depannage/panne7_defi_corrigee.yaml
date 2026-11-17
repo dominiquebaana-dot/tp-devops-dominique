@@ -1,0 +1,28 @@
+# Défi TP 4.13 : Panne 7 originale (readinessProbe sur mauvais chemin /inexistant -> 0/1 READY) & Correction (/health)
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: portal-defi
+  namespace: depannage
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: portal-defi
+  template:
+    metadata:
+      labels:
+        app: portal-defi
+    spec:
+      containers:
+        - name: webapp
+          image: legeni-webapp:1.0.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5000
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 5000
+            periodSeconds: 3
+            failureThreshold: 2
